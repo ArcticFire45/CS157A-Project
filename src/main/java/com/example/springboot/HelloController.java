@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-// import com.example.springboot.PokemonServiceImplementation;
-
 @RestController
 public class HelloController {
 
@@ -23,5 +21,4 @@ public class HelloController {
 	public List<Pokemon> pokemon_information() {
 		return this.pokeservice.getPokemonData();
 	}
-
 }
