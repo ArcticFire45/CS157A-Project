@@ -9,15 +9,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.springboot.Pokemon;
-import com.example.springboot.DBUtil;
-
-
 @Service
 public class PokemonServiceImplementation {
     
     @Autowired
-    static List<Pokemon> pokemonList = new ArrayList();
+    static List<Pokemon> pokemonList = new ArrayList<Pokemon>();
 
     Connection connection;
 
@@ -44,7 +40,11 @@ public class PokemonServiceImplementation {
     {
         try
         {
+<<<<<<< HEAD
             pokemonList = new ArrayList();
+=======
+            pokemonList = new ArrayList<Pokemon>();
+>>>>>>> 9aa75bea1a7bc0bf17ace55e510dedec7202f0b1
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM pokemon");
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
