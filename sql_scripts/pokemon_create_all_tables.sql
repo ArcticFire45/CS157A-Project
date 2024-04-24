@@ -1,3 +1,4 @@
+use pokemon_trader;
 CREATE TABLE IF NOT EXISTS Users (
     UserID INT PRIMARY KEY,
     Password VARCHAR(255),
@@ -6,10 +7,12 @@ CREATE TABLE IF NOT EXISTS Users (
 
 CREATE TABLE IF NOT EXISTS PokemonTemplate(
 	PokeTemplateID INT PRIMARY KEY,
-    PokeName VARCHAR(255),
-    Type1 VARCHAR(50),
+    PokeName VARCHAR(255) NOT NULL,
+    Type1 VARCHAR(50) NOT NULL,
     Type2 VARCHAR(50),
-    ImageURL VARCHAR(255)
+    GifURL VARCHAR(255),
+    ImageURL VARCHAR(255),
+    PokemonDescription TEXT
 );
 
 CREATE TABLE IF NOT EXISTS ItemTemplate(
