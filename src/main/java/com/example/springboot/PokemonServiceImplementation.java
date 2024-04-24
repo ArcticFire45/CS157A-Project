@@ -25,13 +25,12 @@ public class PokemonServiceImplementation {
     {
         try
         {
-            PreparedStatement stmt = connection.prepareStatement("SELECT poke_name FROM pokemon WHERE pokemon_id=1");
+            PreparedStatement stmt = connection.prepareStatement("SELECT poke_name FROM pokemon WHERE pokemon_id="+poke_id);
             ResultSet rs = stmt.executeQuery();
             rs.next();
             return rs.getString(1);
         }
-        catch (SQLException e)
-        {
+        catch(SQLException e){
             e.printStackTrace();
         }
         return "";
@@ -40,11 +39,7 @@ public class PokemonServiceImplementation {
     {
         try
         {
-<<<<<<< HEAD
-            pokemonList = new ArrayList();
-=======
             pokemonList = new ArrayList<Pokemon>();
->>>>>>> 9aa75bea1a7bc0bf17ace55e510dedec7202f0b1
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM pokemon");
             ResultSet rs = stmt.executeQuery();
             while(rs.next())

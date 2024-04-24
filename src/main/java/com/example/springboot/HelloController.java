@@ -23,4 +23,10 @@ public class HelloController {
 		return this.pokeservice.getPokemonData();
 	}
 
+	@GetMapping("/first_pokemon")
+	public String first_pokemon() {
+		return this.pokeservice.getPokemonName("1");
+	}
+
+
 }

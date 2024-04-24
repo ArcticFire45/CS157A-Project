@@ -8,14 +8,11 @@ public class Pokemon {
     }
     private Integer poke_id;
     private String poke_name;
-<<<<<<< HEAD
 
 // USER TABLE
 // U_ID, Name, Age, favorite_pokemon
 // 1, Tyler, 22, poke_id=1
 
-=======
->>>>>>> 9aa75bea1a7bc0bf17ace55e510dedec7202f0b1
     
     public Pokemon(Integer poke_id, String poke_name) {
         this.poke_id = poke_id;
