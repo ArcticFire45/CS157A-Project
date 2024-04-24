@@ -25,11 +25,26 @@ public class PokemonServiceImplementation {
     {
         connection = DBUtil.getConnection();
     }
-
+    public String getPokemonName(String poke_id)
+    {
+        try
+        {
+            PreparedStatement stmt = connection.prepareStatement("SELECT poke_name FROM pokemon WHERE pokemon_id=1");
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            return rs.getString(1);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return "";
+    }
     public List<Pokemon> getPokemonData()
     {
         try
         {
+            pokemonList = new ArrayList();
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM pokemon");
             ResultSet rs = stmt.executeQuery();
             while(rs.next())

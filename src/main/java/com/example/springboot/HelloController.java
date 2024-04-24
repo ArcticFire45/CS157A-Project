@@ -19,9 +19,15 @@ public class HelloController {
 
 		return "Testing from Spring Boot!";
 	}
+	
 	@GetMapping("/pokepoke")
 	public List<Pokemon> pokemon_information() {
 		return this.pokeservice.getPokemonData();
+	}
+
+	@GetMapping("/first_pokemon")
+	public String first_pokemon() {
+		return this.pokeservice.getPokemonName("1");
 	}
 
 }
