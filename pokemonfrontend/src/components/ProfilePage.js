@@ -1,10 +1,21 @@
-import React from "react";
+import React from 'react';
+import Card from './Card';
 
-const ProfilePage = () => {
+const ProfilePage = ({ trainerName, trainerImage, team }) => {
   return (
-    <div>
-      <h1>Profile Page</h1>
-      <p>Welcome to the Profile Page!</p>
+    <div style={{ textAlign: 'center' }}>
+      <h1>{trainerName}'s Profile</h1>
+      <img src={trainerImage} alt={trainerName} style={{ width: '200px', borderRadius: '50%' }} />
+      <h2>Team</h2>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        {team.map((pokemon) => (
+          <Card
+          key={pokemon.poke_id}
+          id={pokemon.poke_id}
+          name={pokemon.poke_name}
+          />
+        ))}
+      </div>
     </div>
   );
 };
