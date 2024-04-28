@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const ProfilePage = () => {
   return (
@@ -7,6 +7,6 @@ const ProfilePage = () => {
       <p>Welcome to the Profile Page!</p>
     </div>
   );
-}
+};
 
 export default ProfilePage;
