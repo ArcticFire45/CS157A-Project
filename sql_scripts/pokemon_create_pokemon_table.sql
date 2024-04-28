@@ -6,10 +6,10 @@ poke_name varchar(30)
 );
 
 
-insert into pokemon
+insert into pokemontemplate
 Values
-(1, "bulbasaur"),
-(2, "ivysaur"),
-(3, "venasaur");
+(1, "bulbasaur", "grass", "poison", ""),
+(2, "ivysaur", "grass", "poison", ""),
+(3, "venasaur", "grass", "poison", "");
 
 select * from pokemon;
