@@ -14,13 +14,15 @@ CREATE TABLE IF NOT EXISTS PokemonTemplate(
     ImageURL VARCHAR(255),
     PokemonDescription TEXT
 );
-
 CREATE TABLE IF NOT EXISTS ItemTemplate(
 	ItemTemplateID INT PRIMARY KEY,
     ItemName VARCHAR(255),
     ItemDescription Text,
-	ImageURL VARCHAR(255)
+    MoneyClickerMultiplier FLOAT,
+	ImageURL VARCHAR(255),
+    CHECK (MoneyClickerMultiplier >= 1) 
 );
+
 
 CREATE TABLE IF NOT EXISTS Pokemon (
     PokeID INT PRIMARY KEY,

@@ -162,3 +162,18 @@ INSERT INTO pokemontemplate (PokeTemplateID, PokeName, Type1, Type2, GifURL, Ima
 (149,'Dragonite','Dragon','Flying','https://play.pokemonshowdown.com/sprites/bwani/dragonite.gif','https://play.pokemonshowdown.com/sprites/bw/dragonite.png','An extremely rarely seen marine Pokemon. Its intelligence is said to match that of humans.'),
 (150,'Mewtwo','Psychic',NULL,'https://play.pokemonshowdown.com/sprites/bwani/mewtwo.gif','https://play.pokemonshowdown.com/sprites/bw/mewtwo.png','It was created by a scientist after years of horrific gene splicing and DNA engineering experiments.'),
 (151,'Mew','Psychic',NULL,'https://play.pokemonshowdown.com/sprites/bwani/mew.gif','https://play.pokemonshowdown.com/sprites/bw/mew.png','So rare that it is still said to be a mirage by many experts. Only a few people have seen it worldwide.');
+
+
+-- CREATE TABLE IF NOT EXISTS ItemTemplate(
+-- 	ItemTemplateID INT PRIMARY KEY,
+--     ItemName VARCHAR(255),
+--     ItemDescription Text,
+-- 	ImageURL VARCHAR(255)
+-- );
+INSERT INTO ItemTemplate (ItemTemplateID, ItemName, ImageURL, ItemDescription) VALUES
+(1, "Anti-Pikachu-Rubber-Balloon-Bazooka", 'https://static.wikia.nocookie.net/pokemon/images/f/f2/Anti-PikachuRubber-balloonBazooka.jpg/revision/latest?cb=20190114193334', 'Shoots a rubber balloon that chases Ash\'s Pikachu.'),
+(1, "Bombs", 'https://archives.bulbagarden.net/media/upload/b/ba/EP012_Bombs.png', 'Ordinary bombs. Used by Jessie and James from their balloon to attack Ash and Squirtle.'),
+(1, "Bombs", '', ''),
+
+(1, "Anti-Pikachu-Rubber-Balloon-Bazooka", 'https://static.wikia.nocookie.net/pokemon/images/f/f2/Anti-PikachuRubber-balloonBazooka.jpg/revision/latest?cb=20190114193334', 'Shoots a rubber balloon that chases Ash\'s Pikachu.'),
+(1, "Anti-Pikachu-Rubber-Balloon-Bazooka", 'https://static.wikia.nocookie.net/pokemon/images/f/f2/Anti-PikachuRubber-balloonBazooka.jpg/revision/latest?cb=20190114193334', 'Shoots a rubber balloon that chases Ash\'s Pikachu.');
