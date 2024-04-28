@@ -40,7 +40,7 @@ public class PokemonServiceImplementation {
         try
         {
             pokemonList = new ArrayList<Pokemon>();
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM pokemon");
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM pokemontemplate");
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
             {
