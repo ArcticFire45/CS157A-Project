@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import usePokemons from "../hooks/usePokemons";
 
-const HomePage = ({ money, setMoney }) => {
+const MoneyPage = ({ money, setMoney }) => {
   const [clicked, setClicked] = useState(false);
   const { pokemons } = usePokemons();
 
@@ -18,6 +18,7 @@ const HomePage = ({ money, setMoney }) => {
   return (
     <div
       style={{
+        position: "relative",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -34,25 +35,34 @@ const HomePage = ({ money, setMoney }) => {
           textAlign: "center",
         }}
       >
-        <h1>Home Page</h1>
-        <p>Welcome to the Home Page!</p>
+        <h1>Money Page</h1>
+        <p>Welcome to the Money Page!</p>
+        <p>Click on Meowth to get Money!</p>
+        <div>
+          <img
+            src="https://64.media.tumblr.com/c3f6563dc4cbbf9fa5cbdc6c85346529/tumblr_inline_pab3jajU1d1qapklj_500.png"
+            alt="Click Me"
+            style={{
+              cursor: "pointer",
+              width: clicked ? "310px" : "300px",
+              height: clicked ? "310px" : "300px",
+              transition: "all 0.1s ease-in-out",
+            }}
+            onClick={handleClick}
+          />
+        </div>
       </div>
-      <div style={{ marginTop: "120px" }}>
-        <img
-          src="https://64.media.tumblr.com/c3f6563dc4cbbf9fa5cbdc6c85346529/tumblr_inline_pab3jajU1d1qapklj_500.png"
-          alt="Click Me"
-          style={{
-            cursor: "pointer",
-            width: clicked ? "310px" : "300px",
-            height: clicked ? "310px" : "300px",
-            transition: "all 0.1s ease-in-out",
-          }}
-          onClick={handleClick}
-        />
+      <div
+        style={{
+          position: "absolute",
+          top: "10px",
+          right: "10px",
+        }}
+      >
+        <p>Money: {money}</p>
       </div>
-      <p>Money: {money}</p>
     </div>
   );
 };
 
-export default HomePage;
+export default MoneyPage;
