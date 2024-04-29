@@ -168,12 +168,13 @@ INSERT INTO pokemontemplate (PokeTemplateID, PokeName, Type1, Type2, GifURL, Ima
 -- 	ItemTemplateID INT PRIMARY KEY,
 --     ItemName VARCHAR(255),
 --     ItemDescription Text,
+--     MoneyClickerMultiplier,
 -- 	ImageURL VARCHAR(255)
 -- );
-INSERT INTO ItemTemplate (ItemTemplateID, ItemName, ImageURL, ItemDescription) VALUES
-(1, "Anti-Pikachu-Rubber-Balloon-Bazooka", 'https://static.wikia.nocookie.net/pokemon/images/f/f2/Anti-PikachuRubber-balloonBazooka.jpg/revision/latest?cb=20190114193334', 'Shoots a rubber balloon that chases Ash\'s Pikachu.'),
-(1, "Bombs", 'https://archives.bulbagarden.net/media/upload/b/ba/EP012_Bombs.png', 'Ordinary bombs. Used by Jessie and James from their balloon to attack Ash and Squirtle.'),
-(1, "Bombs", '', ''),
-
-(1, "Anti-Pikachu-Rubber-Balloon-Bazooka", 'https://static.wikia.nocookie.net/pokemon/images/f/f2/Anti-PikachuRubber-balloonBazooka.jpg/revision/latest?cb=20190114193334', 'Shoots a rubber balloon that chases Ash\'s Pikachu.'),
-(1, "Anti-Pikachu-Rubber-Balloon-Bazooka", 'https://static.wikia.nocookie.net/pokemon/images/f/f2/Anti-PikachuRubber-balloonBazooka.jpg/revision/latest?cb=20190114193334', 'Shoots a rubber balloon that chases Ash\'s Pikachu.');
+INSERT INTO ItemTemplate (ItemTemplateID, MoneyClickerMultiplier, ItemName, ImageURL, ItemDescription) VALUES
+(1, 1.5, "Anti-Pikachu-Rubber-Balloon-Bazooka", 'https://static.wikia.nocookie.net/pokemon/images/f/f2/Anti-PikachuRubber-balloonBazooka.jpg/revision/latest?cb=20190114193334', 'Shoots a rubber balloon that chases Ash\'s Pikachu.'),
+(2, 1.1, "Bombs", 'https://archives.bulbagarden.net/media/upload/b/ba/EP012_Bombs.png', 'Ordinary bombs. Used by Jessie and James from their balloon to attack Ash and Squirtle.');
+-- (1, "Bombs", '', ''),
+SELECT * FROM ItemTemplate;
+-- (1, "Anti-Pikachu-Rubber-Balloon-Bazooka", 'https://static.wikia.nocookie.net/pokemon/images/f/f2/Anti-PikachuRubber-balloonBazooka.jpg/revision/latest?cb=20190114193334', 'Shoots a rubber balloon that chases Ash\'s Pikachu.'),
+-- (1, "Anti-Pikachu-Rubber-Balloon-Bazooka", 'https://static.wikia.nocookie.net/pokemon/images/f/f2/Anti-PikachuRubber-balloonBazooka.jpg/revision/latest?cb=20190114193334', 'Shoots a rubber balloon that chases Ash\'s Pikachu.');

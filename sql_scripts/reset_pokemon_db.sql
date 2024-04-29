@@ -1,3 +1,4 @@
+use pokemon_trader;
 DROP TABLE IF EXISTS ActivityWall;
 DROP TABLE IF EXISTS Friends;
 DROP TABLE IF EXISTS SalesPosts;
