@@ -1,3 +1,4 @@
+use pokemon_trader;
 CREATE TABLE IF NOT EXISTS Users (
     UserID INT PRIMARY KEY,
     Password VARCHAR(255),
@@ -6,23 +7,27 @@ CREATE TABLE IF NOT EXISTS Users (
 
 CREATE TABLE IF NOT EXISTS PokemonTemplate(
 	PokeTemplateID INT PRIMARY KEY,
-    PokeName VARCHAR(255),
-    Type1 VARCHAR(50),
+    PokeName VARCHAR(255) NOT NULL,
+    Type1 VARCHAR(50) NOT NULL,
     Type2 VARCHAR(50),
-    ImageURL VARCHAR(255)
+    GifURL VARCHAR(255) NOT NULL,
+    ImageURL VARCHAR(255) NOT NULL,
+    PokemonDescription TEXT
 );
-
 CREATE TABLE IF NOT EXISTS ItemTemplate(
 	ItemTemplateID INT PRIMARY KEY,
-    ItemName VARCHAR(255),
+    ItemName VARCHAR(255) NOT NULL,
     ItemDescription Text,
-	ImageURL VARCHAR(255)
+    MoneyClickerMultiplier FLOAT NOT NULL,
+	ImageURL VARCHAR(255) NOT NULL,
+    CHECK (MoneyClickerMultiplier >= 1) 
 );
 
+
 CREATE TABLE IF NOT EXISTS Pokemon (
-    PokeID INT PRIMARY KEY,
-    UserID INT,
-    PokeTemplateID INT,
+    PokeID INT PRIMARY KEY, -- The pokemon identity
+    UserID INT, -- Pokemon owner
+    PokeTemplateID INT NOT NULL, -- Pokemon type
     FOREIGN KEY (UserID) REFERENCES Users(UserID),
     FOREIGN KEY (PokeTemplateID) REFERENCES PokemonTemplate(PokeTemplateID)
 );
@@ -44,81 +49,83 @@ CREATE TABLE IF NOT EXISTS PokemonTeam (
     FOREIGN KEY (PokemonID6) REFERENCES Pokemon(PokeID)
 );
 
-CREATE TABLE IF NOT EXISTS PokemonInventory (
-    UserID INT,
-    PokeID INT,
-    FOREIGN KEY (UserID) REFERENCES Users(UserID),
-    FOREIGN KEY (PokeID) REFERENCES Pokemon(PokeID)
-);
+-- CREATE TABLE IF NOT EXISTS PokemonInventory (
+--     UserID INT,
+--     PokeID INT,
+--     FOREIGN KEY (UserID) REFERENCES Users(UserID),
+--     FOREIGN KEY (PokeID) REFERENCES Pokemon(PokeID)
+-- );
 
 CREATE TABLE IF NOT EXISTS Items (
     ItemID INT PRIMARY KEY,
     UserID INT,
-    ItemTemplateID INT,
+    ItemTemplateID INT NOT NULL,
     FOREIGN KEY (UserID) REFERENCES Users(UserID),
     FOREIGN KEY (ItemTemplateID) REFERENCES ItemTemplate(ItemTemplateID)
 );
 
-CREATE TABLE IF NOT EXISTS ItemInventory (
-    UserID INT,
-    ItemID INT,
-    FOREIGN KEY (UserID) REFERENCES Users(UserID),
-    FOREIGN KEY (ItemID) REFERENCES Items(ItemID)
-);
+-- CREATE TABLE IF NOT EXISTS ItemInventory (
+--     UserID INT,
+--     ItemID INT,
+--     FOREIGN KEY (UserID) REFERENCES Users(UserID),
+--     FOREIGN KEY (ItemID) REFERENCES Items(ItemID)
+-- );
 
 CREATE TABLE IF NOT EXISTS Sales (
     SalesID INT PRIMARY KEY,
-    Seller INT,
+    Seller INT NOT NULL,
     Purchaser INT,
-    Price DECIMAL(10, 2),
+    Price DECIMAL(10, 2) NOT NULL,
     FOREIGN KEY (Seller) REFERENCES Users(UserID),
-    FOREIGN KEY (Purchaser) REFERENCES Users(UserID)
+    FOREIGN KEY (Purchaser) REFERENCES Users(UserID),
+    CHECK (Price >= 0) 
 );
 
 CREATE TABLE IF NOT EXISTS PokemonSales (
-    SalesID INT,
-    PokemonID INT,
+    SalesID INT PRIMARY KEY,
+    PokemonID INT NOT NULL,
     FOREIGN KEY (SalesID) REFERENCES Sales(SalesID),
     FOREIGN KEY (PokemonID) REFERENCES Pokemon(PokeID)
 );
 
 CREATE TABLE IF NOT EXISTS ItemSales (
-    SalesID INT,
-    ItemID INT,
+    SalesID INT PRIMARY KEY,
+    ItemID INT NOT NULL,
     FOREIGN KEY (SalesID) REFERENCES Sales(SalesID),
     FOREIGN KEY (ItemID) REFERENCES Items(ItemID)
 );
 
 CREATE TABLE IF NOT EXISTS Posts (
     PostID INT PRIMARY KEY,
-    PostDescription VARCHAR(255),
+    PostDescription VARCHAR(255) NOT NULL,
     ImageURL VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS UserPosts (
-    UserID INT,
-    PostID INT,
+    UserID INT NOT NULL,
+    PostID INT PRIMARY KEY,
     FOREIGN KEY (UserID) REFERENCES Users(UserID),
     FOREIGN KEY (PostID) REFERENCES Posts(PostID)
 );
 
 CREATE TABLE IF NOT EXISTS SalesPosts (
-    SalesID INT,
-    PostID INT,
+    SalesID INT NOT NULL,
+    PostID INT PRIMARY KEY,
     FOREIGN KEY (SalesID) REFERENCES Sales(SalesID),
     FOREIGN KEY (PostID) REFERENCES Posts(PostID)
 );
 
 CREATE TABLE IF NOT EXISTS Friends (
-    UserID1 INT,
-    UserID2 INT,
+    UserID1 INT NOT NULL,
+    UserID2 INT NOT NULL,
     PRIMARY KEY (UserID1, UserID2),
-    FOREIGN KEY (UserID1) REFERENCES Users(UserID)
+    FOREIGN KEY (UserID1) REFERENCES Users(UserID),
+    CHECK (UserID1 != UserID2)
 );
 
 CREATE TABLE IF NOT EXISTS ActivityWall (
-    UserID INT,
-    PostID INT,
+    UserID INT PRIMARY KEY,
+    PostID INT NOT NULL,
     FOREIGN KEY (UserID) REFERENCES Users(UserID),
     FOREIGN KEY (PostID) REFERENCES Posts(PostID)
 );
