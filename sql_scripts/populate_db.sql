@@ -171,10 +171,77 @@ INSERT INTO pokemontemplate (PokeTemplateID, PokeName, Type1, Type2, GifURL, Ima
 --     MoneyClickerMultiplier,
 -- 	ImageURL VARCHAR(255)
 -- );
-INSERT INTO ItemTemplate (ItemTemplateID, MoneyClickerMultiplier, ItemName, ImageURL, ItemDescription) VALUES
-(1, 1.5, "Anti-Pikachu-Rubber-Balloon-Bazooka", 'https://static.wikia.nocookie.net/pokemon/images/f/f2/Anti-PikachuRubber-balloonBazooka.jpg/revision/latest?cb=20190114193334', 'Shoots a rubber balloon that chases Ash\'s Pikachu.'),
-(2, 1.1, "Bombs", 'https://archives.bulbagarden.net/media/upload/b/ba/EP012_Bombs.png', 'Ordinary bombs. Used by Jessie and James from their balloon to attack Ash and Squirtle.');
+-- INSERT INTO ItemTemplate (ItemTemplateID, MoneyClickerMultiplier, ItemName, ImageURL, ItemDescription) VALUES
+-- (1, 1.5, "Anti-Pikachu-Rubber-Balloon-Bazooka", 'https://static.wikia.nocookie.net/pokemon/images/f/f2/Anti-PikachuRubber-balloonBazooka.jpg/revision/latest?cb=20190114193334', 'Shoots a rubber balloon that chases Ash\'s Pikachu.'),
+-- (2, 1.1, "Bombs", 'https://archives.bulbagarden.net/media/upload/b/ba/EP012_Bombs.png', 'Ordinary bombs. Used by Jessie and James from their balloon to attack Ash and Squirtle.');
+INSERT INTO ItemTemplate (ItemTemplateID, ItemName, ItemDescription, MoneyClickerMultiplier, ImageURL) 
+VALUES 
+(1, 'PokeBall', 'A basic Poké Ball that catches Pokémon.', 1.5, 'https://static.wikia.nocookie.net/pokemon-fano/images/6/6f/Poke_Ball.png/revision/latest?cb=20140520015336'),
+(2, 'Rare Candy', 'A candy that levels up a Pokémon by one.', 2.0, 'https://archives.bulbagarden.net/media/upload/5/5e/GO_Rare_Candy.png'),
+(3, 'Super Potion', 'Heals a Pokémon by 50 HP.', 1.75, 'https://static.wikia.nocookie.net/pokemonhonorglory/images/a/a3/Bag_Super_Potion_Sprite.png/revision/latest?cb=20210312173503'),
+(4, 'TM - Thunderbolt', 'A technical machine that teaches Thunderbolt to an Electric-type Pokémon.', 3.0, 'https://archives.bulbagarden.net/media/upload/thumb/5/5b/TM_artwork_RTDX.png/120px-TM_artwork_RTDX.png'),
+(5, 'Eevee Plushie', 'A cute plushie of the Pokémon Eevee.', 1.25, 'https://target.scene7.com/is/image/Target/GUEST_ea37cfc1-aade-4e86-a1b2-bab40592cb91?wid=488&hei=488&fmt=pjpeg'),
+(6, 'Pikachu Hat', 'A hat shaped like the Pokémon Pikachu.', 1.5, 'https://i5.walmartimages.com/seo/Pikachu-Snapback-Trucker-Hat-with-Embroidered-Pikachu-Face-Mesh-Panels-and-3D-Ears_349ada45-1715-41fb-a163-f041e259d972_1.62f670c53df7384b029e2ad2a0d89972.jpeg?odnHeight=768&odnWidth=768&odnBg=FFFFFF'),
+(7, 'Master Ball', 'The ultimate Poké Ball that catches any Pokémon without fail.', 5.0, 'https://pokemon4ever.org/cdn/shop/products/item_0001.png?v=1674083306'),
+(8, 'Lucky Egg', 'An item that increases the experience gained by a Pokémon when held.', 2.5, 'https://archives.bulbagarden.net/media/upload/thumb/0/0c/GO_Lucky_Egg.png/200px-GO_Lucky_Egg.png'),
+(9, 'Anti-Pikachu-Rubber-Balloon-Bazooka', 'Shoots a rubber balloon that chases Ash''s Pikachu.', 1.5, 'https://static.wikia.nocookie.net/pokemon/images/f/f2/Anti-PikachuRubber-balloonBazooka.jpg/revision/latest?cb=20190114193334'),
+(10, 'Bombs', 'Ordinary bombs. Used by Jessie and James from their balloon to attack Ash and Squirtle.', 1.1, 'https://archives.bulbagarden.net/media/upload/b/ba/EP012_Bombs.png');
+
 -- (1, "Bombs", '', ''),
 SELECT * FROM ItemTemplate;
 -- (1, "Anti-Pikachu-Rubber-Balloon-Bazooka", 'https://static.wikia.nocookie.net/pokemon/images/f/f2/Anti-PikachuRubber-balloonBazooka.jpg/revision/latest?cb=20190114193334', 'Shoots a rubber balloon that chases Ash\'s Pikachu.'),
 -- (1, "Anti-Pikachu-Rubber-Balloon-Bazooka", 'https://static.wikia.nocookie.net/pokemon/images/f/f2/Anti-PikachuRubber-balloonBazooka.jpg/revision/latest?cb=20190114193334', 'Shoots a rubber balloon that chases Ash\'s Pikachu.');
+
+
+INSERT INTO Users (Username, User_Password, Money) 
+VALUES 
+('user1', 'password123', 1000.00),
+('user2', 'abc123', 500.50),
+('user3', 'pass456', 750.25),
+('user4', 'userpass', 1200.75),
+('user5', 'securepwd', 800.00);
+
+INSERT INTO Pokemon (PokeID, Username, PokeTemplateID) 
+VALUES 
+(1, 'user1', 1),
+(2, 'user1', 3),
+(3, 'user2', 2),
+(4, 'user3', 1),
+(5, 'user4', 4),
+(6, 'user4', 5),
+(7, 'user5', 3),
+(8, 'user5', 2);
+
+
+-- Single insert statement for Items table
+INSERT INTO Items (ItemID, Username, ItemTemplateID)
+VALUES 
+    (1, 'user1', 1),
+    (2, 'user2', 2),
+    (3, 'user3', 3),
+    (4, 'user1', 4),
+    (5, 'user4', 5),
+    (6, 'user2', 1),
+    (7, 'user5', 2),
+    (8, 'user3', 3);
+
+
+-- Insert statement for UserPosts table with Pokémon-related dummy data
+INSERT INTO UserPosts (PostID, Author, PostDescription, ImageURL)
+VALUES 
+    (1, 'user1', 'Just caught a Pikachu in the forest!', 'https://example.com/pikachu.jpg'),
+    (2, 'user2', 'My Charmander evolved into a Charmeleon!', 'https://example.com/charmeleon.jpg'),
+    (3, 'user3', 'Battling at the Pokémon gym today!', 'https://example.com/pokemon_gym.jpg'),
+    (4, 'user4', 'Found a rare Dragonite near the lake!', 'https://example.com/dragonite.jpg'),
+    (5, 'user5', 'Training my Squirtle for the upcoming tournament!', NULL),
+    (6, 'user1', 'Caught a shiny Eevee while exploring!', 'https://example.com/shiny_eevee.jpg');
+
+
+-- Insert statement for Friends table with dummy data
+INSERT INTO Friends (Username1, Username2)
+VALUES 
+    ('user1', 'user2'),
+    ('user1', 'user3'),
+    ('user2', 'user4'),
+    ('user3', 'user5'),
+    ('user4', 'user1');
