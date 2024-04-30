@@ -1,10 +1,9 @@
 import React from "react";
+import useItems from "../hooks/useItems";
 import Card from "./Card";
 
-const PokemonPage = () => {
-    // ADD ITEMS FETCH CALL HERE
-  const items = [{item_id: "1", item_name: "Berry Up", item_description: "This will give all your Pokemon +500 pokecoins!"},
-  {item_id: "2", item_name: "Money Up", item_description: "Every click will gain an extra +2 pokecoins!"}];
+const ItemPage = () => {
+  const items = useItems();
 
   return (
     <div>
@@ -18,7 +17,7 @@ const PokemonPage = () => {
             key={item.item_id}
             id={item.item_id}
             name={item.item_name}
-            description={item.item_description}
+            description={item.item_desc}
           />
         ))}
       </div>
@@ -26,4 +25,4 @@ const PokemonPage = () => {
   );
 };
 
-export default PokemonPage;
+export default ItemPage;

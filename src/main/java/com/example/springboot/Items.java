@@ -4,7 +4,7 @@ public class Items {
     private Integer item_id;
     private String item_name;
     private String item_desc;
-    private Double multiplier;
+    private Float multiplier;
 	private String image_url;
 
     public Integer getItem_id() {
@@ -25,10 +25,10 @@ public class Items {
     public void setItem_desc(String item_desc) {
         this.item_desc = item_desc;
     }
-    public Double getMultiplier() {
+    public Float getMultiplier() {
         return multiplier;
     }
-    public void setMultiplier(Double multiplier) {
+    public void setMultiplier(Float multiplier) {
         this.multiplier = multiplier;
     }
     public String getImage_url() {
@@ -37,7 +37,7 @@ public class Items {
     public void setImage_url(String image_url) {
         this.image_url = image_url;
     }
-    public Items(Integer item_id, String item_name, String item_desc, Double multiplier, String image_url) {
+    public Items(Integer item_id, String item_name, String item_desc, Float multiplier, String image_url) {
         this.item_id = item_id;
         this.item_name = item_name;
         this.item_desc = item_desc;
