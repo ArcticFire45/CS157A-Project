@@ -17,6 +17,9 @@ public class HelloController {
 
 	@Autowired
 	private PokemonServiceImplementation pokeservice;
+
+	@Autowired
+	private UserServiceImplementation userservice;
 	
 	@GetMapping("/")
 	public String index() {
@@ -37,7 +40,7 @@ public class HelloController {
 	@PostMapping("/signup")
 	public ResponseEntity<?> signup(@RequestParam String user, @RequestParam String pass) {
 		try{
-			this.pokeservice.addUser(user, pass);
+			this.userservice.addUser(user, pass);
 			return ResponseEntity.ok("User registered.");
 		}catch(Exception e){
 			return ResponseEntity.badRequest().body("Registration failed: " + e.getMessage());
@@ -47,7 +50,7 @@ public class HelloController {
 	@PostMapping("/login")
 	public ResponseEntity<?> postMethodName(@RequestBody String user,  @RequestParam String pass) {
 		try {
-            boolean loggedIn = this.pokeservice.loginUser(user, pass);
+            boolean loggedIn = this.userservice.loginUser(user, pass);
             if (loggedIn) {
                 return ResponseEntity.ok("User logged in.");
             } else {
