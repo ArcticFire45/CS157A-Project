@@ -54,6 +54,24 @@ public class PokemonServiceImplementation {
         return pokemonList;
     }
 
+    public List<Pokemon> searchPokemonByName(String name) {
+        try {
+            pokemonList = new ArrayList<Pokemon>();
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM PokemonTemplate WHERE PokeName LIKE ?");
+            stmt.setString(1, "%" + name + "%");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Pokemon poke = new Pokemon(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),
+                        rs.getString(5), rs.getString(6), rs.getString(7));
+                pokemonList.add(poke);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return pokemonList;
+    }
+
     public void addUser(String username, String password){
         try {
             PreparedStatement stmt = connection.prepareStatement("INSERT INTO Users (Username, User_Password) VALUES (?, ?)");
