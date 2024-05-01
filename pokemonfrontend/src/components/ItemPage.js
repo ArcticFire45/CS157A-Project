@@ -1,10 +1,9 @@
 import React from "react";
-import Card from "./Card";
+import useItems from "../hooks/useItems";
+import ItemCard from "./ItemCard";
 
-const PokemonPage = () => {
-    // ADD ITEMS FETCH CALL HERE
-  const items = [{item_id: "1", item_name: "Berry Up", item_description: "This will give all your Pokemon +500 pokecoins!"},
-  {item_id: "2", item_name: "Money Up", item_description: "Every click will gain an extra +2 pokecoins!"}];
+const ItemPage = () => {
+  const items = useItems();
 
   return (
     <div>
@@ -14,11 +13,12 @@ const PokemonPage = () => {
         style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
       >
         {items.map((item) => (
-          <Card
+          <ItemCard
             key={item.item_id}
-            id={item.item_id}
             name={item.item_name}
-            description={item.item_description}
+            description={item.item_desc}
+            multiplier={item.multiplier}
+            imageUrl={item.image_url}
           />
         ))}
       </div>
@@ -26,4 +26,4 @@ const PokemonPage = () => {
   );
 };
 
-export default PokemonPage;
+export default ItemPage;

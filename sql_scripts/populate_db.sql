@@ -176,15 +176,15 @@ INSERT INTO pokemontemplate (PokeTemplateID, PokeName, Type1, Type2, GifURL, Ima
 -- (2, 1.1, "Bombs", 'https://archives.bulbagarden.net/media/upload/b/ba/EP012_Bombs.png', 'Ordinary bombs. Used by Jessie and James from their balloon to attack Ash and Squirtle.');
 INSERT INTO ItemTemplate (ItemTemplateID, ItemName, ItemDescription, MoneyClickerMultiplier, ImageURL) 
 VALUES 
-(1, 'PokeBall', 'A basic Poké Ball that catches Pokémon.', 1.5, 'https://static.wikia.nocookie.net/pokemon-fano/images/6/6f/Poke_Ball.png/revision/latest?cb=20140520015336'),
+(1, 'PokeBall', 'A basic Poké Ball that catches Pokémon.', 1.5, 'https://static.wikia.nocookie.net/pokemon-fano/images/6/6f/Poke_Ball.png'),
 (2, 'Rare Candy', 'A candy that levels up a Pokémon by one.', 2.0, 'https://archives.bulbagarden.net/media/upload/5/5e/GO_Rare_Candy.png'),
-(3, 'Super Potion', 'Heals a Pokémon by 50 HP.', 1.75, 'https://static.wikia.nocookie.net/pokemonhonorglory/images/a/a3/Bag_Super_Potion_Sprite.png/revision/latest?cb=20210312173503'),
+(3, 'Super Potion', 'Heals a Pokémon by 50 HP.', 1.75, 'https://static.wikia.nocookie.net/pokemonhonorglory/images/a/a3/Bag_Super_Potion_Sprite.png'),
 (4, 'TM - Thunderbolt', 'A technical machine that teaches Thunderbolt to an Electric-type Pokémon.', 3.0, 'https://archives.bulbagarden.net/media/upload/thumb/5/5b/TM_artwork_RTDX.png/120px-TM_artwork_RTDX.png'),
 (5, 'Eevee Plushie', 'A cute plushie of the Pokémon Eevee.', 1.25, 'https://target.scene7.com/is/image/Target/GUEST_ea37cfc1-aade-4e86-a1b2-bab40592cb91?wid=488&hei=488&fmt=pjpeg'),
 (6, 'Pikachu Hat', 'A hat shaped like the Pokémon Pikachu.', 1.5, 'https://i5.walmartimages.com/seo/Pikachu-Snapback-Trucker-Hat-with-Embroidered-Pikachu-Face-Mesh-Panels-and-3D-Ears_349ada45-1715-41fb-a163-f041e259d972_1.62f670c53df7384b029e2ad2a0d89972.jpeg?odnHeight=768&odnWidth=768&odnBg=FFFFFF'),
 (7, 'Master Ball', 'The ultimate Poké Ball that catches any Pokémon without fail.', 5.0, 'https://pokemon4ever.org/cdn/shop/products/item_0001.png?v=1674083306'),
 (8, 'Lucky Egg', 'An item that increases the experience gained by a Pokémon when held.', 2.5, 'https://archives.bulbagarden.net/media/upload/thumb/0/0c/GO_Lucky_Egg.png/200px-GO_Lucky_Egg.png'),
-(9, 'Anti-Pikachu-Rubber-Balloon-Bazooka', 'Shoots a rubber balloon that chases Ash''s Pikachu.', 1.5, 'https://static.wikia.nocookie.net/pokemon/images/f/f2/Anti-PikachuRubber-balloonBazooka.jpg/revision/latest?cb=20190114193334'),
+(9, 'Anti-Pikachu-Rubber-Balloon-Bazooka', 'Shoots a rubber balloon that chases Ash''s Pikachu.', 1.5, 'https://static.wikia.nocookie.net/pokemon/images/f/f2/Anti-PikachuRubber-balloonBazooka.jpg'),
 (10, 'Bombs', 'Ordinary bombs. Used by Jessie and James from their balloon to attack Ash and Squirtle.', 1.1, 'https://archives.bulbagarden.net/media/upload/b/ba/EP012_Bombs.png');
 
 -- (1, "Bombs", '', ''),

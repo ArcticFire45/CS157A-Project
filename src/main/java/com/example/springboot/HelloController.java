@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.http.ResponseEntity;
 
 @RestController
@@ -17,7 +16,10 @@ import org.springframework.http.ResponseEntity;
 public class HelloController {
 
 	@Autowired
-	private PokemonServiceImplementation pokeservice;
+	private PokemonServiceImplementation pokeService;
+
+	@Autowired
+	private ItemServiceImplementation itemService;
 
 	@Autowired
 	private UserServiceImplementation userservice;
@@ -30,17 +32,22 @@ public class HelloController {
 
 	@GetMapping("/pokepoke")
 	public List<Pokemon> pokemon_information() {
-		return this.pokeservice.getPokemonData();
+		return this.pokeService.getPokemonData();
+	}
+
+	@GetMapping("/allitems")
+	public List<Items> item_information() {
+		return this.itemService.getItemData();
 	}
 
 	@GetMapping("/first_pokemon")
 	public String first_pokemon() {
-		return this.pokeservice.getPokemonName("1");
+		return this.pokeService.getPokemonName("1");
 	}
 
 	@GetMapping("/search")
 	public List<Pokemon> searchPokemon(@RequestParam String name) {
-		return this.pokeservice.searchPokemonByName(name);
+		return this.pokeService.searchPokemonByName(name);
 	}
 
 	@PostMapping("/signup")
