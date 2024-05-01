@@ -7,6 +7,7 @@ const PokemonPage = () => {
   const pokemons = usePokemons();
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredPokemons, setFilteredPokemons] = useState(pokemons);
+  const [useGif, setUseGif] = useState(false);
 
   const handleSearchChange = async (event) => {
     const { value } = event.target;
@@ -25,9 +26,19 @@ const PokemonPage = () => {
     }
   };
 
+  const toggleImageType = () => {
+    setUseGif((prevUseGif) => !prevUseGif);
+  };
+
   return (
     <div>
       <div style={{ textAlign: "center" }}>
+        <div style={{ position: "absolute", top: "100px", right: "10px" }}>
+          <select onChange={toggleImageType} value={useGif ? "gif" : "image"}>
+            <option value="image">Use Image</option>
+            <option value="gif">Use GIF</option>
+          </select>
+        </div>
         <h1>Pokedex</h1>
         <p>Welcome to the Pokemon Page!</p>
         <p>
@@ -51,7 +62,7 @@ const PokemonPage = () => {
                 name={pokemon.poke_name}
                 type1={pokemon.type1}
                 type2={pokemon.type2}
-                imageUrl={pokemon.imageUrl}
+                imageUrl={useGif ? pokemon.gifUrl : pokemon.imageUrl}
                 description={pokemon.pokemonDescription}
               />
             ))
@@ -61,7 +72,7 @@ const PokemonPage = () => {
                 name={pokemon.poke_name}
                 type1={pokemon.type1}
                 type2={pokemon.type2}
-                imageUrl={pokemon.imageUrl}
+                imageUrl={useGif ? pokemon.gifUrl : pokemon.imageUrl}
                 description={pokemon.pokemonDescription}
               />
             ))}
