@@ -1,6 +1,6 @@
 import React from "react";
 import useItems from "../hooks/useItems";
-import Card from "./Card";
+import ItemCard from "./ItemCard";
 
 const ItemPage = () => {
   const items = useItems();
@@ -13,11 +13,12 @@ const ItemPage = () => {
         style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
       >
         {items.map((item) => (
-          <Card
+          <ItemCard
             key={item.item_id}
-            id={item.item_id}
             name={item.item_name}
             description={item.item_desc}
+            multiplier={item.multiplier}
+            imageUrl={item.image_url}
           />
         ))}
       </div>
