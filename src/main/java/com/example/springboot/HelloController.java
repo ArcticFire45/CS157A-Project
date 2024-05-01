@@ -41,7 +41,9 @@ public class HelloController {
 	@GetMapping("/search")
 	public List<Pokemon> searchPokemon(@RequestParam String name) {
 		return this.pokeservice.searchPokemonByName(name);
-	}	@PostMapping("/signup")
+	}	
+	
+	@PostMapping("/signup")
 	public ResponseEntity<?> signup(@RequestParam String user, @RequestParam String pass) {
 		try{
 			this.userservice.addUser(user, pass);

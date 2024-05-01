@@ -71,42 +71,4 @@ public class PokemonServiceImplementation {
 
         return pokemonList;
     }
-
-    public void addUser(String username, String password){
-        try {
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO Users (Username, User_Password) VALUES (?, ?)");
-            stmt.setString(1, username);
-            stmt.setString(2, password);
-
-            int rs = stmt.executeUpdate();
-
-            if (rs > 0) {
-                System.out.println("User added successfully!");
-            } else {
-                System.out.println("Failed to add user.");
-            }
-            
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public boolean loginUser(String username, String password) {
-        try {
-            PreparedStatement stmt = connection.prepareStatement("SELECT User_Password FROM Users WHERE Username = ?");
-
-            stmt.setString(1, username);
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                String db_password = rs.getString("User_password");
-                return db_password.equals(password);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    
 }
