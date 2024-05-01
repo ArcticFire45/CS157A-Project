@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.http.ResponseEntity;
 
 @RestController
@@ -48,7 +47,7 @@ public class HelloController {
 
 	@GetMapping("/search")
 	public List<Pokemon> searchPokemon(@RequestParam String name) {
-		return this.pokeservice.searchPokemonByName(name);
+		return this.pokeService.searchPokemonByName(name);
 	}
 
 	@PostMapping("/signup")
