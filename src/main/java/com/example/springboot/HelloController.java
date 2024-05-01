@@ -41,30 +41,30 @@ public class HelloController {
 	@GetMapping("/search")
 	public List<Pokemon> searchPokemon(@RequestParam String name) {
 		return this.pokeservice.searchPokemonByName(name);
-	}	
-	
+	}
+
 	@PostMapping("/signup")
 	public ResponseEntity<?> signup(@RequestParam String user, @RequestParam String pass) {
-		try{
+		try {
 			this.userservice.addUser(user, pass);
 			return ResponseEntity.ok("User registered.");
-		}catch(Exception e){
+		} catch (Exception e) {
 			return ResponseEntity.badRequest().body("Registration failed: " + e.getMessage());
 		}
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<?> postMethodName(@RequestBody String user,  @RequestParam String pass) {
+	public ResponseEntity<?> postMethodName(@RequestBody String user, @RequestParam String pass) {
 		try {
-            boolean loggedIn = this.userservice.loginUser(user, pass);
-            if (loggedIn) {
-                return ResponseEntity.ok("User logged in.");
-            } else {
-                return ResponseEntity.status(401).body("Login failed: Invalid username or password");
-            }
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Internal server error: " + e.getMessage());
-        }
+			boolean loggedIn = this.userservice.loginUser(user, pass);
+			if (loggedIn) {
+				return ResponseEntity.ok("User logged in.");
+			} else {
+				return ResponseEntity.status(401).body("Login failed: Invalid username or password");
+			}
+		} catch (Exception e) {
+			return ResponseEntity.status(500).body("Internal server error: " + e.getMessage());
+		}
 	}
 
 }
