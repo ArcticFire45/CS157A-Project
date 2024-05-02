@@ -44,7 +44,7 @@ const PostsPage = () => {
 
   return (
     <div style={{ textAlign: "center" }}>
-      <h1>Posts</h1>
+      <h1>Home</h1>
       <div style={{ marginBottom: "20px" }}>
         <h2>Add New Post</h2>
         <div
@@ -54,6 +54,7 @@ const PostsPage = () => {
             padding: "20px",
             marginBottom: "10px",
             width: "80vw",
+            height: "185px",
             marginLeft: "10vw",
             position: "relative",
             display: "flex",
@@ -80,6 +81,10 @@ const PostsPage = () => {
             style={{
               padding: "10px 20px",
               fontSize: "16px",
+              position: "absolute",
+bottom: 0,
+right: 0,
+
             }}
           >
             Add Post
@@ -88,6 +93,8 @@ const PostsPage = () => {
       </div>
       <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
         <div>
+        <h2>Posts</h2>
+
           {posts.map((post) => (
             <Post
               key={post.id}
