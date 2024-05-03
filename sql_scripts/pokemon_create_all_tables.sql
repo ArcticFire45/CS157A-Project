@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS Users (
 );
 
 CREATE TABLE IF NOT EXISTS PokemonTemplate(
-	PokeTemplateID INT PRIMARY KEY,
+	PokeTemplateID INT PRIMARY KEY auto_increment,
     StockPrice DECIMAL(10, 2) NOT NULL,
     PokeName VARCHAR(255) NOT NULL,
     Type1 VARCHAR(50) NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS PokemonTemplate(
     PokemonDescription TEXT
 );
 CREATE TABLE IF NOT EXISTS ItemTemplate(
-	ItemTemplateID INT PRIMARY KEY,
+	ItemTemplateID INT PRIMARY KEY auto_increment,
     ItemName VARCHAR(255) NOT NULL,
     ItemDescription Text,
     MoneyClickerMultiplier FLOAT NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS ItemTemplate(
 
 
 CREATE TABLE IF NOT EXISTS Pokemon (
-    PokeID INT PRIMARY KEY, -- The pokemon identity
+    PokeID INT PRIMARY KEY auto_increment, -- The pokemon identity
     Username varchar(30), -- Pokemon owner
     PokeTemplateID INT NOT NULL, -- Pokemon type
     FOREIGN KEY (Username) REFERENCES Users(Username),
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS PokemonTeam ( -- needs to check that PokemonID's owne
 -- );
 
 CREATE TABLE IF NOT EXISTS Items (
-    ItemID INT PRIMARY KEY,
+    ItemID INT PRIMARY KEY auto_increment,
     Username varchar(30),
     ItemTemplateID INT NOT NULL,
     FOREIGN KEY (Username) REFERENCES Users(Username),
@@ -73,8 +73,8 @@ CREATE TABLE IF NOT EXISTS Items (
 -- );
 
 CREATE TABLE IF NOT EXISTS Sales (
-    SalesID INT PRIMARY KEY,
-    Seller varchar(30) NOT NULL,
+    SalesID INT PRIMARY KEY auto_increment,
+    Seller varchar(30),
     Purchaser varchar(30),
     Price DECIMAL(10, 2) NOT NULL,
     FOREIGN KEY (Seller) REFERENCES Users(Username),
@@ -83,21 +83,21 @@ CREATE TABLE IF NOT EXISTS Sales (
 );
 
 CREATE TABLE IF NOT EXISTS PokemonSales (
-    SalesID INT PRIMARY KEY,
+    SalesID INT PRIMARY KEY auto_increment,
     PokemonID INT NOT NULL,
     FOREIGN KEY (SalesID) REFERENCES Sales(SalesID),
     FOREIGN KEY (PokemonID) REFERENCES Pokemon(PokeID)
 );
 
 CREATE TABLE IF NOT EXISTS ItemSales (
-    SalesID INT PRIMARY KEY,
+    SalesID INT PRIMARY KEY auto_increment,
     ItemID INT NOT NULL,
     FOREIGN KEY (SalesID) REFERENCES Sales(SalesID),
     FOREIGN KEY (ItemID) REFERENCES Items(ItemID)
 );
 
 CREATE TABLE IF NOT EXISTS UserPosts (
-	PostID INT PRIMARY KEY,
+	PostID INT PRIMARY KEY auto_increment,
     Author varchar(30) NOT NULL,
     PostDescription VARCHAR(255) NOT NULL,
     ImageURL VARCHAR(255),
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS UserPosts (
 );
 
 CREATE TABLE IF NOT EXISTS SalesPosts (
-    SalesID INT NOT NULL,
+    SalesID INT NOT NULL auto_increment,
     PostID INT PRIMARY KEY,
     FOREIGN KEY (SalesID) REFERENCES Sales(SalesID),
     FOREIGN KEY (PostID) REFERENCES UserPosts(PostID)
@@ -121,15 +121,17 @@ CREATE TABLE IF NOT EXISTS Friends (
 );
 
 CREATE TABLE IF NOT EXISTS ActivityWall (
-    Username varchar(30) PRIMARY KEY,
+    Username varchar(30),
     PostID INT NOT NULL,
+    primary key (Username, PostID),
     FOREIGN KEY (Username) REFERENCES Users(Username),
     FOREIGN KEY (PostID) REFERENCES UserPosts(PostID)
 );
 
 CREATE TABLE IF NOT EXISTS SalesWall (
-    Username varchar(30) PRIMARY KEY,
+    Username varchar(30),
     PostID INT NOT NULL,
+	primary key (Username, PostID),
     FOREIGN KEY (Username) REFERENCES Users(Username),
     FOREIGN KEY (PostID) REFERENCES SalesPosts(PostID)
 );

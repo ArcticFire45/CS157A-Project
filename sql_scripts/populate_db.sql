@@ -10,7 +10,7 @@
 -- );
 
 -- Insert data
-INSERT INTO pokemontemplate (PokeTemplateID, PokeName, Type1, Type2, GifURL, ImageURL, PokemonDescription) VALUES
+INSERT INTO pokemontemplate (PokeTemplateID, StockPrice, PokeName, Type1, Type2, GifURL, ImageURL, PokemonDescription) VALUES
 (1, 'Bulbasaur', 'Grass', 'Poison', 'https://play.pokemonshowdown.com/sprites/bwani/bulbasaur.gif', 'https://play.pokemonshowdown.com/sprites/bw/bulbasaur.png', 'A strange seed was planted on its back at birth. The plant sprouts and grows with this Pokemon.'),
 (2, 'Ivysaur', 'Grass', 'Poison', 'https://play.pokemonshowdown.com/sprites/bwani/ivysaur.gif', 'https://play.pokemonshowdown.com/sprites/bw/ivysaur.png', 'Often seen swimming elegantly by lake shores. It is often mistaken for the Japanese monster, Kappa.'),
 (3, 'Venusaur', 'Grass', 'Poison', 'https://play.pokemonshowdown.com/sprites/bwani/venusaur.gif', 'https://play.pokemonshowdown.com/sprites/bw/venusaur.png', 'Because it stores several kinds of toxic gases in its body, it is prone to exploding without warning.'),
@@ -245,3 +245,7 @@ VALUES
     ('user2', 'user4'),
     ('user3', 'user5'),
     ('user4', 'user1');
+
+INSERT into sales (Seller, Purchaser, Price) 
+values 
+	('user1','user2',10.92);
