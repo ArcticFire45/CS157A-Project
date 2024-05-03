@@ -24,6 +24,10 @@ public class HelloController {
 	@Autowired
 	private UserServiceImplementation userservice;
 
+	
+	@Autowired
+	private SalesServiceImplementation salesService;
+
 	@GetMapping("/")
 	public String index() {
 
@@ -61,13 +65,45 @@ public class HelloController {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<?> postMethodName(@RequestBody String user, @RequestParam String pass) {
+	public ResponseEntity<?> login(@RequestBody String user, @RequestParam String pass) {
 		try {
 			boolean loggedIn = this.userservice.loginUser(user, pass);
 			if (loggedIn) {
 				return ResponseEntity.ok("User logged in.");
 			} else {
 				return ResponseEntity.status(401).body("Login failed: Invalid username or password");
+			}
+		} catch (Exception e) {
+			return ResponseEntity.status(500).body("Internal server error: " + e.getMessage());
+		}
+	}
+
+	// public ResponseEntity<?> postMethodName(@RequestBody String user, @RequestParam String pass) {
+
+
+	@PostMapping("/getUserSales")
+	public List<Sales> userSales(@RequestBody String username) {
+		return this.salesService.getUserPurchases(username);
+	}
+
+	@PostMapping("/getUserPurchases")
+	public List<Sales> userPurchases(@RequestBody String username) {
+		return this.salesService.getUserPurchases(username);
+	}
+
+	@PostMapping("/getUserTransactions")
+	public List<Sales> userTransactions(@RequestBody String username) {
+		return this.salesService.getUserSales(username);
+	}
+
+	@PostMapping("/addSale")
+	public ResponseEntity<?> addSale(@RequestBody String buyer, String seller, @RequestParam float price) {
+		try {
+			boolean madeSale = this.salesService.addSale(seller, buyer, price);
+			if (madeSale) {
+				return ResponseEntity.ok("Sale added.");
+			} else {
+				return ResponseEntity.status(401).body("Transaction failed: Invalid sale attributes.");
 			}
 		} catch (Exception e) {
 			return ResponseEntity.status(500).body("Internal server error: " + e.getMessage());

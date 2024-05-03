@@ -72,20 +72,20 @@ public class SalesServiceImplementation {
         return purchaseList;
     }
 
-    public boolean addSale(Sales sale) {
+    public boolean addSale(String seller, String purchaser, float price) {
         try {
             String query;
-            if(sale.getPurchaser()== null)
+            if(purchaser== null)
             {
-                query = "INSERT INTO sales VALUE (SalesID, Seller, Price) VALUES ("+ sale.getSales_id() + ", '" + sale.getSeller() + "', " + sale.getPrice();
+                query = "INSERT INTO sales VALUE (Seller, Price) VALUES ('" + seller + "', " + price;
             }
-            else if(sale.getSeller()== null)
+            else if(seller== null)
             {
-                query = "INSERT INTO sales VALUE (SalesID, Purchaser, Price) VALUES ("+ sale.getSales_id() +  ", '" + sale.getPurchaser() + "', " + sale.getPrice();
+                query = "INSERT INTO sales VALUE (Purchaser, Price) VALUES ('" + purchaser + "', " + price;
             }
             else
             {
-                query = "INSERT INTO sales VALUE (SalesID, Seller, Purchaser, Price) VALUES ("+ sale.getSales_id() + ", '" + sale.getSeller() + "', '" + sale.getPurchaser() + "', " + sale.getPrice();
+                query = "INSERT INTO sales VALUE (Seller, Purchaser, Price) VALUES ('" + seller + "', '" + purchaser + "', " + price;
             }
             PreparedStatement stmt = connection.prepareStatement(query);
             // ResultSet rs = stmt.executeQuery();
