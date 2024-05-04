@@ -10,6 +10,11 @@ const SignupForm = ({ setLoggedIn, setUser }) => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
+    if (!username || !password) {
+      setSignupStatus("Please enter both username and password");
+      return;
+    }
+
     const response = await axios.post("http://localhost:8080/signup", {
       username: username,
       password: password,
@@ -38,21 +43,45 @@ const SignupForm = ({ setLoggedIn, setUser }) => {
   }, [signupStatus, navigate]);
 
   return (
-    <div>
-      <h2>Signup</h2>
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button onClick={handleSignup}>Signup</button>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <h2>Sign Up</h2>
+      <p>Welcome to Pokemon!</p>
+      <form
+        style={{
+          width: "300px",
+          marginBottom: "20px",
+        }}
+        onSubmit={handleSignup}
+      >
+        <div style={{ marginBottom: "10px" }}>
+          <label>Username:</label>
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            style={{ width: "100%" }}
+          />
+        </div>
+        <div style={{ marginBottom: "30px" }}>
+          <label>Password:</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            style={{ width: "100%" }}
+          />
+        </div>
+        <button type="submit" style={{ width: "100%" }}>
+          Login
+        </button>
+      </form>
       {signupStatus && <p>{signupStatus}</p>}
       <p>
         Already have an account? <Link to="/login">Login</Link>

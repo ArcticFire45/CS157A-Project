@@ -10,6 +10,11 @@ function LoginPage({ setLoggedIn, setUser }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!username || !password) {
+      setLoginStatus("Please enter both username and password");
+      return;
+    }
+
     try {
       const response = await axios.get(
         `http://localhost:8080/login/${username}/${password}`
@@ -38,26 +43,44 @@ function LoginPage({ setLoggedIn, setUser }) {
   }, [loginStatus, navigate]);
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <h2>Log In</h2>
+      <p>Please login below!</p>
+      <form
+        style={{
+          width: "300px",
+          marginBottom: "20px",
+        }}
+        onSubmit={handleSubmit}
+      >
+        <div style={{ marginBottom: "10px" }}>
           <label>Username:</label>
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            style={{ width: "100%" }}
           />
         </div>
-        <div>
+        <div style={{ marginBottom: "30px" }}>
           <label>Password:</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            style={{ width: "100%" }}
           />
         </div>
-        <button type="submit">Login</button>
+        <button type="submit" style={{ width: "100%" }}>
+          Login
+        </button>
       </form>
       {loginStatus && <p>{loginStatus}</p>}
       <p>
