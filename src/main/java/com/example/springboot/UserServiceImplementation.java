@@ -43,13 +43,11 @@ public class UserServiceImplementation {
 
     public boolean loginUser(String username, String password) {
         try {
-            PreparedStatement stmt = connection.prepareStatement("SELECT User_Password FROM Users WHERE Username = ?");
-
-            stmt.setString(1, username);
+            PreparedStatement stmt = connection.prepareStatement("SELECT User_Password FROM Users WHERE Username = '"+username+"'");
             ResultSet rs = stmt.executeQuery();
 
-            if (rs.next()) {
-                String db_password = rs.getString("User_password");
+            while (rs.next()) {
+                String db_password = rs.getString("User_Password");
                 return db_password.equals(password);
             }
         } catch (SQLException e) {
@@ -58,4 +56,17 @@ public class UserServiceImplementation {
         return false;
     }
 
+    public User getUserFrom(String username) {
+        try {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Users WHERE Username = '"+username+"'");
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                return new User(rs.getString(1), rs.getString(2), rs.getInt(3));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

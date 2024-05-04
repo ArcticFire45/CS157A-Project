@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,18 +61,14 @@ public class HelloController {
 
 	}
 
-	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody String user, @RequestParam String pass) {
-		try {
-			boolean loggedIn = this.userservice.loginUser(user, pass);
+	@GetMapping("/login/{username}/{password}")
+	public User login(@PathVariable("username") String user, @PathVariable("password") String pass) {
+		boolean loggedIn = this.userservice.loginUser(user, pass);
 			if (loggedIn) {
-				return ResponseEntity.ok("User logged in.");
+				return this.userservice.getUserFrom(user);
 			} else {
-				return ResponseEntity.status(401).body("Login failed: Invalid username or password");
+				return null;
 			}
-		} catch (Exception e) {
-			return ResponseEntity.status(500).body("Internal server error: " + e.getMessage());
-		}
 	}
 
 	// public ResponseEntity<?> postMethodName(@RequestBody String user, @RequestParam String pass) {

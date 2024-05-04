@@ -1,7 +1,9 @@
 import React from 'react';
 import Card from './Card';
+import usePokemons from '../hooks/usePokemons';
 
-const ProfilePage = ({ trainerName, trainerImage, team }) => {
+const ProfilePage = ({ trainerName, trainerImage }) => {
+  const team = usePokemons();
   return (
     <div style={{ textAlign: 'center' }}>
       <h1>{trainerName}'s Profile</h1>
