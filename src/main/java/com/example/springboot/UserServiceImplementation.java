@@ -22,28 +22,46 @@ public class UserServiceImplementation {
         connection = DBUtil.getConnection();
     }
 
-    public void addUser(User user) {
+    private boolean usernameExists(String username) {
+        try {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Users WHERE Username = ?");
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public int addUser(User user) {
         String username = user.getUsername();
         String password = user.getPassword();
         int money = user.getMoney();
 
-        String insertQuery = "INSERT INTO Users Values('"+username+"','"+password+"',"+money+");";
+        if (usernameExists(username)) {
+            return 0;
+        }
+
+        String insertQuery = "INSERT INTO Users Values('" + username + "','" + password + "'," + money + ");";
 
         try {
             PreparedStatement stmt = connection
                     .prepareStatement(insertQuery);
             stmt.executeUpdate();
             System.out.println("User added successfully!");
-
+            return 1;
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return 2;
         }
     }
 
     public boolean loginUser(String username, String password) {
         try {
-            PreparedStatement stmt = connection.prepareStatement("SELECT User_Password FROM Users WHERE Username = '"+username+"'");
+            PreparedStatement stmt = connection
+                    .prepareStatement("SELECT User_Password FROM Users WHERE Username = '" + username + "'");
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -58,7 +76,8 @@ public class UserServiceImplementation {
 
     public User getUserFrom(String username) {
         try {
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Users WHERE Username = '"+username+"'");
+            PreparedStatement stmt = connection
+                    .prepareStatement("SELECT * FROM Users WHERE Username = '" + username + "'");
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {

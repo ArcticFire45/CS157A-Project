@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 @RestController
@@ -25,7 +26,6 @@ public class HelloController {
 	@Autowired
 	private UserServiceImplementation userservice;
 
-	
 	@Autowired
 	private SalesServiceImplementation salesService;
 
@@ -56,23 +56,23 @@ public class HelloController {
 	}
 
 	@PostMapping(value = "/signup")
-	public void signUp(@RequestBody User user) {
-		this.userservice.addUser(user);
-
+	public int signUp(@RequestBody User user) {
+		return this.userservice.addUser(user);
 	}
 
 	@GetMapping("/login/{username}/{password}")
-	public User login(@PathVariable("username") String user, @PathVariable("password") String pass) {
+	public ResponseEntity<?> login(@PathVariable("username") String user, @PathVariable("password") String pass) {
 		boolean loggedIn = this.userservice.loginUser(user, pass);
-			if (loggedIn) {
-				return this.userservice.getUserFrom(user);
-			} else {
-				return null;
-			}
+		if (loggedIn) {
+			User userData = this.userservice.getUserFrom(user);
+			return ResponseEntity.ok(userData);
+		} else {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+		}
 	}
 
-	// public ResponseEntity<?> postMethodName(@RequestBody String user, @RequestParam String pass) {
-
+	// public ResponseEntity<?> postMethodName(@RequestBody String user,
+	// @RequestParam String pass) {
 
 	@PostMapping("/getUserSales")
 	public List<Sales> userSales(@RequestBody String username) {
