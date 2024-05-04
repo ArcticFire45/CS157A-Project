@@ -22,20 +22,19 @@ public class UserServiceImplementation {
         connection = DBUtil.getConnection();
     }
 
-    public void addUser(String username, String password) {
+    public void addUser(User user) {
+        String username = user.getUsername();
+        String password = user.getPassword();
+        int money = user.getMoney();
+
+        String insertQuery = "INSERT INTO Users Values('"+username+"','"+password+"',"+money+");";
+
         try {
             PreparedStatement stmt = connection
-                    .prepareStatement("INSERT INTO Users (Username, User_Password) VALUES (?, ?)");
-            stmt.setString(1, username);
-            stmt.setString(2, password);
+                    .prepareStatement(insertQuery);
+            stmt.executeUpdate();
+            System.out.println("User added successfully!");
 
-            int rs = stmt.executeUpdate();
-
-            if (rs > 0) {
-                System.out.println("User added successfully!");
-            } else {
-                System.out.println("Failed to add user.");
-            }
 
         } catch (SQLException e) {
             e.printStackTrace();

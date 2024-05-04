@@ -3,33 +3,34 @@ package com.example.springboot;
 public class User {
     private String username;
     private String password;
-    private Float money;
-
-    public User(String username, String password, Float money){
-        this.username = username;
-        this.password = password;
-        this.money = money;
+    private int money;
+    
+    public User() {
     }
-
-    public void set_username(String username){
-        this.username = username;
-    }
-
-    public String get_username(){
+    
+    public String getUsername() {
         return username;
     }
-
-    public void set_password(String password){
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
         this.password = password;
     }
-
-    public void set_money(Float money){
+    public int getMoney() {
+        return money;
+    }
+    public void setMoney(int money) {
+        this.money = money;
+    }
+    public User(String username, String password, int money) {
+        this.username = username;
+        this.password = password;
         this.money = money;
     }
 
-    public Float get_money(){
-        return money;
-    }
-
-
+    
 }

@@ -54,14 +54,10 @@ public class HelloController {
 		return this.pokeService.searchPokemonByName(name);
 	}
 
-	@PostMapping("/signup")
-	public ResponseEntity<?> signup(@RequestParam String user, @RequestParam String pass) {
-		try {
-			this.userservice.addUser(user, pass);
-			return ResponseEntity.ok("User registered.");
-		} catch (Exception e) {
-			return ResponseEntity.badRequest().body("Registration failed: " + e.getMessage());
-		}
+	@PostMapping(value = "/signup")
+	public void signUp(@RequestBody User user) {
+		this.userservice.addUser(user);
+
 	}
 
 	@PostMapping("/login")
