@@ -1,14 +1,23 @@
 import React, { useState } from "react";
-import usePokemons from "../hooks/usePokemons";
+import axios from "axios";
 
-const MoneyPage = ({ money, setMoney }) => {
+const MoneyPage = ({ money, setMoney, user }) => {
   const [clicked, setClicked] = useState(false);
-  const { pokemons } = usePokemons();
 
-  const handleClick = () => {
+  const handleClick = async () => {
     const randomMoney = Math.floor(Math.random() * 5) + 1;
-    setMoney((prevMoney) => prevMoney + randomMoney);
+    const newMoney = money + randomMoney;
+    setMoney(newMoney);
     setClicked(true);
+
+    try {
+      await axios.post("http://localhost:8080/updateMoney", {
+        username: user.username,
+        moneyToAdd: randomMoney,
+      });
+    } catch (error) {
+      console.error("Error updating user money:", error);
+    }
 
     setTimeout(() => {
       setClicked(false);

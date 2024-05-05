@@ -1,6 +1,7 @@
 package com.example.springboot;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -74,6 +75,18 @@ public class HelloController {
 		} else {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
 		}
+	}
+
+	@GetMapping("/user")
+	public User getUser(@RequestParam String username) {
+		return this.userservice.getUserFrom(username);
+	}
+
+	@PostMapping("/updateMoney")
+	public void updateMoney(@RequestBody Map<String, Object> requestBody) {
+		String username = (String) requestBody.get("username");
+		int moneyToAdd = (int) requestBody.get("moneyToAdd");
+		this.userservice.updateUserMoney(username, moneyToAdd);
 	}
 
 	// public ResponseEntity<?> postMethodName(@RequestBody String user,

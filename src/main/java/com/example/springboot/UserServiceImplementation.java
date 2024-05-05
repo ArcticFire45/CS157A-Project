@@ -88,4 +88,18 @@ public class UserServiceImplementation {
         }
         return null;
     }
+
+    public int updateUserMoney(String username, int money) {
+        String updateQuery = "UPDATE Users SET Money = Money + ? WHERE Username = ?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(updateQuery);
+            stmt.setInt(1, money);
+            stmt.setString(2, username);
+            return stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
 }

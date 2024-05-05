@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
   BrowserRouter as Router,
   Routes,
@@ -17,15 +18,17 @@ import SignupForm from "./components/Signup";
 import LoginPage from "./components/LoginPage";
 
 const App = () => {
-  const [money, setMoney] = useState(0);
   const [user, setUser] = useState(() => {
     const storedUser = localStorage.getItem("user");
-    return storedUser ? JSON.parse(storedUser) : { username: "", password: "", money: 0 };
+    return storedUser
+      ? JSON.parse(storedUser)
+      : { username: "", password: "", money: 0 };
   });
   const [loggedIn, setLoggedIn] = useState(() => {
     const storedLoggedIn = localStorage.getItem("loggedIn");
     return storedLoggedIn ? JSON.parse(storedLoggedIn) : false;
   });
+  const [money, setMoney] = useState(user.money || 0);
 
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(user));
@@ -35,6 +38,20 @@ const App = () => {
     localStorage.setItem("loggedIn", JSON.stringify(loggedIn));
   }, [loggedIn]);
 
+  useEffect(() => {
+    const fetchUserMoney = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/user?username=${user.username}`
+        );
+        setMoney(response.data.money);
+      } catch (error) {
+        console.error("Error fetching user money:", error);
+      }
+    };
+
+    fetchUserMoney();
+  }, [user.username]);
 
   return (
     <Router>
@@ -49,7 +66,7 @@ const App = () => {
             path="/money"
             element={
               loggedIn ? (
-                <MoneyPage money={money} setMoney={setMoney} />
+                <MoneyPage money={money} setMoney={setMoney} user={user} />
               ) : (
                 <Navigate to="/login" />
               )
