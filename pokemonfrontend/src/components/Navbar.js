@@ -17,19 +17,19 @@ function Navbar() {
         PokeHome
       </Link>
       <ul className="navbar-nav">
-      <li className="nav-item">
+        <li className="nav-item">
           <Link to="/money" className="nav-link">
             Money
           </Link>
         </li>
-      <li className="nav-item">
+        <li className="nav-item">
           <Link to="/items" className="nav-link">
             Items
           </Link>
         </li>
         <li className="nav-item">
           <Link to="/pokemon" className="nav-link">
-            Pokemon
+            Pokedex
           </Link>
         </li>
         <li className="nav-item">

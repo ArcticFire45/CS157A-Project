@@ -55,6 +55,11 @@ public class HelloController {
 		return this.pokeService.searchPokemonByName(name);
 	}
 
+	@GetMapping("/itemsearch")
+	public List<Items> searchItem(@RequestParam String name) {
+		return this.itemService.searchItemByName(name);
+	}
+
 	@PostMapping(value = "/signup")
 	public int signUp(@RequestBody User user) {
 		return this.userservice.addUser(user);

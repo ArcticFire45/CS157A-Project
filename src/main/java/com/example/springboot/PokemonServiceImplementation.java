@@ -41,8 +41,9 @@ public class PokemonServiceImplementation {
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM pokemontemplate");
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                Pokemon poke = new Pokemon(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),
-                        rs.getString(5), rs.getString(6), rs.getString(7));
+                Pokemon poke = new Pokemon(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6), rs.getString(7), rs.getString(8));
                 pokemonList.add(poke);
                 // Pokemon poke_test = new Pokemon(1, "test");
                 // pokemonList.add(poke_test);
@@ -57,12 +58,13 @@ public class PokemonServiceImplementation {
     public List<Pokemon> searchPokemonByName(String name) {
         try {
             pokemonList = new ArrayList<Pokemon>();
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM PokemonTemplate WHERE PokeName LIKE ?");
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM pokemontemplate WHERE PokeName LIKE ?");
             stmt.setString(1, "%" + name + "%");
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                Pokemon poke = new Pokemon(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),
-                        rs.getString(5), rs.getString(6), rs.getString(7));
+                Pokemon poke = new Pokemon(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6), rs.getString(7), rs.getString(8));
                 pokemonList.add(poke);
             }
         } catch (SQLException e) {
