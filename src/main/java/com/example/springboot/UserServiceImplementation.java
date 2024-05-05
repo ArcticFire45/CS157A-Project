@@ -22,35 +22,50 @@ public class UserServiceImplementation {
         connection = DBUtil.getConnection();
     }
 
-    public void addUser(String username, String password) {
+    private boolean usernameExists(String username) {
+        try {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Users WHERE Username = ?");
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public int addUser(User user) {
+        String username = user.getUsername();
+        String password = user.getPassword();
+        int money = user.getMoney();
+
+        if (usernameExists(username)) {
+            return 0;
+        }
+
+        String insertQuery = "INSERT INTO Users Values('" + username + "','" + password + "'," + money + ");";
+
         try {
             PreparedStatement stmt = connection
-                    .prepareStatement("INSERT INTO Users (Username, User_Password) VALUES (?, ?)");
-            stmt.setString(1, username);
-            stmt.setString(2, password);
-
-            int rs = stmt.executeUpdate();
-
-            if (rs > 0) {
-                System.out.println("User added successfully!");
-            } else {
-                System.out.println("Failed to add user.");
-            }
+                    .prepareStatement(insertQuery);
+            stmt.executeUpdate();
+            System.out.println("User added successfully!");
+            return 1;
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return 2;
         }
     }
 
     public boolean loginUser(String username, String password) {
         try {
-            PreparedStatement stmt = connection.prepareStatement("SELECT User_Password FROM Users WHERE Username = ?");
-
-            stmt.setString(1, username);
+            PreparedStatement stmt = connection
+                    .prepareStatement("SELECT User_Password FROM Users WHERE Username = '" + username + "'");
             ResultSet rs = stmt.executeQuery();
 
-            if (rs.next()) {
-                String db_password = rs.getString("User_password");
+            while (rs.next()) {
+                String db_password = rs.getString("User_Password");
                 return db_password.equals(password);
             }
         } catch (SQLException e) {
@@ -59,4 +74,18 @@ public class UserServiceImplementation {
         return false;
     }
 
+    public User getUserFrom(String username) {
+        try {
+            PreparedStatement stmt = connection
+                    .prepareStatement("SELECT * FROM Users WHERE Username = '" + username + "'");
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                return new User(rs.getString(1), rs.getString(2), rs.getInt(3));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
