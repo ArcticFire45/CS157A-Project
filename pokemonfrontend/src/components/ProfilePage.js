@@ -6,7 +6,7 @@ const ProfilePage = ({ user, trainerImage, setLoggedIn, setUser }) => {
   const team = usePokemons();
 
   const handleLogout = () => {
-    setUser(null);
+    setUser({ username: "", password: "", money: 0 });
     setLoggedIn(false);
   };
 
