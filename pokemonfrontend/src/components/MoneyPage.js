@@ -26,8 +26,8 @@ const MoneyPage = ({ money, setMoney, user }) => {
       item_name: "Anti-Pikachu-Rubber-Balloon-Bazooka",
       multiplier: 5,
     },
-    { item_id: 3, item_name: "Foo", multiplier: 5 },
-    { item_id: 4, item_name: "Foo", multiplier: 5 },
+    { item_id: 3, item_name: "Foo", multiplier: 5.5 },
+    { item_id: 4, item_name: "Foo", multiplier: 5.25 },
     { item_id: 5, item_name: "Foo", multiplier: 5 },
     { item_id: 6, item_name: "Foo", multiplier: 5 },
     { item_id: 7, item_name: "Foo", multiplier: 5 },
@@ -46,6 +46,7 @@ const MoneyPage = ({ money, setMoney, user }) => {
 
   const handleClick = async () => {
     const randomMoney = Math.floor(Math.random() * 6) + 1 * totalMultiplier;
+    console.log(randomMoney);
     const newMoney = money + randomMoney;
     setMoney(newMoney);
     setClicked(true);
@@ -126,7 +127,7 @@ const MoneyPage = ({ money, setMoney, user }) => {
             right: "10px",
           }}
         >
-          <p>Money: {money}</p>
+          <p>Money: {money.toFixed(2)}</p>
         </div>
       </div>
     </div>

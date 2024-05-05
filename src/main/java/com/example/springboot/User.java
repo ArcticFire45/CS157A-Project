@@ -3,7 +3,7 @@ package com.example.springboot;
 public class User {
     private String username;
     private String password;
-    private int money;
+    private double money;
 
     public User() {
     }
@@ -24,15 +24,15 @@ public class User {
         this.password = password;
     }
 
-    public int getMoney() {
+    public double getMoney() {
         return money;
     }
 
-    public void setMoney(int money) {
+    public void setMoney(double money) {
         this.money = money;
     }
 
-    public User(String username, String password, int money) {
+    public User(String username, String password, double money) {
         this.username = username;
         this.password = password;
         this.money = money;
