@@ -30,6 +30,10 @@ const PokemonPage = () => {
     setUseGif((prevUseGif) => !prevUseGif);
   };
 
+  const handleBuy = () => {
+    // Implement your buy functionality here
+  };
+
   return (
     <div>
       <div style={{ textAlign: "center" }}>
@@ -57,24 +61,58 @@ const PokemonPage = () => {
       >
         {filteredPokemons.length > 0
           ? filteredPokemons.map((pokemon) => (
-              <PokemonCard
-                key={pokemon.poke_id}
-                name={pokemon.poke_name}
-                type1={pokemon.type1}
-                type2={pokemon.type2}
-                imageUrl={useGif ? pokemon.gifUrl : pokemon.imageUrl}
-                description={pokemon.pokemonDescription}
-              />
+              <div key={pokemon.poke_id} style={{ margin: "10px" }}>
+                <PokemonCard
+                  name={pokemon.poke_name}
+                  type1={pokemon.type1}
+                  type2={pokemon.type2}
+                  imageUrl={useGif ? pokemon.gifUrl : pokemon.imageUrl}
+                  description={pokemon.pokemonDescription}
+                />
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    marginTop: "10px",
+                    border: "1px solid #ccc",
+                    borderRadius: "8px",
+                    padding: "5px 10px",
+                  }}
+                >
+                  <button onClick={handleBuy} style={{ marginRight: "10px" }}>
+                    Buy
+                  </button>
+                  <p style={{ marginLeft: "10px" }}>Price: {pokemon.price}</p>
+                </div>
+              </div>
             ))
           : pokemons.map((pokemon) => (
-              <PokemonCard
-                key={pokemon.poke_id}
-                name={pokemon.poke_name}
-                type1={pokemon.type1}
-                type2={pokemon.type2}
-                imageUrl={useGif ? pokemon.gifUrl : pokemon.imageUrl}
-                description={pokemon.pokemonDescription}
-              />
+              <div key={pokemon.poke_id} style={{ margin: "10px" }}>
+                <PokemonCard
+                  name={pokemon.poke_name}
+                  type1={pokemon.type1}
+                  type2={pokemon.type2}
+                  imageUrl={useGif ? pokemon.gifUrl : pokemon.imageUrl}
+                  description={pokemon.pokemonDescription}
+                />
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    marginTop: "10px",
+                    border: "1px solid #ccc",
+                    borderRadius: "8px",
+                    padding: "5px 10px",
+                  }}
+                >
+                  <button onClick={handleBuy} style={{ marginRight: "10px" }}>
+                    Buy
+                  </button>
+                  <p style={{ marginLeft: "10px" }}>
+                    Price: {pokemon.stockPrice}
+                  </p>
+                </div>
+              </div>
             ))}
       </div>
     </div>

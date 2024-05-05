@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const ItemCard = ({ name, description, multiplier, imageUrl }) => {
   const [showDescription, setShowDescription] = useState(false);
@@ -10,20 +10,23 @@ const ItemCard = ({ name, description, multiplier, imageUrl }) => {
   return (
     <div
       style={{
-        margin: '10px',
-        padding: '10px',
-        border: '1px solid #ccc',
-        borderRadius: '8px',
-        textAlign: 'center',
-        cursor: 'pointer',
-        width: '150px',
-        height: '225px',
+        margin: "10px",
+        padding: "10px",
+        border: "1px solid #ccc",
+        borderRadius: "8px",
+        textAlign: "center",
+        cursor: "pointer",
+        width: "150px",
+        height: "225px",
       }}
       onClick={toggleDescription}
     >
       {showDescription ? (
         <div>
           <p>{description}</p>
+          <p style={{ fontWeight: "bold", color: "#007bff" }}>
+            Increases your clicking power by: {multiplier}
+          </p>
         </div>
       ) : (
         <div>
@@ -31,7 +34,7 @@ const ItemCard = ({ name, description, multiplier, imageUrl }) => {
           <img
             src={imageUrl}
             alt={name}
-            style={{ width: '100px', height: '100px' }}
+            style={{ width: "100px", height: "100px" }}
           />
         </div>
       )}
