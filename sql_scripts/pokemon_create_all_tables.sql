@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS PokemonTemplate(
 CREATE TABLE IF NOT EXISTS ItemTemplate(
 	ItemTemplateID INT PRIMARY KEY auto_increment,
     ItemName VARCHAR(255) NOT NULL,
+    StockPrice DECIMAL(10,2) NOT NULL,
     ItemDescription Text,
     MoneyClickerMultiplier FLOAT NOT NULL,
 	ImageURL VARCHAR(255) NOT NULL,
@@ -120,18 +121,18 @@ CREATE TABLE IF NOT EXISTS Friends (
     CHECK (Username1 != Username2)
 );
 
-CREATE TABLE IF NOT EXISTS ActivityWall (
-    Username varchar(30),
-    PostID INT NOT NULL,
-    primary key (Username, PostID),
-    FOREIGN KEY (Username) REFERENCES Users(Username),
-    FOREIGN KEY (PostID) REFERENCES UserPosts(PostID)
-);
+-- CREATE TABLE IF NOT EXISTS ActivityWall (
+--     Username varchar(30),
+--     PostID INT NOT NULL,
+--     primary key (Username, PostID),
+--     FOREIGN KEY (Username) REFERENCES Users(Username),
+--     FOREIGN KEY (PostID) REFERENCES UserPosts(PostID)
+-- );
 
-CREATE TABLE IF NOT EXISTS SalesWall (
-    Username varchar(30),
-    PostID INT NOT NULL,
-	primary key (Username, PostID),
-    FOREIGN KEY (Username) REFERENCES Users(Username),
-    FOREIGN KEY (PostID) REFERENCES SalesPosts(PostID)
-);
+-- CREATE TABLE IF NOT EXISTS SalesWall (
+--     Username varchar(30),
+--     PostID INT NOT NULL,
+-- 	primary key (Username, PostID),
+--     FOREIGN KEY (Username) REFERENCES Users(Username),
+--     FOREIGN KEY (PostID) REFERENCES SalesPosts(PostID)
+-- );
