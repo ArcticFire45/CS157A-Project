@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +25,9 @@ public class HelloController {
 
 	@Autowired
 	private UserServiceImplementation userservice;
+
+	@Autowired
+    private UserPostsServiceImplementation userPostsService;
 
 	@GetMapping("/")
 	public String index() {
@@ -73,5 +78,34 @@ public class HelloController {
 			return ResponseEntity.status(500).body("Internal server error: " + e.getMessage());
 		}
 	}
+
+	@GetMapping("/userposts")
+    public List<UserPosts> getAllUserPosts() {
+        return this.userPostsService.getAllUserPosts();
+    }
+
+    @PostMapping("/createuserpost")
+    public ResponseEntity<?> createUserPost(@RequestBody UserPosts post) {
+        try {
+            this.userPostsService.createPokemonPost(post);
+            return ResponseEntity.ok("User post created successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Failed to create user post: " + e.getMessage());
+        }
+    }
+
+
+    @DeleteMapping("/userposts/{postId}")
+    public ResponseEntity<?> deleteUserPost(@PathVariable Integer postId) {
+        try {
+            userPostsService.deletePokemonPost(postId);
+            return ResponseEntity.ok("User post deleted successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Failed to delete user post: " + e.getMessage());
+        }
+    }
+	
+
+
 
 }
