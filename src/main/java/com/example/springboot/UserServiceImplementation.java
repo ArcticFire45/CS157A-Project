@@ -37,7 +37,7 @@ public class UserServiceImplementation {
     public int addUser(User user) {
         String username = user.getUsername();
         String password = user.getPassword();
-        int money = user.getMoney();
+        double money = user.getMoney();
 
         if (usernameExists(username)) {
             return 0;
@@ -81,7 +81,7 @@ public class UserServiceImplementation {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                return new User(rs.getString(1), rs.getString(2), rs.getInt(3));
+                return new User(rs.getString(1), rs.getString(2), rs.getDouble(3));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -89,11 +89,11 @@ public class UserServiceImplementation {
         return null;
     }
 
-    public int updateUserMoney(String username, int money) {
+    public int updateUserMoney(String username, double money) {
         String updateQuery = "UPDATE Users SET Money = Money + ? WHERE Username = ?";
         try {
             PreparedStatement stmt = connection.prepareStatement(updateQuery);
-            stmt.setInt(1, money);
+            stmt.setDouble(1, money);
             stmt.setString(2, username);
             return stmt.executeUpdate();
         } catch (SQLException e) {

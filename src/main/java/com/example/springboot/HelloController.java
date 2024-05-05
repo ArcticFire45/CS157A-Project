@@ -85,7 +85,7 @@ public class HelloController {
 	@PostMapping("/updateMoney")
 	public void updateMoney(@RequestBody Map<String, Object> requestBody) {
 		String username = (String) requestBody.get("username");
-		int moneyToAdd = (int) requestBody.get("moneyToAdd");
+		double moneyToAdd = (double) requestBody.get("moneyToAdd");
 		this.userservice.updateUserMoney(username, moneyToAdd);
 	}
 

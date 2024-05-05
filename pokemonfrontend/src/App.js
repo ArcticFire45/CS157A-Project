@@ -28,7 +28,7 @@ const App = () => {
     const storedLoggedIn = localStorage.getItem("loggedIn");
     return storedLoggedIn ? JSON.parse(storedLoggedIn) : false;
   });
-  const [money, setMoney] = useState(user.money || 0);
+  const [money, setMoney] = useState(user.money || 0.0);
 
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(user));
