@@ -202,64 +202,12 @@ public class HelloController {
 
 
 
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// getItem
-// getUserItems
-// getExistingItems
-// getExistingTemplateItems
+// getExistingPokemon
+// getExistingPokemons
+// getUserPokemon
+// getExistingTemplatePokemon
+// deleteExistingPokemon
+// changePokemonOwner
 
 
 @GetMapping("/getExistingPokemon")
