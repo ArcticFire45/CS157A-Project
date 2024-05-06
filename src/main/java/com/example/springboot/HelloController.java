@@ -36,6 +36,9 @@ public class HelloController {
 	@Autowired
 	private ExistingPokemonServiceImplementation existingPokemonService;
 
+	@Autowired
+	private FriendsServiceeImplementation friendService;
+
 	@GetMapping("/")
 	public String index() {
 
@@ -304,4 +307,10 @@ public  Boolean changePokemonOwner(@RequestParam String poke_id, String new_user
 
 	
 
+	@PostMapping("/addFriend")
+	public void addFriend(@RequestBody Map<String, Object> requestBody) {
+		String currentUser = (String) requestBody.get("username1");
+		String friendUser = (String) requestBody.get("username2");
+		this.friendService.addFriend(currentUser, friendUser);
+	}
 }

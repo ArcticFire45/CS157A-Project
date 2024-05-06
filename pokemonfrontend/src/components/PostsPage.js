@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import Post from "./Post";
+import UserFriendsBox from "./UserFriendsBox";
 
-const PostsPage = () => {
+const PostsPage = ({ user }) => {
   const [newPostImage, setNewPostImage] = useState("");
   const [newPostDescription, setNewPostDescription] = useState("");
   const [posts, setPosts] = useState([
@@ -22,20 +22,6 @@ const PostsPage = () => {
       description: "This is the third post",
     },
   ]);
-  const [usernames, setUsernames] = useState([]);
-
-  useEffect(() => {
-    const fetchUsernames = async () => {
-      try {
-        const response = await axios.get("http://localhost:8080/alluser");
-        setUsernames(response.data);
-      } catch (error) {
-        console.error("Error fetching usernames:", error);
-      }
-    };
-
-    fetchUsernames();
-  }, []);
 
   const handleImageChange = (event) => {
     setNewPostImage(event.target.value);
@@ -55,11 +41,6 @@ const PostsPage = () => {
 
     setNewPostImage("");
     setNewPostDescription("");
-  };
-
-  const handleAddFriend = (username) => {
-    // Add logic to add friend
-    alert(`Friend request sent to ${username}`);
   };
 
   return (
@@ -123,56 +104,7 @@ const PostsPage = () => {
           ))}
         </div>
       </div>
-      <div
-        style={{
-          width: "200px",
-          position: "fixed",
-          top: "200px",
-          right: "0",
-          border: "1px solid #ccc",
-          padding: "20px",
-          height: "50vh",
-          overflowY: "auto",
-        }}
-      >
-        <h2>All Users</h2>
-        <div style={{ textAlign: "left" }}>
-          {usernames.map((username) => (
-            <div
-              key={username}
-              style={{
-                marginBottom: "10px",
-                position: "relative",
-                backgroundColor: "#e0e0e0",
-                borderRadius: "5px",
-              }}
-            >
-              <div
-                style={{
-                  padding: "8px",
-                  marginRight: "40px",
-                }}
-              >
-                {username}
-              </div>
-              <button
-                onClick={() => handleAddFriend(username)}
-                style={{
-                  borderRadius: "20px",
-                  padding: "5px 15px",
-                  fontSize: "12px",
-                  position: "absolute",
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  right: "10px",
-                }}
-              >
-                Add Friend
-              </button>
-            </div>
-          ))}
-        </div>
-      </div>
+      <UserFriendsBox user={user} />
     </div>
   );
 };

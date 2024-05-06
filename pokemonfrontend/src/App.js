@@ -60,7 +60,7 @@ const App = () => {
         <Routes>
           <Route
             path="/"
-            element={loggedIn ? <PostsPage /> : <Navigate to="/login" />}
+            element={loggedIn ? <PostsPage user={user} /> : <Navigate to="/login" />}
           />
           <Route
             path="/money"
