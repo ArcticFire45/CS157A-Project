@@ -128,6 +128,21 @@ public class ExistingItemServiceImplementation {
             e.printStackTrace();
         }
         return false;
+    } 
+    
+    
+    public Boolean deleteExistingItem(String item_id)
+    {
+        try {
+            PreparedStatement stmt = connection
+                    .prepareStatement("DELETE FROM Items WHERE itemID=" + item_id);
+            stmt.executeQuery();
+            return true;    
+        } catch (SQLException e) 
+        {
+            e.printStackTrace();
+        }
+        return false;
     }   
 
 

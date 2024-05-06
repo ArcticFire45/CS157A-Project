@@ -158,7 +158,7 @@ public class HelloController {
 
 
 	@GetMapping("/getExistingTemplateItems")
-	public  List<ExistingItem> getExistingTemplateItems(@RequestBody String template_id) {
+	public  List<ExistingItem> getExistingTemplateItem(@RequestBody String template_id) {
 		try {
 			return this.existingItemsService.getExistingTemplateItems(template_id);
 			} catch (Exception e) {
@@ -167,13 +167,26 @@ public class HelloController {
 	}
 
 	@PostMapping("/addExistingItem")
-	public  Boolean getExistingTemplateItems(@RequestBody String username, String template_id) {
+	public  Boolean addExistingItem(@RequestBody String username, String template_id) {
 		try {
 			return this.existingItemsService.addExistingItem(username, template_id);
 			} catch (Exception e) {
 			return false;
 		}
+
 	}
+
+
+	@PostMapping("/deleteExistingItem")
+	public  Boolean getExistingTemplateItems(@RequestBody String item_id) {
+		try {
+			return this.existingItemsService.deleteExistingItem(item_id);
+			} catch (Exception e) {
+			return false;
+		}
+
+	}
+
 
 
 	
