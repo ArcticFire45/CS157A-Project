@@ -7,7 +7,7 @@ const UserFriendsBox = ({user}) => {
     useEffect(() => {
       const fetchUsernames = async () => {
         try {
-          const response = await axios.get("http://localhost:8080/alluser");
+          const response = await axios.get(`http://localhost:8080/alluser/${user.username}`);
           setUsernames(response.data);
         } catch (error) {
           console.error("Error fetching usernames:", error);

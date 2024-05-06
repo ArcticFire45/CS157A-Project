@@ -91,9 +91,9 @@ public class HelloController {
 		return this.userservice.getUserFrom(username);
 	}
 
-	@GetMapping("/alluser")
-	public List<String> getAllUser() {
-		return this.userservice.getAllUsernames();
+	@GetMapping("/alluser/{excludedUsername}")
+	public List<String> getAllUserExcept(@PathVariable String excludedUsername) {
+		return this.userservice.getAllUsernamesExcept(excludedUsername);
 	}
 
 	@PostMapping("/updateMoney")

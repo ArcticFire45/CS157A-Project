@@ -92,10 +92,11 @@ public class UserServiceImplementation {
         return null;
     }
 
-    public List<String> getAllUsernames() {
+    public List<String> getAllUsernamesExcept(String excludedUsername) {
         try {
             usernameList = new ArrayList<String>();
-            PreparedStatement stmt = connection.prepareStatement("SELECT Username FROM Users");
+            PreparedStatement stmt = connection.prepareStatement("SELECT Username FROM Users WHERE Username != ?");
+            stmt.setString(1, excludedUsername);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 usernameList.add(rs.getString(1));
