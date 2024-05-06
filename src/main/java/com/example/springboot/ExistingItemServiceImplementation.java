@@ -30,6 +30,13 @@ public class ExistingItemServiceImplementation {
     // private String username;
     // private Integer item_template_id;
 
+
+
+    // getItem
+    // getUserItems
+    // getExistingItems
+    // getExistingTemplateItems
+
     public ExistingItem getItem(String item_id)
     {
         try {
@@ -51,7 +58,7 @@ public class ExistingItemServiceImplementation {
         existingItemsList = new ArrayList<ExistingItem>();  
         try {
             PreparedStatement stmt = connection
-                    .prepareStatement("SELECT * FROM items WHERE username=" + username);
+                    .prepareStatement("SELECT * FROM items WHERE username='" + username +"'");
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
             {
@@ -70,7 +77,7 @@ public class ExistingItemServiceImplementation {
     {
         existingItemsList = new ArrayList<ExistingItem>();  
         try {
-            String query_str = "SELECT * FROM items WHERE ItemTemplateID=" + item_template_id + " AND username=" + username;
+            String query_str = "SELECT * FROM items WHERE ItemTemplateID=" + item_template_id + " AND username='" + username + "'";
             PreparedStatement stmt = connection
                     .prepareStatement(query_str);
             ResultSet rs = stmt.executeQuery();
@@ -87,6 +94,7 @@ public class ExistingItemServiceImplementation {
         return null;
     }   
 
+    
 
     public List<ExistingItem> getExistingTemplateItems(String item_template_id)
     {
@@ -106,6 +114,20 @@ public class ExistingItemServiceImplementation {
             e.printStackTrace();
         }
         return null;
+    }   
+
+    public Boolean addExistingItem(String username, String item_template_id)
+    {
+        try {
+            PreparedStatement stmt = connection
+                    .prepareStatement("INSERT INTO Items (username, ItemTemplateID) VALUES ('" + username + "', " + item_template_id + ")");
+            stmt.executeQuery();
+            return true;    
+        } catch (SQLException e) 
+        {
+            e.printStackTrace();
+        }
+        return false;
     }   
 
 
