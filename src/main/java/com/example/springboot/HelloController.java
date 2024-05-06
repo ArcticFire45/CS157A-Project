@@ -88,6 +88,11 @@ public class HelloController {
 		return this.userservice.getUserFrom(username);
 	}
 
+	@GetMapping("/alluser")
+	public List<String> getAllUser() {
+		return this.userservice.getAllUsernames();
+	}
+
 	@PostMapping("/updateMoney")
 	public void updateMoney(@RequestBody Map<String, Object> requestBody) {
 		String username = (String) requestBody.get("username");
