@@ -69,8 +69,8 @@ public class UserPostsServiceImplementation {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        
     }
-
 }
     
     
