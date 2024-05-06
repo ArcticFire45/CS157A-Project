@@ -187,6 +187,16 @@ public class HelloController {
 
 	}
 
+	@PostMapping("/changeItemOwner")
+	public  Boolean getExistingTemplateItems(@RequestBody String item_id, String new_username) {
+		try {
+			return this.existingItemsService.changeOwnerUsername(item_id, new_username);
+			} catch (Exception e) {
+			return false;
+		}
+
+	}
+
 
 
 	

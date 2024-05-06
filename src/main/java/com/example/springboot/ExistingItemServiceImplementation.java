@@ -10,6 +10,8 @@ import java.util.List;
 // import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 // import com.example.springboot.ItemServiceImplementation;
@@ -145,7 +147,36 @@ public class ExistingItemServiceImplementation {
         return false;
     }   
 
+    public Boolean changeOwnerUsername(String item_id, String new_username)
+    {
+        try {
+            // UPDATE Customers
+            // SET ContactName = 'Alfred Schmidt', City = 'Frankfurt'
+            // WHERE CustomerID = 1;
+            ExistingItem item = this.getItem(item_id);
+            PreparedStatement stmt = connection
+                    .prepareStatement("UPDATE Items SET itemID=" + item_id + ", username='"+new_username + "', ItemTemplateID="+item.getItem_template_id() + " WHERE itemID=" + item_id);
+            stmt.executeQuery();
 
+            return true;    
+        } catch (SQLException e) 
+        {
+            e.printStackTrace();
+        }
+        return false;
+    }   
+
+
+
+
+    
+	// @PostMapping("/changeItemOwner")
+	// public  Boolean getExistingTemplateItems(@RequestBody String item_id, String new_username) {
+	// 	try {
+	// 		return this.existingItemsService.changeOwnerUsername(item_id, new_username);
+	// 		} catch (Exception e) {
+	// 		return false;
+	// 	}
 
 
 
