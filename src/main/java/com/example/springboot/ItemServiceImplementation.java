@@ -56,4 +56,21 @@ public class ItemServiceImplementation {
         return itemList;
     }
 
+    public Items getItem(String item_id) {
+        try {
+            itemList = new ArrayList<Items>();
+            // ItemTemplateID INT PRIMARY KEY auto_increment,
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM ItemTemplate WHERE ItemTemplateID=" + item_id);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            Items item = new Items(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getString(4), rs.getFloat(5),
+                    rs.getString(6));
+            return item; 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 }
