@@ -32,6 +32,9 @@ public class HelloController {
 	private SalesServiceImplementation salesService;
 
 	@Autowired
+	private PokemonRosterImplementation rosterService;
+
+	@Autowired
 	private ExistingItemServiceImplementation existingItemsService;
 
 	@Autowired
@@ -328,4 +331,34 @@ public class HelloController {
 					.body("Failed to delete post: " + e.getMessage());
 		}
 	}
+
+	@GetMapping("/getRoster")
+	public PokemonRoster getRoster(@RequestParam String username) {
+		try{
+			return this.rosterService.getRoster(username);
+		}catch(Exception e){
+			return null;
+		}
+	}
+
+	@PostMapping("/addToRoster")
+	public boolean addToRoster(@RequestBody String username, @RequestParam Integer pokemonID) {
+		try{
+			return this.rosterService.addPokemonToRoster(username, pokemonID);
+		}catch(Exception e){
+			return false;
+		}
+	}
+
+	@PostMapping("/deleteFromRoster")
+	public boolean deleteFromRoster(@RequestBody String username, @RequestParam Integer pokemonID) {
+		try{
+			return this.rosterService.removePokemonFromRoster(username, pokemonID);
+		}catch(Exception e){
+			return false;
+		}
+	}
+	
+	
+
 }
