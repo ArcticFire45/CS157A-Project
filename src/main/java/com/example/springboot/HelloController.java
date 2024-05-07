@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -312,5 +313,17 @@ public  Boolean changePokemonOwner(@RequestParam String poke_id, String new_user
 		String currentUser = (String) requestBody.get("username1");
 		String friendUser = (String) requestBody.get("username2");
 		this.friendService.addFriend(currentUser, friendUser);
+	}
+
+	@DeleteMapping("/removeFriend")
+	public void deleteFriendship(@RequestBody Map<String, Object> request) {
+		String username1 = (String) request.get("username1");
+		String username2 = (String) request.get("username2");
+		this.friendService.removeFriend(username1, username2);
+	}
+
+	@GetMapping("/checkFriendship")
+	public boolean checkFriendship(@RequestParam String username1, @RequestParam String username2) {
+		return this.friendService.checkFriendship(username1, username2);
 	}
 }
