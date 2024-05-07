@@ -47,9 +47,26 @@ const PostsPage = ({ user }) => {
     }
   };
 
+  const handleDeletePost = async (postId) => {
+    try {
+      await axios.delete(
+        `http://localhost:8080/deletePost/${postId}/${user.username}`
+      );
+      const updatedPosts = posts.filter((post) => post.postID !== postId);
+      setPosts(updatedPosts);
+      alert("Post deleted!");
+    } catch (error) {
+      console.error("Error deleting post:", error);
+    }
+  };
+
   return (
     <div style={{ textAlign: "center" }}>
       <h1>Home</h1>
+      <p>
+        Welcome to the Home Page! Scroll down to see all the posts! You can even
+        add your own! Don't like your current post? You can also delete it!
+      </p>
       <div style={{ marginBottom: "20px" }}>
         <h2>Add New Post</h2>
         <div
@@ -105,6 +122,8 @@ const PostsPage = ({ user }) => {
               author={post.author}
               imageUrl={post.imageURL}
               description={post.postDesc}
+              onDelete={() => handleDeletePost(post.postID)}
+              currentUser={user.username}
             />
           ))}
         </div>

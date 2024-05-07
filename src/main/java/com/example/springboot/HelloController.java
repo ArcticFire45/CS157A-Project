@@ -344,4 +344,15 @@ public  Boolean changePokemonOwner(@RequestParam String poke_id, String new_user
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to create pokemon post.");
 		}
 	}
+
+	@DeleteMapping("/deletePost/{postId}/{authorUsername}")
+	public ResponseEntity<String> deletePost(@PathVariable int postId, @PathVariable String authorUsername) {
+		try {
+			postService.deletePost(postId, authorUsername);
+			return ResponseEntity.ok("Post deleted successfully!");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("Failed to delete post: " + e.getMessage());
+		}
+	}
 }

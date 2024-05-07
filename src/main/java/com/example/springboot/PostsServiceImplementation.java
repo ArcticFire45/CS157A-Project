@@ -57,4 +57,21 @@ public class PostsServiceImplementation {
         }
     }
 
+    public void deletePost(int postId, String authorUsername) {
+        try {
+            PreparedStatement stmt = connection.prepareStatement(
+                    "DELETE FROM UserPosts WHERE PostID = ? AND Author = ?;");
+            stmt.setInt(1, postId);
+            stmt.setString(2, authorUsername);
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Post deleted successfully!");
+            } else {
+                System.out.println("Failed to delete post.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

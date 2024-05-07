@@ -1,6 +1,6 @@
 import React from "react";
 
-const Post = ({ author, imageUrl, description }) => {
+const Post = ({ author, imageUrl, description, onDelete, currentUser }) => {
   return (
     <div
       style={{
@@ -23,6 +23,20 @@ const Post = ({ author, imageUrl, description }) => {
         />
       </div>
       <p>{description}</p>
+      {currentUser === author && (
+        <button
+          onClick={onDelete}
+          style={{
+            backgroundColor: "red",
+            color: "white",
+            padding: "5px 10px",
+            borderRadius: "5px",
+            border: "none",
+          }}
+        >
+          Delete
+        </button>
+      )}
     </div>
   );
 };
