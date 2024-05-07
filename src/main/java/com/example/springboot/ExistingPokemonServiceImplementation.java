@@ -14,37 +14,43 @@ import org.springframework.stereotype.Service;
 
 // import com.example.springboot.ItemServiceImplementation;
 
+
+// CREATE TABLE IF NOT EXISTS Pokemon (
+//     PokeID INT PRIMARY KEY auto_increment, -- The pokemon identity
+//     Username varchar(30), -- Pokemon owner
+//     PokeTemplateID INT NOT NULL, -- Pokemon type
+//     FOREIGN KEY (Username) REFERENCES Users(Username),
+//     FOREIGN KEY (PokeTemplateID) REFERENCES PokemonTemplate(PokeTemplateID)
+// );
 @Service
-public class ExistingItemServiceImplementation {
+public class ExistingPokemonServiceImplementation {
 
     @Autowired
-    static List<ExistingItem> existingItemsList = new ArrayList<ExistingItem>();
+    static List<ExistingPokemon> existingPokeList = new ArrayList<ExistingPokemon>();
 
     Connection connection;
 
-    public ExistingItemServiceImplementation() throws SQLException {
+    public ExistingPokemonServiceImplementation() throws SQLException {
         connection = DBUtil.getConnection();
     }
 
-    // private Integer item_id;
-    // private String username;
-    // private Integer item_template_id;
 
+// CREATE TABLE IF NOT EXISTS Pokemon (
+//     PokeID INT PRIMARY KEY auto_increment, -- The pokemon identity
+//     Username varchar(30), -- Pokemon owner
+//     PokeTemplateID INT NOT NULL, -- Pokemon type
+//     FOREIGN KEY (Username) REFERENCES Users(Username),
+//     FOREIGN KEY (PokeTemplateID) REFERENCES PokemonTemplate(PokeTemplateID)
+// );
 
-
-    // getItem
-    // getUserItems
-    // getExistingItems
-    // getExistingTemplateItems
-
-    public ExistingItem getItem(String item_id)
+    public ExistingPokemon getPokemon(String poke_id)
     {
         try {
             PreparedStatement stmt = connection
-                    .prepareStatement("SELECT * FROM items WHERE itemID=" + item_id);
+                    .prepareStatement("SELECT * FROM Pokemon WHERE pokeID=" + poke_id);
             ResultSet rs = stmt.executeQuery();
             rs.next();
-            ExistingItem item = new ExistingItem(rs.getInt(1), rs.getString(2), rs.getInt(3));
+            ExistingPokemon item = new ExistingPokemon(rs.getInt(1), rs.getString(2), rs.getInt(3));
             return item;
         } catch (SQLException e) 
         {
@@ -53,19 +59,19 @@ public class ExistingItemServiceImplementation {
         return null;
     }   
 
-    public List<ExistingItem> getUserItems(String username)
+    public List<ExistingPokemon> getUserPokemon(String username)
     {
-        existingItemsList = new ArrayList<ExistingItem>();  
+        existingPokeList = new ArrayList<ExistingPokemon>();  
         try {
             PreparedStatement stmt = connection
-                    .prepareStatement("SELECT * FROM items WHERE username='" + username +"'");
+                    .prepareStatement("SELECT * FROM Pokemon WHERE username='" + username +"'");
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
             {
-                ExistingItem item = new ExistingItem(rs.getInt(1), rs.getString(2), rs.getInt(3));
-                existingItemsList.add(item);                    
+                ExistingPokemon item = new ExistingPokemon(rs.getInt(1), rs.getString(2), rs.getInt(3));
+                existingPokeList.add(item);                    
             }
-            return existingItemsList;
+            return existingPokeList;
         } catch (SQLException e) 
         {
             e.printStackTrace();
@@ -73,20 +79,20 @@ public class ExistingItemServiceImplementation {
         return null;
     }   
 
-    public List<ExistingItem> getExistingItems(String username, String item_template_id)
+    public List<ExistingPokemon> getExistingPokemons(String username, String item_template_id)
     {
-        existingItemsList = new ArrayList<ExistingItem>();  
+        existingPokeList = new ArrayList<ExistingPokemon>();  
         try {
-            String query_str = "SELECT * FROM items WHERE ItemTemplateID=" + item_template_id + " AND username='" + username + "'";
+            String query_str = "SELECT * FROM Pokemon WHERE PokeTemplateID=" + item_template_id + " AND username='" + username + "'";
             PreparedStatement stmt = connection
                     .prepareStatement(query_str);
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
             {
-                ExistingItem item = new ExistingItem(rs.getInt(1), rs.getString(2), rs.getInt(3));
-                existingItemsList.add(item);                    
+                ExistingPokemon item = new ExistingPokemon(rs.getInt(1), rs.getString(2), rs.getInt(3));
+                existingPokeList.add(item);                    
             }
-            return existingItemsList;
+            return existingPokeList;
         } catch (SQLException e) 
         {
             e.printStackTrace();
@@ -96,19 +102,19 @@ public class ExistingItemServiceImplementation {
 
     
 
-    public List<ExistingItem> getExistingTemplateItems(String item_template_id)
+    public List<ExistingPokemon> getExistingTemplatePokemon(String item_template_id)
     {
-        existingItemsList = new ArrayList<ExistingItem>();  
+        existingPokeList = new ArrayList<ExistingPokemon>();  
         try {
             PreparedStatement stmt = connection
-                    .prepareStatement("SELECT * FROM items WHERE ItemTemplateID=" + item_template_id);
+                    .prepareStatement("SELECT * FROM Pokemon WHERE PokeTemplateID=" + item_template_id);
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
             {
-                ExistingItem item = new ExistingItem(rs.getInt(1), rs.getString(2), rs.getInt(3));
-                existingItemsList.add(item);                    
+                ExistingPokemon item = new ExistingPokemon(rs.getInt(1), rs.getString(2), rs.getInt(3));
+                existingPokeList.add(item);                    
             }
-            return existingItemsList;
+            return existingPokeList;
         } catch (SQLException e) 
         {
             e.printStackTrace();
@@ -116,11 +122,11 @@ public class ExistingItemServiceImplementation {
         return null;
     }   
 
-    public Boolean addExistingItem(String username, String item_template_id)
+    public Boolean addExistingPokemon(String username, String item_template_id)
     {
         try {
             PreparedStatement stmt = connection
-                    .prepareStatement("INSERT INTO Items (username, ItemTemplateID) VALUES ('" + username + "', " + item_template_id + ")");
+                    .prepareStatement("INSERT INTO Pokemon (username, PokeTemplateID) VALUES ('" + username + "', " + item_template_id + ")");
             stmt.executeQuery();
             return true;    
         } catch (SQLException e) 
@@ -131,11 +137,11 @@ public class ExistingItemServiceImplementation {
     } 
     
     
-    public Boolean deleteExistingItem(String item_id)
+    public Boolean deleteExistingPokemon(String item_id)
     {
         try {
             PreparedStatement stmt = connection
-                    .prepareStatement("DELETE FROM Items WHERE itemID=" + item_id);
+                    .prepareStatement("DELETE FROM Pokemon WHERE PokeID=" + item_id);
             stmt.executeQuery();
             return true;    
         } catch (SQLException e) 
@@ -145,15 +151,15 @@ public class ExistingItemServiceImplementation {
         return false;
     }   
 
-    public Boolean changeOwnerUsername(String item_id, String new_username)
+    public Boolean changeOwnerUsername(String poke_id, String new_username)
     {
         try {
             // UPDATE Customers
             // SET ContactName = 'Alfred Schmidt', City = 'Frankfurt'
             // WHERE CustomerID = 1;
-            ExistingItem item = this.getItem(item_id);
+            ExistingPokemon pokemon = this.getPokemon(poke_id);
             PreparedStatement stmt = connection
-                    .prepareStatement("UPDATE Items SET itemID=" + item_id + ", username='"+new_username + "', ItemTemplateID="+item.getItem_template_id() + " WHERE itemID=" + item_id);
+                    .prepareStatement("UPDATE Items SET pokeID=" + poke_id + ", username='"+new_username + "', PokeTemplateID="+pokemon.getPoke_template_id() + " WHERE PokeID=" + poke_id);
             stmt.executeQuery();
 
             return true;    
