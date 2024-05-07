@@ -40,6 +40,9 @@ public class HelloController {
 	@Autowired
 	private FriendsServiceeImplementation friendService;
 
+	@Autowired
+	private PostsServiceImplementation postService;
+
 	@GetMapping("/")
 	public String index() {
 
@@ -325,5 +328,31 @@ public  Boolean changePokemonOwner(@RequestParam String poke_id, String new_user
 	@GetMapping("/checkFriendship")
 	public boolean checkFriendship(@RequestParam String username1, @RequestParam String username2) {
 		return this.friendService.checkFriendship(username1, username2);
+	}
+	@GetMapping("/allPosts")
+	public List<Posts> getAllPosts() {
+		return this.postService.getAllPokemonPosts();
+	}
+
+	@PostMapping("/createPost")
+	public ResponseEntity<String> createPost(@RequestBody Posts post) {
+		try {
+			postService.createPokemonPost(post);
+			return ResponseEntity.ok("Pokemon post created successfully!");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to create pokemon post.");
+		}
+	}
+
+	@DeleteMapping("/deletePost/{postId}/{authorUsername}")
+	public ResponseEntity<String> deletePost(@PathVariable int postId, @PathVariable String authorUsername) {
+		try {
+			postService.deletePost(postId, authorUsername);
+			return ResponseEntity.ok("Post deleted successfully!");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("Failed to delete post: " + e.getMessage());
+		}
 	}
 }

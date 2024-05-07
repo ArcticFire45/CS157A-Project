@@ -1,51 +1,72 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Post from "./Post";
 import UserFriendsBox from "./UserFriendsBox";
 
 const PostsPage = ({ user }) => {
   const [newPostImage, setNewPostImage] = useState("");
   const [newPostDescription, setNewPostDescription] = useState("");
-  const [posts, setPosts] = useState([
-    {
-      id: 1,
-      imageUrl: "https://via.placeholder.com/300",
-      description: "This is the first post",
-    },
-    {
-      id: 2,
-      imageUrl: "https://via.placeholder.com/300",
-      description: "This is the second post",
-    },
-    {
-      id: 3,
-      imageUrl: "https://via.placeholder.com/300",
-      description: "This is the third post",
-    },
-  ]);
+  const [posts, setPosts] = useState([]);
 
-  const handleImageChange = (event) => {
-    setNewPostImage(event.target.value);
-  };
-
-  const handleDescriptionChange = (event) => {
-    setNewPostDescription(event.target.value);
-  };
-
-  const handleAddPost = () => {
-    const newPost = {
-      id: posts.length + 1,
-      imageUrl: newPostImage,
-      description: newPostDescription,
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/allPosts");
+        setPosts(response.data);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
     };
-    setPosts([...posts, newPost]);
 
-    setNewPostImage("");
-    setNewPostDescription("");
+    fetchPosts();
+  }, []);
+
+  const handleAddPost = async (e) => {
+    e.preventDefault();
+
+    if (!newPostImage || !newPostDescription) {
+      alert("Please enter both image URL and description.");
+      return;
+    }
+
+    try {
+      await axios.post("http://localhost:8080/createPost", {
+        postDesc: newPostDescription,
+        author: user.username,
+        imageURL: newPostImage,
+      });
+      setNewPostDescription("");
+      setNewPostImage("");
+
+      const response = await axios.get("http://localhost:8080/allPosts");
+      setPosts(response.data);
+
+      alert("Post added!");
+    } catch (error) {
+      console.error("Error creating post:", error);
+    }
+  };
+
+  const handleDeletePost = async (postId) => {
+    try {
+      await axios.delete(
+        `http://localhost:8080/deletePost/${postId}/${user.username}`
+      );
+      const updatedPosts = posts.filter((post) => post.postID !== postId);
+      setPosts(updatedPosts);
+      alert("Post deleted!");
+    } catch (error) {
+      console.error("Error deleting post:", error);
+    }
   };
 
   return (
     <div style={{ textAlign: "center" }}>
       <h1>Home</h1>
+      <p>
+        Welcome to the Home Page! Scroll down to see all the posts! You can even
+        add your own! Don't like your current post? You can also delete it!
+      </p>
       <div style={{ marginBottom: "20px" }}>
         <h2>Add New Post</h2>
         <div
@@ -67,13 +88,13 @@ const PostsPage = ({ user }) => {
             type="text"
             placeholder="Image URL"
             value={newPostImage}
-            onChange={handleImageChange}
+            onChange={(e) => setNewPostImage(e.target.value)}
             style={{ marginBottom: "10px", width: "100%", padding: "8px" }}
           />
           <textarea
             placeholder="Description"
             value={newPostDescription}
-            onChange={handleDescriptionChange}
+            onChange={(e) => setNewPostDescription(e.target.value)}
             style={{ marginBottom: "10px", width: "100%", padding: "8px" }}
             rows={6}
           ></textarea>
@@ -97,9 +118,12 @@ const PostsPage = ({ user }) => {
 
           {posts.map((post) => (
             <Post
-              key={post.id}
-              imageUrl={post.imageUrl}
-              description={post.description}
+              key={post.postID}
+              author={post.author}
+              imageUrl={post.imageURL}
+              description={post.postDesc}
+              onDelete={() => handleDeletePost(post.postID)}
+              currentUser={user.username}
             />
           ))}
         </div>
