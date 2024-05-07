@@ -333,4 +333,15 @@ public  Boolean changePokemonOwner(@RequestParam String poke_id, String new_user
 	public List<Posts> getAllPosts() {
 		return this.postService.getAllPokemonPosts();
 	}
+
+	@PostMapping("/createPost")
+	public ResponseEntity<String> createPost(@RequestBody Posts post) {
+		try {
+			postService.createPokemonPost(post);
+			return ResponseEntity.ok("Pokemon post created successfully!");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to create pokemon post.");
+		}
+	}
 }

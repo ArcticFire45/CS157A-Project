@@ -34,15 +34,16 @@ public class PostsServiceImplementation {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-            return PokemonPosts;
+        return PokemonPosts;
 
-        }
+    }
 
     public void createPokemonPost(Posts post) {
         try {
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO pokemon_posts (post_content, author, imageURL) VALUES (?, ?, ?)");
-            stmt.setString(1, post.getPostDesc());
-            stmt.setString(2, post.getAuthor());
+            PreparedStatement stmt = connection
+                    .prepareStatement("INSERT INTO UserPosts (Author, PostDescription, ImageURL) VALUES (?, ?, ?)");
+            stmt.setString(1, post.getAuthor());
+            stmt.setString(2, post.getPostDesc());
             stmt.setString(3, post.getImageURL());
             int rs = stmt.executeUpdate();
 
@@ -57,5 +58,3 @@ public class PostsServiceImplementation {
     }
 
 }
-    
-    
