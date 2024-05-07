@@ -25,26 +25,24 @@ public class PostsServiceImplementation {
     public List<Posts> getAllPokemonPosts() {
         try {
             PokemonPosts = new ArrayList<Posts>();
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM UserPosts");
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Posts");
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                Posts post = new Posts(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4));
+                Posts post = new Posts(rs.getInt(1), rs.getString(2), rs.getString(3));
                 PokemonPosts.add(post);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return PokemonPosts;
+            return PokemonPosts;
 
-    }
+        }
 
     public void createPokemonPost(Posts post) {
         try {
-            PreparedStatement stmt = connection
-                    .prepareStatement("INSERT INTO UserPosts (Author, PostDescription, ImageURL) VALUES (?, ?, ?)");
-            stmt.setString(1, post.getAuthor());
-            stmt.setString(2, post.getPostDesc());
-            stmt.setString(3, post.getImageURL());
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO pokemon_posts (post_content, author) VALUES (?, ?)");
+            stmt.setString(1, post.getPostContent());
+            stmt.setString(2, post.getAuthor());
             int rs = stmt.executeUpdate();
 
             if (rs > 0) {
@@ -57,21 +55,6 @@ public class PostsServiceImplementation {
         }
     }
 
-    public void deletePost(int postId, String authorUsername) {
-        try {
-            PreparedStatement stmt = connection.prepareStatement(
-                    "DELETE FROM UserPosts WHERE PostID = ? AND Author = ?;");
-            stmt.setInt(1, postId);
-            stmt.setString(2, authorUsername);
-            int rowsAffected = stmt.executeUpdate();
-            if (rowsAffected > 0) {
-                System.out.println("Post deleted successfully!");
-            } else {
-                System.out.println("Failed to delete post.");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
 }
+    
+    
