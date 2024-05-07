@@ -16,6 +16,9 @@ public class UserServiceImplementation {
     @Autowired
     static List<User> userList = new ArrayList<User>();
 
+    @Autowired
+    static List<String> usernameList = new ArrayList<String>();
+
     Connection connection;
 
     public UserServiceImplementation() throws SQLException {
@@ -87,6 +90,22 @@ public class UserServiceImplementation {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public List<String> getAllUsernamesExcept(String excludedUsername) {
+        try {
+            usernameList = new ArrayList<String>();
+            PreparedStatement stmt = connection.prepareStatement("SELECT Username FROM Users WHERE Username != ?");
+            stmt.setString(1, excludedUsername);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                usernameList.add(rs.getString(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return usernameList;
     }
 
     public int updateUserMoney(String username, double money) {

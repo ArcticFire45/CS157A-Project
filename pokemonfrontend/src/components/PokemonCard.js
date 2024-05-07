@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const PokemonCard = ({ name, type1, type2, imageUrl, description }) => {
   const [showDescription, setShowDescription] = useState(false);
@@ -10,14 +10,14 @@ const PokemonCard = ({ name, type1, type2, imageUrl, description }) => {
   return (
     <div
       style={{
-        margin: '10px',
-        padding: '10px',
-        border: '1px solid #ccc',
-        borderRadius: '8px',
-        textAlign: 'center',
-        cursor: 'pointer',
-        width: '150px',
-        height: '225px',
+        margin: "10px",
+        padding: "10px",
+        border: "1px solid #ccc",
+        borderRadius: "8px",
+        textAlign: "center",
+        cursor: "pointer",
+        width: "150px",
+        height: "225px",
       }}
       onClick={toggleDescription}
     >
@@ -31,15 +31,15 @@ const PokemonCard = ({ name, type1, type2, imageUrl, description }) => {
           <img
             src={imageUrl}
             alt={name}
-            style={{ width: '100px', height: '100px' }}
+            style={{ width: "100px", height: "100px" }}
           />
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div style={{ display: "flex", justifyContent: "center" }}>
             <div
               style={{
-                backgroundColor: '#f0f0f0',
-                padding: '5px 10px',
-                borderRadius: '20px',
-                margin: '5px',
+                backgroundColor: "#f0f0f0",
+                padding: "5px 10px",
+                borderRadius: "20px",
+                margin: "5px",
               }}
             >
               {type1}
@@ -47,10 +47,10 @@ const PokemonCard = ({ name, type1, type2, imageUrl, description }) => {
             {type2 && (
               <div
                 style={{
-                  backgroundColor: '#f0f0f0',
-                  padding: '5px 10px',
-                  borderRadius: '20px',
-                  margin: '5px',
+                  backgroundColor: "#f0f0f0",
+                  padding: "5px 10px",
+                  borderRadius: "20px",
+                  margin: "5px",
                 }}
               >
                 {type2}

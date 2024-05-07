@@ -387,12 +387,12 @@ VALUES
 -- Insert statement for UserPosts table with Pokémon-related dummy data
 INSERT INTO UserPosts (PostID, Author, PostDescription, ImageURL)
 VALUES 
-    (1, 'user1', 'Just caught a Pikachu in the forest!', 'https://example.com/pikachu.jpg'),
-    (2, 'user2', 'My Charmander evolved into a Charmeleon!', 'https://example.com/charmeleon.jpg'),
-    (3, 'user3', 'Battling at the Pokémon gym today!', 'https://example.com/pokemon_gym.jpg'),
-    (4, 'user4', 'Found a rare Dragonite near the lake!', 'https://example.com/dragonite.jpg'),
-    (5, 'user5', 'Training my Squirtle for the upcoming tournament!', NULL),
-    (6, 'user1', 'Caught a shiny Eevee while exploring!', 'https://example.com/shiny_eevee.jpg');
+    (1, 'user1', 'Just caught a Pikachu in the forest!', 'https://wallpapers.com/images/hd/pikachu-in-the-forest-76sdhn2b9fen4mzl.jpg'),
+    (2, 'user2', 'My Charmander evolved into a Charmeleon!', 'https://pm1.aminoapps.com/5728/3f5af6b4790e54f7ab2afd48f47adddcd12b1fb7_hq.jpg'),
+    (3, 'user3', 'Battling at the Pokémon gym today!', 'https://staticg.sportskeeda.com/editor/2021/01/d70f3-16105607399966-800.jpg'),
+    (4, 'user4', 'Found a rare Dragonite near the lake!', 'https://pbs.twimg.com/media/Fi1pwIGXEBMEJCt.jpg'),
+    (5, 'user5', 'Training my Squirtle for the upcoming tournament!', "https://static0.gamerantimages.com/wordpress/wp-content/uploads/2021/04/Squirtle-Tackles-Charmander.jpg"),
+    (6, 'user1', 'Caught a shiny Eevee while exploring!', 'https://static0.gamerantimages.com/wordpress/wp-content/uploads/2023/02/shiny-eevee.jpg');
 
 
 -- Insert statement for Friends table with dummy data

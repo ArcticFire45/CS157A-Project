@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +31,21 @@ public class HelloController {
 
 	@Autowired
 	private SalesServiceImplementation salesService;
+
+	@Autowired
+	private PokemonRosterImplementation rosterService;
+
+	@Autowired
+	private ExistingItemServiceImplementation existingItemsService;
+
+	@Autowired
+	private ExistingPokemonServiceImplementation existingPokemonService;
+
+	@Autowired
+	private FriendsServiceeImplementation friendService;
+
+	@Autowired
+	private PostsServiceImplementation postService;
 
 	@Autowired
 	private UserPostsServiceImplementation userPostsService;
@@ -89,6 +105,11 @@ public class HelloController {
 		return this.userservice.getUserFrom(username);
 	}
 
+	@GetMapping("/alluser/{excludedUsername}")
+	public List<String> getAllUserExcept(@PathVariable String excludedUsername) {
+		return this.userservice.getAllUsernamesExcept(excludedUsername);
+	}
+
 	@PostMapping("/updateMoney")
 	public void updateMoney(@RequestBody Map<String, Object> requestBody) {
 		String username = (String) requestBody.get("username");
@@ -100,12 +121,12 @@ public class HelloController {
 	// @RequestParam String pass) {
 
 	@PostMapping("/getUserSales")
-	public List<Sales> userSales(@RequestBody String username) {
+	public List<Sales> userSales(@RequestParam String username) {
 		return this.salesService.getUserPurchases(username);
 	}
 
 	@PostMapping("/getUserPurchases")
-	public List<Sales> userPurchases(@RequestBody String username) {
+	public List<Sales> userPurchases(@RequestParam String username) {
 		return this.salesService.getUserPurchases(username);
 	}
 
@@ -115,7 +136,7 @@ public class HelloController {
 	}
 
 	@PostMapping("/addSale")
-	public ResponseEntity<?> addSale(@RequestBody String buyer, String seller, @RequestParam float price) {
+	public ResponseEntity<?> addSale(@RequestParam String buyer, String seller, float price) {
 		try {
 			boolean madeSale = this.salesService.addSale(seller, buyer, price);
 			if (madeSale) {
