@@ -34,6 +34,9 @@ public class HelloController {
 	@Autowired
 	private UserPostsServiceImplementation userPostsService;
 
+	@Autowired
+    private SalesPostServiceImplementation salesPostService;
+
 	@GetMapping("/")
 	public String index() {
 
@@ -151,6 +154,30 @@ public class HelloController {
         }
     }
 	
+
+	@PostMapping("/salesposts")
+    public ResponseEntity<String> createSalesPost(@RequestBody SalesPost salesPost) {
+        try {
+            salesPostService.createSalesPost(salesPost);
+            return ResponseEntity.ok("Sales post created successfully!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                 .body("Failed to create sales post.");
+        }
+    }
+
+    @DeleteMapping("/salesposts/{salesId}")
+    public ResponseEntity<String> deleteSalesPost(@RequestParam Integer salesId) {
+        try {
+            salesPostService.deleteSalesPost(salesId);
+            return ResponseEntity.ok("Sales post deleted successfully!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                 .body("Failed to delete sales post.");
+        }
+    }
 
 
 
