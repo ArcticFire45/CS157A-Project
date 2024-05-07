@@ -30,6 +30,9 @@ public class HelloController {
 	@Autowired
 	private SalesServiceImplementation salesService;
 
+	@Autowired
+	private ExistingItemServiceImplementation existingItemsService;
+
 	@GetMapping("/")
 	public String index() {
 
@@ -120,5 +123,85 @@ public class HelloController {
 			return ResponseEntity.status(500).body("Internal server error: " + e.getMessage());
 		}
 	}
+// getItem
+// getUserItems
+// getExistingItems
+// getExistingTemplateItems
+
+
+	@GetMapping("/getExistingItem")
+	public ExistingItem getExistingItem(@RequestBody String item_id) {
+		try {
+			return this.existingItemsService.getItem(item_id);
+			} catch (Exception e) {
+			return null;
+		}
+	}
+
+
+	@GetMapping("/getUserItems")
+	public List<ExistingItem> getUserItems(@RequestBody String username) {
+		try {
+			return this.existingItemsService.getUserItems(username);
+			} catch (Exception e) {
+			return null;
+		}
+	}
+	@GetMapping("/getExistingItems")
+	public List<ExistingItem> getExistingItems(@RequestBody String username, String template_id) {
+		try {
+			return this.existingItemsService.getExistingItems(username, template_id);
+			} catch (Exception e) {
+			return null;
+		}
+	}
+
+
+	@GetMapping("/getExistingTemplateItems")
+	public  List<ExistingItem> getExistingTemplateItem(@RequestBody String template_id) {
+		try {
+			return this.existingItemsService.getExistingTemplateItems(template_id);
+			} catch (Exception e) {
+			return null;
+		}
+	}
+
+	@PostMapping("/addExistingItem")
+	public  Boolean addExistingItem(@RequestBody String username, String template_id) {
+		try {
+			return this.existingItemsService.addExistingItem(username, template_id);
+			} catch (Exception e) {
+			return false;
+		}
+
+	}
+
+
+	@PostMapping("/deleteExistingItem")
+	public  Boolean getExistingTemplateItems(@RequestBody String item_id) {
+		try {
+			return this.existingItemsService.deleteExistingItem(item_id);
+			} catch (Exception e) {
+			return false;
+		}
+
+	}
+
+	@PostMapping("/changeItemOwner")
+	public  Boolean getExistingTemplateItems(@RequestBody String item_id, String new_username) {
+		try {
+			return this.existingItemsService.changeOwnerUsername(item_id, new_username);
+			} catch (Exception e) {
+			return false;
+		}
+
+	}
+
+
+
+	
+	
+
+	
 
 }
