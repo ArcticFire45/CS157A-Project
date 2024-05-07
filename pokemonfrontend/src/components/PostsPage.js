@@ -116,16 +116,19 @@ const PostsPage = ({ user }) => {
         <div>
           <h2>Posts</h2>
 
-          {posts.map((post) => (
-            <Post
-              key={post.postID}
-              author={post.author}
-              imageUrl={post.imageURL}
-              description={post.postDesc}
-              onDelete={() => handleDeletePost(post.postID)}
-              currentUser={user.username}
-            />
-          ))}
+          {posts
+            .slice()
+            .reverse()
+            .map((post) => (
+              <Post
+                key={post.postID}
+                author={post.author}
+                imageUrl={post.imageURL}
+                description={post.postDesc}
+                onDelete={() => handleDeletePost(post.postID)}
+                currentUser={user.username}
+              />
+            ))}
         </div>
       </div>
       <UserFriendsBox user={user} />
