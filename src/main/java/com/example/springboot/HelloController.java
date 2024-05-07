@@ -48,9 +48,6 @@ public class HelloController {
 	private PostsServiceImplementation postService;
 
 	@Autowired
-	private UserPostsServiceImplementation userPostsService;
-
-	@Autowired
     private SalesPostServiceImplementation salesPostService;
 
 	@GetMapping("/")
@@ -149,31 +146,32 @@ public class HelloController {
 		}
 	}
 
-	@GetMapping("/userposts")
-    public List<UserPosts> getAllUserPosts() {
-        return this.userPostsService.getAllUserPosts();
-    }
+	@GetMapping("/allPosts")
+	public List<Posts> getAllPosts() {
+		return this.postService.getAllPokemonPosts();
+	}
 
-    @PostMapping("/createuserpost")
-    public ResponseEntity<?> createUserPost(@RequestBody UserPosts post) {
-        try {
-            this.userPostsService.createPokemonPost(post);
-            return ResponseEntity.ok("User post created successfully.");
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Failed to create user post: " + e.getMessage());
-        }
-    }
+	@PostMapping("/createPost")
+	public ResponseEntity<String> createPost(@RequestBody Posts post) {
+		try {
+			postService.createPokemonPost(post);
+			return ResponseEntity.ok("Pokemon post created successfully!");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to create pokemon post.");
+		}
+	}
 
-
-    @DeleteMapping("/userposts/{postId}")
-    public ResponseEntity<?> deleteUserPost(@PathVariable Integer postId) {
-        try {
-            userPostsService.deletePokemonPost(postId);
-            return ResponseEntity.ok("User post deleted successfully.");
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body("Failed to delete user post: " + e.getMessage());
-        }
-    }
+	@DeleteMapping("/deletePost/{postId}/{authorUsername}")
+	public ResponseEntity<String> deletePost(@PathVariable int postId, @PathVariable String authorUsername) {
+		try {
+			postService.deletePost(postId, authorUsername);
+			return ResponseEntity.ok("Post deleted successfully!");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("Failed to delete post: " + e.getMessage());
+		}
+	}
 	
 
 	@PostMapping("/salesposts")
