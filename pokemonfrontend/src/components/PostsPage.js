@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Post from "./Post";
+import UserFriendsBox from "./UserFriendsBox";
 
-const PostsPage = () => {
+const PostsPage = ({ user }) => {
   const [newPostImage, setNewPostImage] = useState("");
   const [newPostDescription, setNewPostDescription] = useState("");
   const [posts, setPosts] = useState([
@@ -53,9 +54,9 @@ const PostsPage = () => {
             borderRadius: "10px",
             padding: "20px",
             marginBottom: "10px",
-            width: "80vw",
-            height: "185px",
-            marginLeft: "10vw",
+            width: "50vw",
+            height: "200px",
+            marginLeft: "25vw",
             position: "relative",
             display: "flex",
             flexDirection: "column",
@@ -82,9 +83,8 @@ const PostsPage = () => {
               padding: "10px 20px",
               fontSize: "16px",
               position: "absolute",
-bottom: 0,
-right: 0,
-
+              bottom: 10,
+              right: 10,
             }}
           >
             Add Post
@@ -93,7 +93,7 @@ right: 0,
       </div>
       <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
         <div>
-        <h2>Posts</h2>
+          <h2>Posts</h2>
 
           {posts.map((post) => (
             <Post
@@ -104,6 +104,7 @@ right: 0,
           ))}
         </div>
       </div>
+      <UserFriendsBox user={user} />
     </div>
   );
 };

@@ -10,6 +10,7 @@ const ItemInventoryBox = ({ inventory, totalMultiplier }) => {
           width: "90%",
           overflowY: "auto",
           border: "1px solid #ccc",
+          borderRadius: "15px",
           padding: "10px",
         }}
       >
