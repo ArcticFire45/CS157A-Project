@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 //     CHECK (Price >= 0) 
 // );
 
-
 @Service
 public class SalesServiceImplementation {
 
@@ -36,14 +35,14 @@ public class SalesServiceImplementation {
     public List<Sales> getUserPurchases(String username) {
         ArrayList<Sales> purchaseList = new ArrayList<Sales>();
         try {
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM sales WHERE purchaser=\'" + username + "\'");
+            PreparedStatement stmt = connection
+                    .prepareStatement("SELECT * FROM sales WHERE purchaser=\'" + username + "\'");
             ResultSet rs = stmt.executeQuery();
-            while(rs.next())
-            {
+            while (rs.next()) {
                 Sales purchase = new Sales(rs.getInt(1),
-                                            rs.getString(2),
-                                            rs.getString(3), 
-                                            rs.getFloat(4));
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getFloat(4));
                 purchaseList.add(purchase);
             }
         } catch (SQLException e) {
@@ -52,18 +51,17 @@ public class SalesServiceImplementation {
         return purchaseList;
     }
 
-
     public List<Sales> getUserSales(String username) {
         ArrayList<Sales> purchaseList = new ArrayList<Sales>();
         try {
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM sales WHERE seller=\'" + username + "\'");
+            PreparedStatement stmt = connection
+                    .prepareStatement("SELECT * FROM sales WHERE seller=\'" + username + "\'");
             ResultSet rs = stmt.executeQuery();
-            while(rs.next())
-            {
+            while (rs.next()) {
                 Sales purchase = new Sales(rs.getInt(1),
-                                            rs.getString(2),
-                                            rs.getString(3), 
-                                            rs.getFloat(4));
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getFloat(4));
                 purchaseList.add(purchase);
             }
         } catch (SQLException e) {
@@ -75,17 +73,13 @@ public class SalesServiceImplementation {
     public boolean addSale(String seller, String purchaser, float price) {
         try {
             String query;
-            if(purchaser== null)
-            {
+            if (purchaser == null) {
                 query = "INSERT INTO sales VALUE (Seller, Price) VALUES ('" + seller + "', " + price;
-            }
-            else if(seller== null)
-            {
+            } else if (seller == null) {
                 query = "INSERT INTO sales VALUE (Purchaser, Price) VALUES ('" + purchaser + "', " + price;
-            }
-            else
-            {
-                query = "INSERT INTO sales VALUE (Seller, Purchaser, Price) VALUES ('" + seller + "', '" + purchaser + "', " + price;
+            } else {
+                query = "INSERT INTO sales VALUE (Seller, Purchaser, Price) VALUES ('" + seller + "', '" + purchaser
+                        + "', " + price;
             }
             PreparedStatement stmt = connection.prepareStatement(query);
             // ResultSet rs = stmt.executeQuery();
@@ -97,10 +91,7 @@ public class SalesServiceImplementation {
         return false;
     }
 
-
-
-
-// Did we want to add dates to when they were purchased, when they were posted?
+    // Did we want to add dates to when they were purchased, when they were posted?
     public List<Sales> getUserTransactionHistory(String username) {
         ArrayList<Sales> transactionList = new ArrayList<Sales>();
         transactionList.addAll(getUserPurchases(username));

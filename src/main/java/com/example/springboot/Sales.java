@@ -1,7 +1,5 @@
 package com.example.springboot;
 
-
-
 // CREATE TABLE IF NOT EXISTS Sales (
 //     SalesID INT PRIMARY KEY,
 //     Seller varchar(30) NOT NULL,
@@ -13,13 +11,10 @@ package com.example.springboot;
 // );
 public class Sales {
 
-
     private Integer sales_id;
     private String seller;
     private String purchaser;
     private Float price;
-
-
 
     public Sales(Integer sales_id, String seller, String purchaser, Float price) {
         this.sales_id = sales_id;
@@ -65,7 +60,7 @@ public class Sales {
     public void setPrice(Float price) {
         this.price = price;
     }
-    
+
     @Override
     public String toString() {
         return "Sales [sales_id=" + sales_id + ", seller=" + seller + ", purchaser=" + purchaser + ", price=" + price

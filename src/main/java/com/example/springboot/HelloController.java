@@ -33,7 +33,7 @@ public class HelloController {
 
 	@Autowired
 	private ExistingItemServiceImplementation existingItemsService;
-	
+
 	@Autowired
 	private ExistingPokemonServiceImplementation existingPokemonService;
 
@@ -138,178 +138,150 @@ public class HelloController {
 			return ResponseEntity.status(500).body("Internal server error: " + e.getMessage());
 		}
 	}
-// getItem
-// getUserItems
-// getExistingItems
-// getExistingTemplateItems
-
+	// getItem
+	// getUserItems
+	// getExistingItems
+	// getExistingTemplateItems
 
 	@GetMapping("/getExistingItem")
 	public ExistingItem getExistingItem(@RequestParam String item_id) {
 		try {
 			return this.existingItemsService.getItem(item_id);
-			} catch (Exception e) {
+		} catch (Exception e) {
 			return null;
 		}
 	}
-
 
 	@GetMapping("/getUserItems")
 	public List<ExistingItem> getUserItems(@RequestParam String username) {
 		try {
 			return this.existingItemsService.getUserItems(username);
-			} catch (Exception e) {
+		} catch (Exception e) {
 			return null;
 		}
 	}
+
 	@GetMapping("/getExistingItems")
 	public List<ExistingItem> getExistingItems(@RequestParam String username, String template_id) {
 		try {
 			return this.existingItemsService.getExistingItems(username, template_id);
-			} catch (Exception e) {
+		} catch (Exception e) {
 			return null;
 		}
 	}
 
-
 	@GetMapping("/getExistingTemplateItems")
-	public  List<ExistingItem> getExistingTemplateItem(@RequestParam String template_id) {
+	public List<ExistingItem> getExistingTemplateItem(@RequestParam String template_id) {
 		try {
 			return this.existingItemsService.getExistingTemplateItems(template_id);
-			} catch (Exception e) {
+		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@PostMapping("/addExistingItem")
-	public  Boolean addExistingItem(@RequestParam String username, String template_id) {
+	public Boolean addExistingItem(@RequestParam String username, String template_id) {
 		try {
 			return this.existingItemsService.addExistingItem(username, template_id);
-			} catch (Exception e) {
+		} catch (Exception e) {
 			return false;
 		}
 
 	}
 
-
 	@PostMapping("/deleteExistingItem")
-	public  Boolean deleteExistingItem(@RequestParam String item_id) {
+	public Boolean deleteExistingItem(@RequestParam String item_id) {
 		try {
 			return this.existingItemsService.deleteExistingItem(item_id);
-			} catch (Exception e) {
+		} catch (Exception e) {
 			return false;
 		}
 
 	}
 
 	@PostMapping("/changeItemOwner")
-	public  Boolean changeItemOwner(@RequestParam String item_id, String new_username) {
+	public Boolean changeItemOwner(@RequestParam String item_id, String new_username) {
 		try {
 			return this.existingItemsService.changeOwnerUsername(item_id, new_username);
-			} catch (Exception e) {
+		} catch (Exception e) {
 			return false;
 		}
 
 	}
 
+	// getExistingPokemon
+	// getExistingPokemons
+	// getUserPokemon
+	// getExistingTemplatePokemon
+	// deleteExistingPokemon
+	// changePokemonOwner
 
+	@GetMapping("/getExistingPokemon")
+	public ExistingPokemon getExistingPokemon(@RequestParam String poke_id) {
+		try {
 
-// getExistingPokemon
-// getExistingPokemons
-// getUserPokemon
-// getExistingTemplatePokemon
-// deleteExistingPokemon
-// changePokemonOwner
-
-
-@GetMapping("/getExistingPokemon")
-public ExistingPokemon getExistingPokemon(@RequestParam String poke_id) {
-	try {
-		
-		return this.existingPokemonService.getPokemon(poke_id);
+			return this.existingPokemonService.getPokemon(poke_id);
 		} catch (Exception e) {
-		return null;
-	}
-}
-
-
-@GetMapping("/getUserPokemon")
-public List<ExistingPokemon> getUserPokemon(@RequestParam String username) {
-	try {
-		return this.existingPokemonService.getUserPokemon(username);
-		} catch (Exception e) {
-		return null;
-	}
-}
-
-
-@GetMapping("/getExistingPokemons")
-public List<ExistingPokemon> getExistingPokemon(@RequestParam String username, String template_id) {
-	try {
-		return this.existingPokemonService.getExistingPokemons(username, template_id);
-		} catch (Exception e) {
-		return null;
-	}
-}
-
-
-
-@GetMapping("/getExistingTemplatePokemon")
-public  List<ExistingPokemon> getExistingTemplatePokemon(@RequestParam String template_id) {
-	try {
-		return this.existingPokemonService.getExistingTemplatePokemon(template_id);
-		} catch (Exception e) {
-		return null;
-	}
-}
-
-@PostMapping("/addExistingPokemon")
-public  Boolean addExistingPokemon(@RequestParam String username, String template_id) {
-	try {
-		return this.existingPokemonService.addExistingPokemon(username, template_id);
-		} catch (Exception e) {
-		return false;
+			return null;
+		}
 	}
 
-}
-
-
-@PostMapping("/deleteExistingPokemon")
-public  Boolean deleteExistingPokemon(@RequestParam String poke_id) {
-	try {
-		return this.existingPokemonService.deleteExistingPokemon(poke_id);
+	@GetMapping("/getUserPokemon")
+	public List<ExistingPokemon> getUserPokemon(@RequestParam String username) {
+		try {
+			return this.existingPokemonService.getUserPokemon(username);
 		} catch (Exception e) {
-		return false;
+			return null;
+		}
 	}
 
-}
-
-@PostMapping("/changePokemonOwner")
-public  Boolean changePokemonOwner(@RequestParam String poke_id, String new_username) {
-	try {
-		return this.existingPokemonService.changeOwnerUsername(poke_id, new_username);
+	@GetMapping("/getExistingPokemons")
+	public List<ExistingPokemon> getExistingPokemon(@RequestParam String username, String template_id) {
+		try {
+			return this.existingPokemonService.getExistingPokemons(username, template_id);
 		} catch (Exception e) {
-		return false;
+			return null;
+		}
 	}
 
-}
+	@GetMapping("/getExistingTemplatePokemon")
+	public List<ExistingPokemon> getExistingTemplatePokemon(@RequestParam String template_id) {
+		try {
+			return this.existingPokemonService.getExistingTemplatePokemon(template_id);
+		} catch (Exception e) {
+			return null;
+		}
+	}
 
+	@PostMapping("/addExistingPokemon")
+	public Boolean addExistingPokemon(@RequestParam String username, String template_id) {
+		try {
+			return this.existingPokemonService.addExistingPokemon(username, template_id);
+		} catch (Exception e) {
+			return false;
+		}
 
+	}
 
+	@PostMapping("/deleteExistingPokemon")
+	public Boolean deleteExistingPokemon(@RequestParam String poke_id) {
+		try {
+			return this.existingPokemonService.deleteExistingPokemon(poke_id);
+		} catch (Exception e) {
+			return false;
+		}
 
+	}
 
+	@PostMapping("/changePokemonOwner")
+	public Boolean changePokemonOwner(@RequestParam String poke_id, String new_username) {
+		try {
+			return this.existingPokemonService.changeOwnerUsername(poke_id, new_username);
+		} catch (Exception e) {
+			return false;
+		}
 
-
-
-
-
-
-
-
-
-	
-
-	
+	}
 
 	@PostMapping("/addFriend")
 	public void addFriend(@RequestBody Map<String, Object> requestBody) {
@@ -329,6 +301,7 @@ public  Boolean changePokemonOwner(@RequestParam String poke_id, String new_user
 	public boolean checkFriendship(@RequestParam String username1, @RequestParam String username2) {
 		return this.friendService.checkFriendship(username1, username2);
 	}
+
 	@GetMapping("/allPosts")
 	public List<Posts> getAllPosts() {
 		return this.postService.getAllPokemonPosts();
