@@ -25,10 +25,10 @@ public class PostsServiceImplementation {
     public List<Posts> getAllPokemonPosts() {
         try {
             PokemonPosts = new ArrayList<Posts>();
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Posts");
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM UserPosts");
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                Posts post = new Posts(rs.getInt(1), rs.getString(2), rs.getString(3));
+                Posts post = new Posts(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4));
                 PokemonPosts.add(post);
             }
         } catch (SQLException e) {
@@ -40,9 +40,10 @@ public class PostsServiceImplementation {
 
     public void createPokemonPost(Posts post) {
         try {
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO pokemon_posts (post_content, author) VALUES (?, ?)");
-            stmt.setString(1, post.getPostContent());
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO pokemon_posts (post_content, author, imageURL) VALUES (?, ?, ?)");
+            stmt.setString(1, post.getPostDesc());
             stmt.setString(2, post.getAuthor());
+            stmt.setString(3, post.getImageURL());
             int rs = stmt.executeUpdate();
 
             if (rs > 0) {

@@ -1,32 +1,24 @@
 package com.example.springboot;
 
-
 public class Posts {
     private Integer postID;
-    private String postContent;
     private String author;
+    private String postDesc;
+    private String imageURL;
 
-    public Posts(Integer postID, String postContent, String author) {
+    public Posts(Integer postID, String author, String postDesc, String imageURL) {
         this.postID = postID;
-        this.postContent = postContent;
         this.author = author;
-
+        this.postDesc = postDesc;
+        this.imageURL = imageURL;
     }
 
-    public Integer getPostid() {
+    public Integer getPostID() {
         return postID;
     }
 
-    public void setPostid(Integer postID) {
+    public void setPostID(Integer postID) {
         this.postID = postID;
-    }
-
-    public String getPostContent() {
-        return postContent;
-    }
-
-    public void setPostContent(String postContent) {
-        this.postContent = postContent;
     }
 
     public String getAuthor() {
@@ -37,8 +29,25 @@ public class Posts {
         this.author = author;
     }
 
+    public String getPostDesc() {
+        return postDesc;
+    }
+
+    public void setPostDesc(String postDesc) {
+        this.postDesc = postDesc;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
     @Override
     public String toString() {
-        return "PokemonPosts [postId=" + postID + ", postContent=" + postContent + ", author=" + author + "]";
+        return "Posts [postID=" + postID + ", author=" + author + ", postDesc=" + postDesc + ", imageURL=" + imageURL
+                + "]";
     }
 }

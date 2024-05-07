@@ -40,6 +40,9 @@ public class HelloController {
 	@Autowired
 	private FriendsServiceeImplementation friendService;
 
+	@Autowired
+	private PostsServiceImplementation postService;
+
 	@GetMapping("/")
 	public String index() {
 
@@ -325,5 +328,9 @@ public  Boolean changePokemonOwner(@RequestParam String poke_id, String new_user
 	@GetMapping("/checkFriendship")
 	public boolean checkFriendship(@RequestParam String username1, @RequestParam String username2) {
 		return this.friendService.checkFriendship(username1, username2);
+	}
+	@GetMapping("/allPosts")
+	public List<Posts> getAllPosts() {
+		return this.postService.getAllPokemonPosts();
 	}
 }
