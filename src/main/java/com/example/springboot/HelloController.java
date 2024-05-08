@@ -49,6 +49,9 @@ public class HelloController {
 	@Autowired
 	private ItemSalesServiceImplementation itemSalesService;
 
+	@Autowired
+	private PokemonSalesServiceImplementation pokemonSalesService;
+
 	@GetMapping("/")
 	public String index() {
 
@@ -363,7 +366,7 @@ public class HelloController {
 		}
 	}
 	
-
+// Used to buy items from the shop
 	@PostMapping("/buyShopItem")
 	public boolean buyShopItem(@RequestParam String buyer_username, float price, Integer item_template) {
 		try{
@@ -373,6 +376,7 @@ public class HelloController {
 		}
 	}
 
+	// Used to buy items from other people. will do a transfer
 	@PostMapping("/buySellerItem")
 	public boolean buySellerItem(@RequestParam String seller_username, String buyer_username, float price, Integer item_template) {
 		try{
@@ -382,6 +386,28 @@ public class HelloController {
 		}
 	}
 	
+
+
+
+	// Used to buy items from the shop
+	@PostMapping("/buyShopPokemon")
+	public boolean buyShopPokemon(@RequestParam String buyer_username, float price, Integer pokemon_template) {
+		try{
+			return pokemonSalesService.buyStockPokemon(new Sales(-1, "", buyer_username, price), pokemon_template);
+		}catch(Exception e){ 
+			return false;
+		}
+	}
+
+	// Used to buy items from other people. will do a transfer
+	@PostMapping("/buySellerPokemon")
+	public boolean buySellerPokemon(@RequestParam String seller_username, String buyer_username, float price, Integer pokemon_template) {
+		try{
+			return pokemonSalesService.buySellerPokemon(new Sales(-1, seller_username, buyer_username, price), pokemon_template);
+		}catch(Exception e){ 
+			return false;
+		}
+	}
 
 }		// (Integer sales_id, String seller, String purchaser, Float price)
 
