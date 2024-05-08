@@ -333,7 +333,7 @@ public class HelloController {
 	}
 
 	@GetMapping("/getRoster")
-	public PokemonRoster getRoster(@RequestParam String username) {
+	public List<Pokemon> getRoster(@RequestParam String username) {
 		try{
 			return this.rosterService.getRoster(username);
 		}catch(Exception e){
