@@ -364,12 +364,25 @@ public class HelloController {
 	}
 	
 
-	// @PostMapping("/buyShopItem")
-	// public boolean buyShopItem(@RequestParam String buyer_username, float price, Integer item_template) {
+	@PostMapping("/buyShopItem")
+	public boolean buyShopItem(@RequestParam String buyer_username, float price, Integer item_template) {
+		try{
+			return itemSalesService.buyStockItem(new Sales(-1, "", buyer_username, price), item_template);
+		}catch(Exception e){ 
+			return false;
+		}
+	}
 
-	// 	itemSalesService.buyShopItem(Sales(), buyer_username);
-	// 	this.friendService.addFriend(currentUser, friendUser);
-	// }
+	@PostMapping("/buySellerItem")
+	public boolean buySellerItem(@RequestParam String seller_username, String buyer_username, float price, Integer item_template) {
+		try{
+			return itemSalesService.buySellerItem(new Sales(-1, seller_username, buyer_username, price), item_template);
+		}catch(Exception e){ 
+			return false;
+		}
+	}
 	
 
-}
+}		// (Integer sales_id, String seller, String purchaser, Float price)
+
+// itemSalesService.BuyStockItem(null, buyer_username)

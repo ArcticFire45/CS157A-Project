@@ -117,12 +117,13 @@ public class ItemSalesServiceImplementation {
     //     query = query + "INSERT INTO sales (Seller, Purchaser, Price) VALUES ('" + sales.getSeller() + "', '" +  sales.getPurchaser()+ "', " + sales.getPrice() + ");";
     // }
 
-    public Boolean BuyStockItem(Sales sales, String item_template_id)
+    public Boolean buyStockItem(Sales sales, Integer item_template_id)
     {
         try {
+            String str_item_template_id = String.valueOf(item_template_id);
             String query = "START TRANSACTION; ";
             query = query + "UPDATE users SET money=money-" + String.valueOf(sales.getPrice()) + " WHERE username='" + sales.getPurchaser() + "';";
-            query = query + "INSERT INTO items (Username, ItemTemplateID) VALUES ('" + sales.getPurchaser() + "', " + item_template_id + "); ";
+            query = query + "INSERT INTO items (Username, ItemTemplateID) VALUES ('" + sales.getPurchaser() + "', " + str_item_template_id + "); ";
             query = query + "INSERT INTO sales (Purchaser, Price) VALUES ('" + sales.getPurchaser() + "', " + String.valueOf(sales.getPrice()) + "); ";
             query = query + "INSERT INTO itemSales (salesID, itemID) SELECT MAX(s.salesID), MAX(i.itemID) FROM sales s, items i; ";
             query = query + "COMMIT;";
@@ -143,15 +144,16 @@ public class ItemSalesServiceImplementation {
         return false;
     }   
 
-    public Boolean BuySellerItem(Sales sales, String item_id)
+    public Boolean buySellerItem(Sales sales, Integer item_id)
     {
         try {
+            String str_item_id = String.valueOf(item_id);
             String query = "START TRANSACTION; ";
             query = query + "UPDATE users SET money=money-" + String.valueOf(sales.getPrice()) + " WHERE username='" + sales.getPurchaser() + "';";
             query = query + "UPDATE users SET money=money+" + String.valueOf(sales.getPrice()) + " WHERE username='" + sales.getSeller() + "';";
-            query = query + "UPDATE items SET Username=" + sales.getPurchaser() + " WHERE itemID=" + item_id + "); ";
+            query = query + "UPDATE items SET Username=" + sales.getPurchaser() + " WHERE itemID=" + str_item_id + "); ";
             query = query + "INSERT INTO sales (Seller, Purchaser, Price) VALUES ('" + sales.getSeller() + "', '" + sales.getPurchaser() + "', " + String.valueOf(sales.getPrice()) + "); "; 
-            query = query + "INSERT INTO itemSales (salesID, itemID) SELECT MAX(s.salesID)," + item_id + " FROM sales s; ";
+            query = query + "INSERT INTO itemSales (salesID, itemID) SELECT MAX(s.salesID)," + str_item_id + " FROM sales s; ";
             query = query + "COMMIT;";
 
             // query = "START TRANSACTION; ";
