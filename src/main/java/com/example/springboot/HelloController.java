@@ -46,6 +46,9 @@ public class HelloController {
 	@Autowired
 	private PostsServiceImplementation postService;
 
+	@Autowired
+	private ItemSalesServiceImplementation itemSalesService;
+
 	@GetMapping("/")
 	public String index() {
 
@@ -141,6 +144,7 @@ public class HelloController {
 			return ResponseEntity.status(500).body("Internal server error: " + e.getMessage());
 		}
 	}
+
 	// getItem
 	// getUserItems
 	// getExistingItems
@@ -155,8 +159,8 @@ public class HelloController {
 		}
 	}
 
-	@GetMapping("/getUserItems")
-	public List<ExistingItem> getUserItems(@RequestParam String username) {
+	@GetMapping("/getExistingUserItems")
+	public List<ExistingItem> getExistingUserItems(@RequestParam String username) {
 		try {
 			return this.existingItemsService.getUserItems(username);
 		} catch (Exception e) {
@@ -229,7 +233,7 @@ public class HelloController {
 		}
 	}
 
-	@GetMapping("/getUserPokemon")
+	@GetMapping("/getExistingUserPokemon")
 	public List<ExistingPokemon> getUserPokemon(@RequestParam String username) {
 		try {
 			return this.existingPokemonService.getUserPokemon(username);
@@ -359,6 +363,13 @@ public class HelloController {
 		}
 	}
 	
+
+	// @PostMapping("/buyShopItem")
+	// public boolean buyShopItem(@RequestParam String buyer_username, float price, Integer item_template) {
+
+	// 	itemSalesService.buyShopItem(Sales(), buyer_username);
+	// 	this.friendService.addFriend(currentUser, friendUser);
+	// }
 	
 
 }
