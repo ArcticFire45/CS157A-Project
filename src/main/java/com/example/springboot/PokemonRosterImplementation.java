@@ -19,23 +19,28 @@ public class PokemonRosterImplementation {
         connection = DBUtil.getConnection();
     }
 
-    public PokemonRoster getRoster(String username){
-        List<Integer> pokemons = new ArrayList<>();
+    public List<Pokemon> getRoster(String username){
+        List<Pokemon> pokemons = new ArrayList<>();
         try {
             PreparedStatement stmt = connection
-                    .prepareStatement("SELECT PokemonID1, PokemonID2, PokemonID3, PokemonID4, PokemonID5, PokemonID6 FROM PokemonTeam WHERE Username =" + username);
+                    .prepareStatement("SELECT p.PokeID, p.StockPrice, p.PokeName, p.Type1, p.Type2, p.GifUrl, p.ImageUrl, p.PokemonDescription " +
+                    "FROM PokemonTeam pt " +
+                    "JOIN Pokemon p ON p.PokeID IN (pt.PokemonID1, pt.PokemonID2, pt.PokemonID3, pt.PokemonID4, pt.PokemonID5, pt.PokemonID6) " +
+                    "WHERE pt.Username = " + username);
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){
-                pokemons.add(rs.getInt("PokemonID1"));
-                pokemons.add(rs.getInt("PokemonID2"));
-                pokemons.add(rs.getInt("PokemonID3"));
-                pokemons.add(rs.getInt("PokemonID4"));
-                pokemons.add(rs.getInt("PokemonID5"));
-                pokemons.add(rs.getInt("PokemonID6"));
-
-                PokemonRoster poke = new PokemonRoster(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7));
-                return poke;
+                pokemons.add(new Pokemon(
+                rs.getInt("PokeID"),
+                rs.getInt("StockPrice"),
+                rs.getString("PokeName"),
+                rs.getString("Type1"),
+                rs.getString("Type2"),
+                rs.getString("GifUrl"),
+                rs.getString("ImageUrl"),
+                rs.getString("PokemonDescription")
+            ));
             }
+            return pokemons;
         } catch (SQLException e) {
             e.printStackTrace();
         }
