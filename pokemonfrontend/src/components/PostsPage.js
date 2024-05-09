@@ -3,10 +3,45 @@ import axios from "axios";
 import Post from "./Post";
 import UserFriendsBox from "./UserFriendsBox";
 
-const PostsPage = ({ user }) => {
+const PostsPage = ({ user, money }) => {
   const [newPostImage, setNewPostImage] = useState("");
   const [newPostDescription, setNewPostDescription] = useState("");
+  const [makeSale, setMakeSale] = useState(false);
+  const [price, setPrice] = useState("");
+  const [currency, setCurrency] = useState("USD"); // Default currency
   const [posts, setPosts] = useState([]);
+  const [pokemonInventory, setPokemonInventory] = useState([]);
+  const [inventory, setInventory] = useState([]);
+
+  useEffect(() => {
+    const fetchUserInventory = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/getExistingUserPokemon?username=${user.username}`
+        );
+        setPokemonInventory(response.data);
+      } catch (error) {
+        console.error("Error fetching user inventory:", error);
+      }
+    };
+
+    fetchUserInventory();
+  }, [user.username, money]);
+
+  useEffect(() => {
+    const fetchUserInventory = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/getExistingUserItems?username=${user.username}`
+        );
+        setInventory(response.data);
+      } catch (error) {
+        console.error("Error fetching user inventory:", error);
+      }
+    };
+
+    fetchUserInventory();
+  }, [user.username, money]);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -30,13 +65,21 @@ const PostsPage = ({ user }) => {
     }
 
     try {
-      await axios.post("http://localhost:8080/createPost", {
+      const postData = {
         postDesc: newPostDescription,
         author: user.username,
         imageURL: newPostImage,
-      });
+        makeSale: makeSale,
+        price: makeSale ? parseFloat(price) : null,
+        currency: makeSale ? currency : null,
+      };
+
+      await axios.post("http://localhost:8080/createPost", postData);
       setNewPostDescription("");
       setNewPostImage("");
+      setMakeSale(false);
+      setPrice("");
+      setCurrency("USD");
 
       const response = await axios.get("http://localhost:8080/allPosts");
       setPosts(response.data);
@@ -76,7 +119,7 @@ const PostsPage = ({ user }) => {
             padding: "20px",
             marginBottom: "10px",
             width: "50vw",
-            height: "200px",
+            height: makeSale ? "280px" : "200px",
             marginLeft: "25vw",
             position: "relative",
             display: "flex",
@@ -96,8 +139,43 @@ const PostsPage = ({ user }) => {
             value={newPostDescription}
             onChange={(e) => setNewPostDescription(e.target.value)}
             style={{ marginBottom: "10px", width: "100%", padding: "8px" }}
-            rows={6}
+            rows={4}
           ></textarea>
+          <label style={{ marginBottom: "10px" }}>
+            <input
+              type="checkbox"
+              checked={makeSale}
+              onChange={(e) => setMakeSale(e.target.checked)}
+            />
+            Make Sale
+          </label>
+          {makeSale && (
+            <div>
+              <input
+                type="number"
+                placeholder="Price"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                style={{ marginBottom: "10px", width: "100%", padding: "8px" }}
+              />
+              <select
+                value={currency}
+                onChange={(e) => setCurrency(e.target.value)}
+                style={{ marginBottom: "10px", width: "100%", padding: "8px" }}
+              >
+                {pokemonInventory.map((pokemon) => (
+                  <option key={pokemon.poke_id} value={pokemon.poke_id}>
+                    {pokemon.poke_name}
+                  </option>
+                ))}
+                {inventory.map((item) => (
+                  <option key={item.item_id} value={item.item_id}>
+                    {item.item_name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
           <button
             onClick={handleAddPost}
             style={{
