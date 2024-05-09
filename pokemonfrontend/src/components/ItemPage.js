@@ -3,7 +3,7 @@ import axios from "axios";
 import useItems from "../hooks/useItems";
 import ItemCard from "./ItemCard";
 
-const ItemPage = () => {
+const ItemPage = ({ user }) => {
   const items = useItems();
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredItems, setFilteredItems] = useState(items);
@@ -25,8 +25,19 @@ const ItemPage = () => {
     }
   };
 
-  const handleBuy = () => {
-    // Implement your buy functionality here
+  const handleBuy = async (price, item_template_id) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:8080/buyShopItem?buyer_username=${user.username}&price=${price}&item_template_id=${item_template_id}`
+      );
+      if (response.data) {
+        alert("Purchased successfully");
+      } else {
+        alert("Purchase failed - get some more money!");
+      }
+    } catch (error) {
+      console.error("Error purchasing item:", error);
+    }
   };
 
   return (
@@ -63,7 +74,10 @@ const ItemPage = () => {
                     padding: "5px 10px",
                   }}
                 >
-                  <button onClick={handleBuy} style={{ marginRight: "10px" }}>
+                  <button
+                    onClick={() => handleBuy(item.stockPrice, item.item_id)}
+                    style={{ marginRight: "10px" }}
+                  >
                     Buy
                   </button>
                   <p style={{ marginLeft: "10px" }}>Price: {item.stockPrice}</p>
@@ -88,7 +102,10 @@ const ItemPage = () => {
                     padding: "5px 10px",
                   }}
                 >
-                  <button onClick={handleBuy} style={{ marginRight: "10px" }}>
+                  <button
+                    onClick={() => handleBuy(item.stockPrice, item.item_id)}
+                    style={{ marginRight: "10px" }}
+                  >
                     Buy
                   </button>
                   <p style={{ marginLeft: "10px" }}>Price: {item.stockPrice}</p>

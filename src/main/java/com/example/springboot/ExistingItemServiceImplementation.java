@@ -19,6 +19,9 @@ public class ExistingItemServiceImplementation {
     @Autowired
     static List<ExistingItem> existingItemsList = new ArrayList<ExistingItem>();
 
+    @Autowired
+    static List<Items> itemsList = new ArrayList<Items>();
+
     Connection connection;
 
     public ExistingItemServiceImplementation() throws SQLException {
@@ -48,17 +51,26 @@ public class ExistingItemServiceImplementation {
         return null;
     }
 
-    public List<ExistingItem> getUserItems(String username) {
-        existingItemsList = new ArrayList<ExistingItem>();
+    public List<Items> getUserItems(String username) {
+        itemsList = new ArrayList<Items>();
         try {
             PreparedStatement stmt = connection
-                    .prepareStatement("SELECT * FROM items WHERE username='" + username + "'");
+                    .prepareStatement(
+                            "SELECT i.*, it.ItemName, it.StockPrice, it.ItemDescription, it.MoneyClickerMultiplier, it.ImageURL "
+                                    +
+                                    "FROM Items i " +
+                                    "JOIN ItemTemplate it ON i.ItemTemplateID = it.ItemTemplateID " +
+                                    "WHERE i.Username = ?");
+            stmt.setString(1, username);
+
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                ExistingItem item = new ExistingItem(rs.getInt(1), rs.getString(2), rs.getInt(3));
-                existingItemsList.add(item);
+                Items item = new Items(rs.getInt("ItemID"), rs.getString("ItemName"), rs.getFloat("StockPrice"),
+                        rs.getString("ItemDescription"), rs.getFloat("MoneyClickerMultiplier"),
+                        rs.getString("ImageURL"));
+                itemsList.add(item);
             }
-            return existingItemsList;
+            return itemsList;
         } catch (SQLException e) {
             e.printStackTrace();
         }

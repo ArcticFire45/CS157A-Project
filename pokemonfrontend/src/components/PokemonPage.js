@@ -3,7 +3,7 @@ import axios from "axios";
 import usePokemons from "../hooks/usePokemons";
 import PokemonCard from "./PokemonCard";
 
-const PokemonPage = () => {
+const PokemonPage = ({ user }) => {
   const pokemons = usePokemons();
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredPokemons, setFilteredPokemons] = useState(pokemons);
@@ -30,8 +30,19 @@ const PokemonPage = () => {
     setUseGif((prevUseGif) => !prevUseGif);
   };
 
-  const handleBuy = () => {
-    // Implement your buy functionality here
+  const handleBuy = async (price, item_template_id) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:8080/buyShopPokemon?buyer_username=${user.username}&price=${price}&pokemon_template_id=${item_template_id}`
+      );
+      if (response.data) {
+        alert("Purchased successfully");
+      } else {
+        alert("Purchase failed - get some more money!");
+      }
+    } catch (error) {
+      console.error("Error purchasing item:", error);
+    }
   };
 
   return (
@@ -79,7 +90,12 @@ const PokemonPage = () => {
                     padding: "5px 10px",
                   }}
                 >
-                  <button onClick={handleBuy} style={{ marginRight: "10px" }}>
+                  <button
+                    onClick={() =>
+                      handleBuy(pokemon.stockPrice, pokemon.poke_id)
+                    }
+                    style={{ marginRight: "10px" }}
+                  >
                     Buy
                   </button>
                   <p style={{ marginLeft: "10px" }}>Price: {pokemon.price}</p>
@@ -105,7 +121,12 @@ const PokemonPage = () => {
                     padding: "5px 10px",
                   }}
                 >
-                  <button onClick={handleBuy} style={{ marginRight: "10px" }}>
+                  <button
+                    onClick={() =>
+                      handleBuy(pokemon.stockPrice, pokemon.poke_id)
+                    }
+                    style={{ marginRight: "10px" }}
+                  >
                     Buy
                   </button>
                   <p style={{ marginLeft: "10px" }}>

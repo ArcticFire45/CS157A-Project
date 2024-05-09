@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ItemInventoryBox from "./ItemInventoryBox";
 
 const MoneyPage = ({ money, setMoney, user }) => {
   const [clicked, setClicked] = useState(false);
-  // const [inventory, setInventory] = useState([]);
+  const [inventory, setInventory] = useState([]);
 
   // useEffect(() => {
   //   // Fetch user's inventory from the server
@@ -19,34 +19,29 @@ const MoneyPage = ({ money, setMoney, user }) => {
   //     console.error("Error fetching user inventory:", error);
   //   }
   // };
-  const inventory = [
-    { item_id: 1, item_name: "Bombs", multiplier: 10 },
-    {
-      item_id: 2,
-      item_name: "Anti-Pikachu-Rubber-Balloon-Bazooka",
-      multiplier: 5,
-    },
-    { item_id: 3, item_name: "Foo", multiplier: 5.5 },
-    { item_id: 4, item_name: "Foo", multiplier: 5.25 },
-    { item_id: 5, item_name: "Foo", multiplier: 5 },
-    { item_id: 6, item_name: "Foo", multiplier: 5 },
-    { item_id: 7, item_name: "Foo", multiplier: 5 },
-    { item_id: 8, item_name: "Foo", multiplier: 5 },
-    { item_id: 9, item_name: "Foo", multiplier: 5 },
-    { item_id: 10, item_name: "Foo", multiplier: 5 },
-    { item_id: 11, item_name: "Foo", multiplier: 5 },
-    { item_id: 12, item_name: "Foo", multiplier: 5 },
-    { item_id: 13, item_name: "Foo", multiplier: 5 },
-  ];
+
+  useEffect(() => {
+    const fetchUserInventory = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/getExistingUserItems?username=${user.username}`
+        );
+        setInventory(response.data);
+      } catch (error) {
+        console.error("Error fetching user inventory:", error);
+      }
+    };
+
+    fetchUserInventory();
+  }, [user.username, money]);
 
   const totalMultiplier = inventory.reduce(
-    (acc, item) => acc + item.multiplier,
-    1
+    (acc, item) => acc + parseFloat(item.multiplier),
+    1.0
   );
 
   const handleClick = async () => {
-    const randomMoney = Math.floor(Math.random() * 6) + 1 * totalMultiplier;
-    console.log(randomMoney);
+    const randomMoney = parseFloat((Math.random() * 6 + 1) * totalMultiplier);
     const newMoney = money + randomMoney;
     setMoney(newMoney);
     setClicked(true);
