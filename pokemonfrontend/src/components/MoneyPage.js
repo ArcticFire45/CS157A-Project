@@ -19,27 +19,29 @@ const MoneyPage = ({ money, setMoney, user }) => {
   //     console.error("Error fetching user inventory:", error);
   //   }
   // };
-  
+
   useEffect(() => {
     const fetchUserInventory = async () => {
-        try {
-            const response = await axios.get(`http://localhost:8080/getExistingUserItems?username=${user.username}`);
-            setInventory(response.data);
-        } catch (error) {
-            console.error("Error fetching user inventory:", error);
-        }
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/getExistingUserItems?username=${user.username}`
+        );
+        setInventory(response.data);
+      } catch (error) {
+        console.error("Error fetching user inventory:", error);
+      }
     };
 
     fetchUserInventory();
-}, [user.username, money]);
+  }, [user.username, money]);
 
   const totalMultiplier = inventory.reduce(
-    (acc, item) => acc + item.multiplier,
-    1
+    (acc, item) => acc + parseFloat(item.multiplier),
+    1.0
   );
 
   const handleClick = async () => {
-    const randomMoney = Math.floor(Math.random() * 6) + 1 * totalMultiplier;
+    const randomMoney = parseFloat((Math.random() * 6 + 1) * totalMultiplier);
     console.log(randomMoney);
     const newMoney = money + randomMoney;
     setMoney(newMoney);
@@ -121,7 +123,7 @@ const MoneyPage = ({ money, setMoney, user }) => {
             right: "10px",
           }}
         >
-          <p>Money: {money}</p>
+          <p>Money: {money.toFixed(2)}</p>
         </div>
       </div>
     </div>

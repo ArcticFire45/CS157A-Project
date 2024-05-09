@@ -101,6 +101,7 @@ const App = () => {
                   trainerImage="https://via.placeholder.com/300"
                   setLoggedIn={setLoggedIn}
                   setUser={setUser}
+                  money={money}
                 />
               ) : (
                 <Navigate to="/login" />

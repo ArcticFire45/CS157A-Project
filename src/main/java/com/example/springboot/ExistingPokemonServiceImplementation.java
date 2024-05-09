@@ -26,6 +26,9 @@ public class ExistingPokemonServiceImplementation {
     @Autowired
     static List<ExistingPokemon> existingPokeList = new ArrayList<ExistingPokemon>();
 
+    @Autowired
+    static List<Pokemon> pokemonList = new ArrayList<Pokemon>();
+
     Connection connection;
 
     public ExistingPokemonServiceImplementation() throws SQLException {
@@ -54,17 +57,32 @@ public class ExistingPokemonServiceImplementation {
         return null;
     }
 
-    public List<ExistingPokemon> getUserPokemon(String username) {
-        existingPokeList = new ArrayList<ExistingPokemon>();
+    public List<Pokemon> getUserPokemon(String username) {
+        pokemonList = new ArrayList<Pokemon>();
         try {
             PreparedStatement stmt = connection
-                    .prepareStatement("SELECT * FROM Pokemon WHERE username='" + username + "'");
+                    .prepareStatement(
+                            "SELECT p.PokeID, p.Username, p.PokeTemplateID, pt.StockPrice, pt.PokeName, pt.Type1, pt.Type2, pt.GifURL, pt.ImageURL, pt.PokemonDescription "
+                                    +
+                                    "FROM Pokemon p " +
+                                    "JOIN PokemonTemplate pt ON p.PokeTemplateID = pt.PokeTemplateID " +
+                                    "WHERE p.Username = ?");
+            stmt.setString(1, username);
+
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                ExistingPokemon item = new ExistingPokemon(rs.getInt(1), rs.getString(2), rs.getInt(3));
-                existingPokeList.add(item);
+                Pokemon item = new Pokemon(rs.getInt("PokeTemplateID"),
+                        rs.getInt("PokeID"),
+                        rs.getInt("StockPrice"),
+                        rs.getString("PokeName"),
+                        rs.getString("Type1"),
+                        rs.getString("Type2"),
+                        rs.getString("GifURL"),
+                        rs.getString("ImageURL"),
+                        rs.getString("PokemonDescription"));
+                pokemonList.add(item);
             }
-            return existingPokeList;
+            return pokemonList;
         } catch (SQLException e) {
             e.printStackTrace();
         }

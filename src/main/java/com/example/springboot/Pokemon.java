@@ -2,6 +2,7 @@ package com.example.springboot;
 
 public class Pokemon {
     private Integer poke_id;
+    private Integer poke_user_id;
     private Integer stockPrice;
     private String poke_name;
     private String type1;
@@ -26,11 +27,34 @@ public class Pokemon {
         this.pokemonDescription = pokemonDescription;
     }
 
+    public Pokemon(Integer poke_id, Integer poke_user_id, Integer stockPrice, String poke_name, String type1,
+            String type2, String gifUrl,
+            String imageUrl,
+            String pokemonDescription) {
+        this.poke_id = poke_id;
+        this.poke_user_id = poke_user_id;
+        this.stockPrice = stockPrice;
+        this.poke_name = poke_name;
+        this.type1 = type1;
+        this.type2 = type2;
+        this.gifUrl = gifUrl;
+        this.imageUrl = imageUrl;
+        this.pokemonDescription = pokemonDescription;
+    }
+
     @Override
     public String toString() {
         return "Pokemon [poke_id=" + poke_id + ", stockPrice=" + stockPrice + ", poke_name=" + poke_name + ", type1="
                 + type1 + ", type2=" + type2
                 + ", gifUrl=" + gifUrl + ", imageUrl=" + imageUrl + ", pokemonDescription=" + pokemonDescription + "]";
+    }
+
+    public Integer getPoke_user_id() {
+        return poke_user_id;
+    }
+
+    public void setPoke_user_id(Integer poke_user_id) {
+        this.poke_user_id = poke_user_id;
     }
 
     public Integer getStockPrice() {

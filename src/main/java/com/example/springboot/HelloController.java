@@ -80,6 +80,7 @@ public class HelloController {
 	public String first_pokemon() {
 		return this.pokeService.getPokemonName("1");
 	}
+
 	@GetMapping("/getPokemon")
 	public Pokemon getPokemon(@RequestParam String pokemon_template_id) {
 		return this.pokeService.getPokemon(pokemon_template_id);
@@ -175,7 +176,7 @@ public class HelloController {
 	}
 
 	@GetMapping("/getExistingUserItems")
-	public List<ExistingItem> getExistingUserItems(@RequestParam String username) {
+	public List<Items> getExistingUserItems(@RequestParam String username) {
 		try {
 			return this.existingItemsService.getUserItems(username);
 		} catch (Exception e) {
@@ -249,7 +250,7 @@ public class HelloController {
 	}
 
 	@GetMapping("/getExistingUserPokemon")
-	public List<ExistingPokemon> getUserPokemon(@RequestParam String username) {
+	public List<Pokemon> getUserPokemon(@RequestParam String username) {
 		try {
 			return this.existingPokemonService.getUserPokemon(username);
 		} catch (Exception e) {
@@ -352,7 +353,7 @@ public class HelloController {
 	}
 
 	@GetMapping("/getRoster")
-	public PokemonRoster getRoster(@RequestParam String username) {
+	public List<Integer> getRoster(@RequestParam String username) {
 		try {
 			return this.rosterService.getRoster(username);
 		} catch (Exception e) {
@@ -361,7 +362,7 @@ public class HelloController {
 	}
 
 	@PostMapping("/addToRoster")
-	public boolean addToRoster(@RequestBody String username, @RequestParam Integer pokemonID) {
+	public boolean addToRoster(@RequestParam String username, @RequestParam Integer pokemonID) {
 		try {
 			return this.rosterService.addPokemonToRoster(username, pokemonID);
 		} catch (Exception e) {
@@ -370,7 +371,7 @@ public class HelloController {
 	}
 
 	@PostMapping("/deleteFromRoster")
-	public boolean deleteFromRoster(@RequestBody String username, @RequestParam Integer pokemonID) {
+	public boolean deleteFromRoster(@RequestParam String username, @RequestParam Integer pokemonID) {
 		try {
 			return this.rosterService.removePokemonFromRoster(username, pokemonID);
 		} catch (Exception e) {
