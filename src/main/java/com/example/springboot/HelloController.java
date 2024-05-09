@@ -368,9 +368,9 @@ public class HelloController {
 	
 // Used to buy items from the shop
 	@PostMapping("/buyShopItem")
-	public boolean buyShopItem(@RequestParam String buyer_username, float price, Integer item_template) {
+	public boolean buyShopItem(@RequestParam String buyer_username, float price, Integer item_template_id) {
 		try{
-			return itemSalesService.buyStockItem(new Sales(-1, "", buyer_username, price), item_template);
+			return itemSalesService.buyStockItem(new Sales(-1, "", buyer_username, price), item_template_id);
 		}catch(Exception e){ 
 			return false;
 		}
@@ -378,9 +378,9 @@ public class HelloController {
 
 	// Used to buy items from other people. will do a transfer
 	@PostMapping("/buySellerItem")
-	public boolean buySellerItem(@RequestParam String seller_username, String buyer_username, float price, Integer item_template) {
+	public boolean buySellerItem(@RequestParam String seller_username, String buyer_username, float price, Integer existing_item_id) {
 		try{
-			return itemSalesService.buySellerItem(new Sales(-1, seller_username, buyer_username, price), item_template);
+			return itemSalesService.buySellerItem(new Sales(-1, seller_username, buyer_username, price), existing_item_id);
 		}catch(Exception e){ 
 			return false;
 		}
@@ -391,9 +391,9 @@ public class HelloController {
 
 	// Used to buy items from the shop
 	@PostMapping("/buyShopPokemon")
-	public boolean buyShopPokemon(@RequestParam String buyer_username, float price, Integer pokemon_template) {
+	public boolean buyShopPokemon(@RequestParam String buyer_username, float price, Integer pokemon_template_id) {
 		try{
-			return pokemonSalesService.buyStockPokemon(new Sales(-1, "", buyer_username, price), pokemon_template);
+			return pokemonSalesService.buyStockPokemon(new Sales(-1, "", buyer_username, price), pokemon_template_id);
 		}catch(Exception e){ 
 			return false;
 		}
@@ -401,9 +401,9 @@ public class HelloController {
 
 	// Used to buy items from other people. will do a transfer
 	@PostMapping("/buySellerPokemon")
-	public boolean buySellerPokemon(@RequestParam String seller_username, String buyer_username, float price, Integer pokemon_template) {
+	public boolean buySellerPokemon(@RequestParam String seller_username, String buyer_username, float price, Integer existing_pokemon_id) {
 		try{
-			return pokemonSalesService.buySellerPokemon(new Sales(-1, seller_username, buyer_username, price), pokemon_template);
+			return pokemonSalesService.buySellerPokemon(new Sales(-1, seller_username, buyer_username, price), existing_pokemon_id);
 		}catch(Exception e){ 
 			return false;
 		}

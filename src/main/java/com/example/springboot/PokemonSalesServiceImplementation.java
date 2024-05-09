@@ -121,21 +121,29 @@ public class PokemonSalesServiceImplementation {
     {
         try {
             String str_pokemon_template_id = String.valueOf(pokemon_template_id);
-            String query = "START TRANSACTION; ";
-            query = query + "UPDATE users SET money=money-" + String.valueOf(sales.getPrice()) + " WHERE username='" + sales.getPurchaser() + "';";
-            query = query + "INSERT INTO Pokemon (Username, PokeTemplateID) VALUES ('" + sales.getPurchaser() + "', " + str_pokemon_template_id + "); ";
-            query = query + "INSERT INTO sales (Purchaser, Price) VALUES ('" + sales.getPurchaser() + "', " + String.valueOf(sales.getPrice()) + "); ";
-            query = query + "INSERT INTO PokemonSales (salesID, PokemonID) SELECT MAX(s.salesID), MAX(i.PokeID) FROM sales s, Pokemons i; ";
-            query = query + "COMMIT;";
+            
+            // String query = "START TRANSACTION; ";
+            String query = "";
+            
+            connection.setAutoCommit(false);
+
+            query = "UPDATE users SET money=money-" + String.valueOf(sales.getPrice()) + " WHERE username='" + sales.getPurchaser() + "'; ";
+            connection.prepareStatement(query).executeUpdate();
+            query = "INSERT INTO Pokemon (Username, PokeTemplateID) VALUES ('" + sales.getPurchaser() + "', " + str_pokemon_template_id + "); ";
+            connection.prepareStatement(query).executeUpdate();
+            query = "INSERT INTO sales (Purchaser, Price) VALUES ('" + sales.getPurchaser() + "', " + String.valueOf(sales.getPrice()) + "); ";
+            connection.prepareStatement(query).executeUpdate();
+            query = "INSERT INTO PokemonSales (salesID, PokemonID) SELECT MAX(s.salesID), MAX(i.PokeID) FROM sales s, Pokemon i; ";
+            connection.prepareStatement(query).executeUpdate();
+
+            connection.commit();
             // query = "START TRANSACTION; ";
             // query = query + "UPDATE users SET money=money-10.10 WHERE username='User1';";
             // query = query + "INSERT INTO Pokemons (Username, PokemonTemplateID) VALUES ('User1', 1); ";
             // query = query + "INSERT INTO sales (Purchaser, Price) VALUES ('User1', 10.10); ";
             // query = query + "INSERT INTO PokemonSales (salesID, PokemonID) SELECT MAX(s.salesID), MAX(i.PokemonID) FROM sales s, Pokemons i; ";
             // query = query + "COMMIT;";
-            PreparedStatement stmt = connection
-                .prepareStatement(query);
-            stmt.executeQuery();
+
             return true;    
         } catch (SQLException e) 
         {
@@ -148,14 +156,24 @@ public class PokemonSalesServiceImplementation {
     {
         try {
             String str_pokemon_id = String.valueOf(pokemon_id);
-            String query = "START TRANSACTION; ";
-            query = query + "UPDATE users SET money=money-" + String.valueOf(sales.getPrice()) + " WHERE username='" + sales.getPurchaser() + "';";
-            query = query + "UPDATE users SET money=money+" + String.valueOf(sales.getPrice()) + " WHERE username='" + sales.getSeller() + "';";
-            query = query + "UPDATE Pokemon SET Username=" + sales.getPurchaser() + " WHERE PokeID=" + str_pokemon_id + "); ";
-            query = query + "INSERT INTO sales (Seller, Purchaser, Price) VALUES ('" + sales.getSeller() + "', '" + sales.getPurchaser() + "', " + String.valueOf(sales.getPrice()) + "); "; 
-            query = query + "INSERT INTO PokemonSales (salesID, PokemonID) SELECT MAX(s.salesID)," + str_pokemon_id + " FROM sales s; ";
-            query = query + "COMMIT;";
+            String query = "";
+            System.out.println(str_pokemon_id);
+            connection.setAutoCommit(false);
 
+            query = "UPDATE users SET money=money-" + String.valueOf(sales.getPrice()) + " WHERE username='" + sales.getPurchaser() + "'; ";
+            connection.prepareStatement(query).executeUpdate();
+            query = "UPDATE users SET money=money+" + String.valueOf(sales.getPrice()) + " WHERE username='" + sales.getSeller() + "'; ";
+            connection.prepareStatement(query).executeUpdate();
+            query = "UPDATE Pokemon SET Username='" + sales.getPurchaser() + "' WHERE PokeID=" + str_pokemon_id + "; ";
+            connection.prepareStatement(query).executeUpdate();
+            query = "INSERT INTO sales (Seller, Purchaser, Price) VALUES ('" + sales.getSeller() + "', '" + sales.getPurchaser() + "', " + String.valueOf(sales.getPrice()) + "); "; 
+            connection.prepareStatement(query).executeUpdate();
+            query = "INSERT INTO PokemonSales (salesID, PokemonID) SELECT MAX(s.salesID)," + str_pokemon_id + " FROM sales s; ";
+            connection.prepareStatement(query).executeUpdate();
+
+            connection.commit();
+
+            
             // query = "START TRANSACTION; ";
             // query = query + "UPDATE users SET money=money-10.23 WHERE username='User1';";
             // query = query + "UPDATE users SET money=money+10.23 WHERE username='User2';";
@@ -163,9 +181,6 @@ public class PokemonSalesServiceImplementation {
             // query = query + "INSERT INTO sales (Purchaser, Price) VALUES ('User1', 10.23); ";
             // query = query + "INSERT INTO PokemonSales (salesID, PokemonID) SELECT MAX(s.salesID), 1 FROM sales s; ";
             // query = query + "COMMIT;";
-            PreparedStatement stmt = connection
-                .prepareStatement(query);
-            stmt.executeQuery();
             return true;    
         } catch (SQLException e) 
         {

@@ -120,23 +120,37 @@ public class ItemSalesServiceImplementation {
     public Boolean buyStockItem(Sales sales, Integer item_template_id)
     {
         try {
+            System.err.println(item_template_id);
             String str_item_template_id = String.valueOf(item_template_id);
-            String query = "START TRANSACTION; ";
-            query = query + "UPDATE users SET money=money-" + String.valueOf(sales.getPrice()) + " WHERE username='" + sales.getPurchaser() + "';";
-            query = query + "INSERT INTO items (Username, ItemTemplateID) VALUES ('" + sales.getPurchaser() + "', " + str_item_template_id + "); ";
-            query = query + "INSERT INTO sales (Purchaser, Price) VALUES ('" + sales.getPurchaser() + "', " + String.valueOf(sales.getPrice()) + "); ";
-            query = query + "INSERT INTO itemSales (salesID, itemID) SELECT MAX(s.salesID), MAX(i.itemID) FROM sales s, items i; ";
-            query = query + "COMMIT;";
+            System.out.println();
+            System.out.println(str_item_template_id);
+            String query = "";
+
+            connection.setAutoCommit(false);
+            query = "UPDATE users SET money=money-" + String.valueOf(sales.getPrice()) + " WHERE username='" + sales.getPurchaser() + "'; ";
+            connection.prepareStatement(query).executeUpdate();
+            query = "INSERT INTO items (Username, ItemTemplateID) VALUES ('" + sales.getPurchaser() + "', " + str_item_template_id + "); ";
+            connection.prepareStatement(query).executeUpdate();
+            query = "INSERT INTO sales (Purchaser, Price) VALUES ('" + sales.getPurchaser() + "', " + String.valueOf(sales.getPrice()) + "); ";
+            connection.prepareStatement(query).executeUpdate();
+            query = "INSERT INTO itemSales (salesID, itemID) SELECT MAX(s.salesID), MAX(i.itemID) FROM sales s, items i; ";
+            connection.prepareStatement(query).executeUpdate();
+            
+            connection.commit();
+            return true;    
+
+            // System.out.println();
+            // System.out.println(query);
+            // System.out.println();
             // query = "START TRANSACTION; ";
             // query = query + "UPDATE users SET money=money-10.10 WHERE username='User1';";
             // query = query + "INSERT INTO items (Username, ItemTemplateID) VALUES ('User1', 1); ";
             // query = query + "INSERT INTO sales (Purchaser, Price) VALUES ('User1', 10.10); ";
             // query = query + "INSERT INTO itemSales (salesID, itemID) SELECT MAX(s.salesID), MAX(i.itemID) FROM sales s, items i; ";
             // query = query + "COMMIT;";
-            PreparedStatement stmt = connection
-                .prepareStatement(query);
-            stmt.executeQuery();
-            return true;    
+            // PreparedStatement stmt = connection
+            //     .prepareStatement(query);
+            // stmt.executeBatch();
         } catch (SQLException e) 
         {
             e.printStackTrace();
@@ -147,15 +161,24 @@ public class ItemSalesServiceImplementation {
     public Boolean buySellerItem(Sales sales, Integer item_id)
     {
         try {
-            String str_item_id = String.valueOf(item_id);
-            String query = "START TRANSACTION; ";
-            query = query + "UPDATE users SET money=money-" + String.valueOf(sales.getPrice()) + " WHERE username='" + sales.getPurchaser() + "';";
-            query = query + "UPDATE users SET money=money+" + String.valueOf(sales.getPrice()) + " WHERE username='" + sales.getSeller() + "';";
-            query = query + "UPDATE items SET Username=" + sales.getPurchaser() + " WHERE itemID=" + str_item_id + "); ";
-            query = query + "INSERT INTO sales (Seller, Purchaser, Price) VALUES ('" + sales.getSeller() + "', '" + sales.getPurchaser() + "', " + String.valueOf(sales.getPrice()) + "); "; 
-            query = query + "INSERT INTO itemSales (salesID, itemID) SELECT MAX(s.salesID)," + str_item_id + " FROM sales s; ";
-            query = query + "COMMIT;";
+            String str_item_id = String.valueOf(item_id);            
+            String query = "";
+            
+            connection.setAutoCommit(false);
 
+            query = "UPDATE users SET money=money-" + String.valueOf(sales.getPrice()) + " WHERE username='" + sales.getPurchaser() + "'; ";
+            connection.prepareStatement(query).executeUpdate();
+            query = "UPDATE users SET money=money+" + String.valueOf(sales.getPrice()) + " WHERE username='" + sales.getSeller() + "'; ";
+            connection.prepareStatement(query).executeUpdate();
+            query = "UPDATE items SET Username='" + sales.getPurchaser() + "' WHERE itemID=" + str_item_id + "; ";
+            connection.prepareStatement(query).executeUpdate();
+            query = "INSERT INTO sales (Seller, Purchaser, Price) VALUES ('" + sales.getSeller() + "', '" + sales.getPurchaser() + "', " + String.valueOf(sales.getPrice()) + "); "; 
+            connection.prepareStatement(query).executeUpdate();
+            query = "INSERT INTO itemSales (salesID, itemID) SELECT MAX(s.salesID)," + str_item_id + " FROM sales s; ";
+            connection.prepareStatement(query).executeUpdate();
+            
+            connection.commit();
+            return true;
             // query = "START TRANSACTION; ";
             // query = query + "UPDATE users SET money=money-10.23 WHERE username='User1';";
             // query = query + "UPDATE users SET money=money+10.23 WHERE username='User2';";
@@ -163,10 +186,6 @@ public class ItemSalesServiceImplementation {
             // query = query + "INSERT INTO sales (Purchaser, Price) VALUES ('User1', 10.23); ";
             // query = query + "INSERT INTO itemSales (salesID, itemID) SELECT MAX(s.salesID), 1 FROM sales s; ";
             // query = query + "COMMIT;";
-            PreparedStatement stmt = connection
-                .prepareStatement(query);
-            stmt.executeQuery();
-            return true;    
         } catch (SQLException e) 
         {
             e.printStackTrace();
