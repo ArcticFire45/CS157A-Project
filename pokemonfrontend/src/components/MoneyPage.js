@@ -42,7 +42,6 @@ const MoneyPage = ({ money, setMoney, user }) => {
 
   const handleClick = async () => {
     const randomMoney = parseFloat((Math.random() * 6 + 1) * totalMultiplier);
-    console.log(randomMoney);
     const newMoney = money + randomMoney;
     setMoney(newMoney);
     setClicked(true);
