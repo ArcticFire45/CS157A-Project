@@ -1,5 +1,6 @@
 package com.example.springboot;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -54,6 +55,9 @@ public class HelloController {
 
 	@Autowired
 	private PokemonSalesServiceImplementation pokemonSalesService;
+
+    @Autowired
+    private InsertSaleItemServiceImplementation insertSaleItemService;
 
 	@GetMapping("/")
 	public String index() {
@@ -466,6 +470,18 @@ public class HelloController {
 			return false;
 		}
 	}
+
+    // Used to insert sale item and then return the sales post with the id
+    @PostMapping("/insertSaleItem")
+    public ResponseEntity<?> insertSaleItem(@RequestBody InsertSaleItem saleItem) {
+        try {
+            InsertSaleItem insertedItem = insertSaleItemService.insertSaleItem(saleItem);
+            return ResponseEntity.ok(insertedItem);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to insert sale item.");
+        }
+}
 
 } // (Integer sales_id, String seller, String purchaser, Float price)
 
