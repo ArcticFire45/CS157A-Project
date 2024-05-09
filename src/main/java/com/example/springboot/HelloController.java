@@ -71,9 +71,18 @@ public class HelloController {
 		return this.itemService.getItemData();
 	}
 
+	@GetMapping("/getItem")
+	public Items getItem(@RequestParam String item_template_id) {
+		return this.itemService.getItem(item_template_id);
+	}
+
 	@GetMapping("/first_pokemon")
 	public String first_pokemon() {
 		return this.pokeService.getPokemonName("1");
+	}
+	@GetMapping("/getPokemon")
+	public Pokemon getPokemon(@RequestParam String pokemon_template_id) {
+		return this.pokeService.getPokemon(pokemon_template_id);
 	}
 
 	@GetMapping("/search")
