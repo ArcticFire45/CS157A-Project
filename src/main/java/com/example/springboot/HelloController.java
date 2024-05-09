@@ -46,10 +46,10 @@ public class HelloController {
 	@Autowired
 	private PostsServiceImplementation postService;
 
-    @Autowired
-    private SalesPostServiceImplementation salesPostService;
+	@Autowired
+	private SalesPostServiceImplementation salesPostService;
 
-  @Autowired
+	@Autowired
 	private ItemSalesServiceImplementation itemSalesService;
 
 	@Autowired
@@ -353,100 +353,101 @@ public class HelloController {
 
 	@GetMapping("/getRoster")
 	public PokemonRoster getRoster(@RequestParam String username) {
-		try{
+		try {
 			return this.rosterService.getRoster(username);
-		}catch(Exception e){
+		} catch (Exception e) {
 			return null;
 		}
 	}
 
 	@PostMapping("/addToRoster")
 	public boolean addToRoster(@RequestBody String username, @RequestParam Integer pokemonID) {
-		try{
+		try {
 			return this.rosterService.addPokemonToRoster(username, pokemonID);
-		}catch(Exception e){
+		} catch (Exception e) {
 			return false;
 		}
 	}
 
 	@PostMapping("/deleteFromRoster")
 	public boolean deleteFromRoster(@RequestBody String username, @RequestParam Integer pokemonID) {
-		try{
+		try {
 			return this.rosterService.removePokemonFromRoster(username, pokemonID);
-		}catch(Exception e){
+		} catch (Exception e) {
 			return false;
 		}
 	}
 
-    // Create a sales post
-    @PostMapping("/salesposts")
-    public ResponseEntity<String> createSalesPost(@RequestBody SalesPost salesPost) {
-        try {
-            salesPostService.createSalesPost(salesPost);
-            return ResponseEntity.ok("Sales post created successfully!");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                                 .body("Failed to create sales post.");
-        }
-    }
+	// Create a sales post
+	@PostMapping("/salesposts")
+	public ResponseEntity<String> createSalesPost(@RequestBody SalesPost salesPost) {
+		try {
+			salesPostService.createSalesPost(salesPost);
+			return ResponseEntity.ok("Sales post created successfully!");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("Failed to create sales post.");
+		}
+	}
 
-    // Delete a sales post
-    @DeleteMapping("/salesposts/{salesId}")
-    public ResponseEntity<String> deleteSalesPost(@RequestParam Integer salesId) {
-        try {
-            salesPostService.deleteSalesPost(salesId);
-            return ResponseEntity.ok("Sales post deleted successfully!");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                                 .body("Failed to delete sales post.");
-        }
-    }
-	
-// Used to buy items from the shop
+	// Delete a sales post
+	@DeleteMapping("/salesposts/{salesId}")
+	public ResponseEntity<String> deleteSalesPost(@RequestParam Integer salesId) {
+		try {
+			salesPostService.deleteSalesPost(salesId);
+			return ResponseEntity.ok("Sales post deleted successfully!");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("Failed to delete sales post.");
+		}
+	}
+
+	// Used to buy items from the shop
 	@PostMapping("/buyShopItem")
 	public boolean buyShopItem(@RequestParam String buyer_username, float price, Integer item_template_id) {
-		try{
+		try {
 			return itemSalesService.buyStockItem(new Sales(-1, "", buyer_username, price), item_template_id);
-		}catch(Exception e){ 
+		} catch (Exception e) {
 			return false;
 		}
 	}
 
 	// Used to buy items from other people. will do a transfer
 	@PostMapping("/buySellerItem")
-	public boolean buySellerItem(@RequestParam String seller_username, String buyer_username, float price, Integer existing_item_id) {
-		try{
-			return itemSalesService.buySellerItem(new Sales(-1, seller_username, buyer_username, price), existing_item_id);
-		}catch(Exception e){ 
+	public boolean buySellerItem(@RequestParam String seller_username, String buyer_username, float price,
+			Integer existing_item_id) {
+		try {
+			return itemSalesService.buySellerItem(new Sales(-1, seller_username, buyer_username, price),
+					existing_item_id);
+		} catch (Exception e) {
 			return false;
 		}
 	}
-	
-
-
 
 	// Used to buy items from the shop
 	@PostMapping("/buyShopPokemon")
 	public boolean buyShopPokemon(@RequestParam String buyer_username, float price, Integer pokemon_template_id) {
-		try{
+		try {
 			return pokemonSalesService.buyStockPokemon(new Sales(-1, "", buyer_username, price), pokemon_template_id);
-		}catch(Exception e){ 
+		} catch (Exception e) {
 			return false;
 		}
 	}
 
 	// Used to buy items from other people. will do a transfer
 	@PostMapping("/buySellerPokemon")
-	public boolean buySellerPokemon(@RequestParam String seller_username, String buyer_username, float price, Integer existing_pokemon_id) {
-		try{
-			return pokemonSalesService.buySellerPokemon(new Sales(-1, seller_username, buyer_username, price), existing_pokemon_id);
-		}catch(Exception e){ 
+	public boolean buySellerPokemon(@RequestParam String seller_username, String buyer_username, float price,
+			Integer existing_pokemon_id) {
+		try {
+			return pokemonSalesService.buySellerPokemon(new Sales(-1, seller_username, buyer_username, price),
+					existing_pokemon_id);
+		} catch (Exception e) {
 			return false;
 		}
 	}
 
-}		// (Integer sales_id, String seller, String purchaser, Float price)
+} // (Integer sales_id, String seller, String purchaser, Float price)
 
 // itemSalesService.BuyStockItem(null, buyer_username)

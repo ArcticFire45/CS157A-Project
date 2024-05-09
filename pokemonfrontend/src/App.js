@@ -51,7 +51,7 @@ const App = () => {
     };
 
     fetchUserMoney();
-  }, [user.username]);
+  }, [user.username, money]);
 
   return (
     <Router>
@@ -76,7 +76,9 @@ const App = () => {
           />
           <Route
             path="/pokemon"
-            element={loggedIn ? <PokemonPage /> : <Navigate to="/login" />}
+            element={
+              loggedIn ? <PokemonPage user={user} /> : <Navigate to="/login" />
+            }
           />
           <Route
             path="/signup"
@@ -107,7 +109,9 @@ const App = () => {
           />
           <Route
             path="/items"
-            element={loggedIn ? <ItemPage /> : <Navigate to="/login" />}
+            element={
+              loggedIn ? <ItemPage user={user} /> : <Navigate to="/login" />
+            }
           />
         </Routes>
       </>

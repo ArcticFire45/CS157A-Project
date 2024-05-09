@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS Users (
     Username varchar(30) PRIMARY KEY,
     User_Password VARCHAR(255),
     Money DECIMAL(10, 2),
-    CHECK (money > 0)
+    CHECK (money >= 0)
 );
 
 CREATE TABLE IF NOT EXISTS PokemonTemplate(
