@@ -90,7 +90,7 @@ const App = () => {
           />
           <Route
             path="/shop"
-            element={loggedIn ? <ShopPage /> : <Navigate to="/login" />}
+            element={loggedIn ? <ShopPage user={user}/> : <Navigate to="/login" />}
           />
           <Route
             path="/profile"

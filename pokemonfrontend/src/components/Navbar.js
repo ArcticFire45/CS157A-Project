@@ -34,7 +34,7 @@ function Navbar() {
         </li>
         <li className="nav-item">
           <Link to="/shop" className="nav-link">
-            Shop
+            Shop History
           </Link>
         </li>
         <li className="nav-item">
