@@ -46,7 +46,10 @@ public class HelloController {
 	@Autowired
 	private PostsServiceImplementation postService;
 
-	@Autowired
+    @Autowired
+    private SalesPostServiceImplementation salesPostService;
+
+  @Autowired
 	private ItemSalesServiceImplementation itemSalesService;
 
 	@Autowired
@@ -374,6 +377,32 @@ public class HelloController {
 			return false;
 		}
 	}
+
+    // Create a sales post
+    @PostMapping("/salesposts")
+    public ResponseEntity<String> createSalesPost(@RequestBody SalesPost salesPost) {
+        try {
+            salesPostService.createSalesPost(salesPost);
+            return ResponseEntity.ok("Sales post created successfully!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                 .body("Failed to create sales post.");
+        }
+    }
+
+    // Delete a sales post
+    @DeleteMapping("/salesposts/{salesId}")
+    public ResponseEntity<String> deleteSalesPost(@RequestParam Integer salesId) {
+        try {
+            salesPostService.deleteSalesPost(salesId);
+            return ResponseEntity.ok("Sales post deleted successfully!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                 .body("Failed to delete sales post.");
+        }
+    }
 	
 // Used to buy items from the shop
 	@PostMapping("/buyShopItem")
