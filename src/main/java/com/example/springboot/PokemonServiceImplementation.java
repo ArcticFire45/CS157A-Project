@@ -25,7 +25,7 @@ public class PokemonServiceImplementation {
     public String getPokemonName(String poke_id) {
         try {
             PreparedStatement stmt = connection
-                    .prepareStatement("SELECT poke_name FROM pokemon WHERE pokemon_id=" + poke_id);
+                    .prepareStatement("SELECT poke_name FROM pokemonTemplate WHERE PokemonTemplateID=" + poke_id);
             ResultSet rs = stmt.executeQuery();
             rs.next();
             return rs.getString(1);
@@ -72,5 +72,23 @@ public class PokemonServiceImplementation {
         }
 
         return pokemonList;
+    }
+
+
+    public Pokemon getPokemon(String poke_id) {
+        try {
+            PreparedStatement stmt = connection
+                    .prepareStatement("SELECT * FROM pokemontemplate WHERE PokeTemplateID=" + poke_id);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            Pokemon pokemon_template =  new Pokemon(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
+            rs.getString(5),
+            rs.getString(6), rs.getString(7), rs.getString(8));
+
+            return pokemon_template;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
