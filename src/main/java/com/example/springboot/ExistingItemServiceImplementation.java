@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.antlr.v4.runtime.atn.SemanticContext.AND;
 // import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -138,6 +139,8 @@ public class ExistingItemServiceImplementation {
         return false;
     }
 
+
+
     public Boolean changeOwnerUsername(String item_id, String new_username) {
         try {
             // UPDATE Customers
@@ -155,6 +158,35 @@ public class ExistingItemServiceImplementation {
         }
         return false;
     }
+
+
+
+
+// SELECT * 
+// FROM items i, itemTemplate it 
+// WHERE i.username = "user1" AND it.ItemTemplateID = i.ItemTemplateID AND i.ItemID NOT IN (SELECT its.ItemID
+// 												FROM itemsales its, sales s 
+// 												WHERE its.SalesID = s.SalesID AND s.Purchaser = NULL);
+public List<ExistingItem> getUserSellableItems(String username) {
+    existingItemsList = new ArrayList<ExistingItem>();
+    try {
+        String query = "SELECT * FROM items i, itemTemplate it WHERE i.username = '"+username+"' AND it.ItemTemplateID = i.ItemTemplateID AND i.ItemID NOT IN (SELECT its.ItemID FROM itemsales its, sales s  WHERE its.SalesID = s.SalesID AND s.Purchaser = NULL);";
+        PreparedStatement stmt = connection
+                .prepareStatement(query);
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            ExistingItem item = new ExistingItem(rs.getInt(1), rs.getString(2), rs.getInt(3));
+            existingItemsList.add(item);
+        }
+        return existingItemsList;
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return null;
+}
+
+
+
 
     // @PostMapping("/changeItemOwner")
     // public Boolean getExistingTemplateItems(@RequestBody String item_id, String
