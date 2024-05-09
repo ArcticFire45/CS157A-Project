@@ -258,6 +258,16 @@ public class HelloController {
 		}
 	}
 
+	@GetMapping("/getUserSellablePokemon")
+	public List<ExistingPokemon> getUserSellablePokemon(@RequestParam String username) {
+		try {
+			return this.existingPokemonService.getUserSellablePokemon(username);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+
 	@GetMapping("/getExistingPokemons")
 	public List<ExistingPokemon> getExistingPokemon(@RequestParam String username, String template_id) {
 		try {

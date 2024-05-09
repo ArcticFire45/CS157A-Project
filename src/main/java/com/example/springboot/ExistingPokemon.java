@@ -11,6 +11,7 @@ public class ExistingPokemon {
     private Integer poke_id;
     private String username;
     private Integer poke_template_id;
+    private Pokemon pokemon_template;
 
     public ExistingPokemon(Integer poke_id, String username, Integer poke_template_id) {
         this.poke_id = poke_id;
@@ -46,5 +47,13 @@ public class ExistingPokemon {
     public String toString() {
         return "ExistingPokemon [poke_id=" + poke_id + ", username=" + username + ", poke_template_id="
                 + poke_template_id + "]";
+    }
+
+    public Pokemon getPokemon_template() {
+        return pokemon_template;
+    }
+
+    public void setPokemon_template(Pokemon pokemon_template) {
+        this.pokemon_template = pokemon_template;
     }
 }

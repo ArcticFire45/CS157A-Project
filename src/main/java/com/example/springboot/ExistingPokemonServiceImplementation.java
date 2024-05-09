@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.antlr.v4.runtime.atn.SemanticContext.AND;
 // import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -167,6 +168,33 @@ public class ExistingPokemonServiceImplementation {
         }
         return false;
     }
+
+// SELECT * 
+// FROM pokemon p, pokemonTemplate pt 
+// WHERE p.username = "user1" AND pt.PokeTemplateID = p.PokeTemplateID AND p.PokeID NOT IN (SELECT ps.pokemonID as PokeID
+// 												FROM pokemonsales ps, sales s 
+// 												WHERE ps.SalesID = s.SalesID AND s.Purchaser = NULL);
+public List<ExistingPokemon> getUserSellablePokemon(String username) {
+    existingPokeList = new ArrayList<ExistingPokemon>();
+    try {
+        String query = "SELECT * FROM pokemon p, pokemonTemplate pt WHERE p.username = '" + username + "' AND pt.PokeTemplateID = p.PokeTemplateID AND p.PokeID NOT IN (SELECT ps.pokemonID as PokeID FROM pokemonsales ps, sales s WHERE ps.SalesID = s.SalesID AND s.Purchaser = NULL);";
+        PreparedStatement stmt = connection
+                .prepareStatement(query);
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            ExistingPokemon pokemon = new ExistingPokemon(rs.getInt(1), rs.getString(2), rs.getInt(3));
+            existingPokeList.add(pokemon);
+        }
+        return existingPokeList;
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return null;
+}
+
+    
+
+
 
     // @PostMapping("/changeItemOwner")
     // public Boolean getExistingTemplateItems(@RequestBody String item_id, String

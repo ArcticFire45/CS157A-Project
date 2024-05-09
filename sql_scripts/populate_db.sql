@@ -403,6 +403,15 @@ VALUES
     ('user3', 'user5'),
     ('user4', 'user1');
 
+
+SELECT * 
+FROM pokemon p, pokemonsales ps 
+WHERE p.Username = "User1" & ps.PokemonID NOT IN (SELECT ps.pokemonID 
+													FROM pokemonsales ps, sales s 
+                                                    WHERE ps.SalesID = s.SalesID);
+START TRANSACTION;
+
+COMMIT;
 -- INSERT into sales (Seller, Purchaser, Price) 
 -- values 
 -- 	('user1','user2',10.92);
