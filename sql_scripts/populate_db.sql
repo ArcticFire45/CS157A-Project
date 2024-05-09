@@ -394,7 +394,6 @@ VALUES
     (5, 'user5', 'Training my Squirtle for the upcoming tournament!', "https://static0.gamerantimages.com/wordpress/wp-content/uploads/2021/04/Squirtle-Tackles-Charmander.jpg"),
     (6, 'user1', 'Caught a shiny Eevee while exploring!', 'https://static0.gamerantimages.com/wordpress/wp-content/uploads/2023/02/shiny-eevee.jpg');
 
-
 -- Insert statement for Friends table with dummy data
 INSERT INTO Friends (Username1, Username2)
 VALUES 
