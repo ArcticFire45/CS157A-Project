@@ -40,8 +40,6 @@ const PurchasesPage = ({ user }) => {
           </div>
         ))}
       </div>
-      <h1>User Transactions</h1>
-
     </div>
   );
 
