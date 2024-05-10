@@ -1,14 +1,5 @@
 package com.example.springboot;
 
-// CREATE TABLE IF NOT EXISTS Sales (
-//     SalesID INT PRIMARY KEY,
-//     Seller varchar(30) NOT NULL,
-//     Purchaser varchar(30),
-//     Price DECIMAL(10, 2) NOT NULL,
-//     FOREIGN KEY (Seller) REFERENCES Users(Username),
-//     FOREIGN KEY (Purchaser) REFERENCES Users(Username),
-//     CHECK (Price >= 0) 
-// );
 public class Sales {
 
     private Integer sales_id;

@@ -1,6 +1,6 @@
 package com.example.springboot;
 
-import java.sql.SQLException;
+// import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -56,50 +56,50 @@ public class HelloController {
 	@Autowired
 	private PokemonSalesServiceImplementation pokemonSalesService;
 
-    // @Autowired
-    // private InsertSaleItemServiceImplementation insertSaleItemService;
-
 	@GetMapping("/")
 	public String index() {
 
 		return "Testing from Spring Boot!";
 	}
 
+	// Returns all Pokemon template data
 	@GetMapping("/pokepoke")
 	public List<Pokemon> pokemon_information() {
 		return this.pokeService.getPokemonData();
 	}
-
+	// Returns all item template data
 	@GetMapping("/allitems")
 	public List<Items> item_information() {
 		return this.itemService.getItemData();
 	}
-
+	// Retrieves a specific item template by its template ID
 	@GetMapping("/getItem")
 	public Items getItem(@RequestParam String item_template_id) {
 		return this.itemService.getItem(item_template_id);
 	}
 
+	// Retrieves the first pokemon template
 	@GetMapping("/first_pokemon")
 	public String first_pokemon() {
 		return this.pokeService.getPokemonName("1");
 	}
 
+	// Retrieves a specific pokemon template by its template ID
 	@GetMapping("/getPokemon")
 	public Pokemon getPokemon(@RequestParam String pokemon_template_id) {
 		return this.pokeService.getPokemon(pokemon_template_id);
 	}
-
+	// Retrieves a list of pokemon template that contain the name's value in their name
 	@GetMapping("/search")
 	public List<Pokemon> searchPokemon(@RequestParam String name) {
 		return this.pokeService.searchPokemonByName(name);
 	}
-
+	// Retrieves a list of pokemon template that contain the name's value in their name
 	@GetMapping("/itemsearch")
 	public List<Items> searchItem(@RequestParam String name) {
 		return this.itemService.searchItemByName(name);
 	}
-
+	// Saves user in database
 	@PostMapping(value = "/signup")
 	public int signUp(@RequestBody User user) {
 		return this.userservice.addUser(user);
@@ -115,7 +115,7 @@ public class HelloController {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
 		}
 	}
-
+	// Retrieves user account information given username
 	@GetMapping("/user")
 	public User getUser(@RequestParam String username) {
 		return this.userservice.getUserFrom(username);
@@ -125,32 +125,29 @@ public class HelloController {
 	public List<String> getAllUserExcept(@PathVariable String excludedUsername) {
 		return this.userservice.getAllUsernamesExcept(excludedUsername);
 	}
-
+	// Adds money to the user's account 
 	@PostMapping("/updateMoney")
 	public void updateMoney(@RequestBody Map<String, Object> requestBody) {
 		String username = (String) requestBody.get("username");
 		double moneyToAdd = (double) requestBody.get("moneyToAdd");
 		this.userservice.updateUserMoney(username, moneyToAdd);
 	}
-
-	// public ResponseEntity<?> postMethodName(@RequestBody String user,
-	// @RequestParam String pass) {
-
-	@PostMapping("/getUserSales")
+	// Retrieves all sales that a user has sold.
+	@GetMapping("/getUserSales")
 	public List<Sales> userSales(@RequestParam String username) {
 		return this.salesService.getUserPurchases(username);
 	}
-
-	@PostMapping("/getUserPurchases")
+	// Retrieves all sales that a user has purchased
+	@GetMapping("/getUserPurchases")
 	public List<Sales> userPurchases(@RequestParam String username) {
 		return this.salesService.getUserPurchases(username);
 	}
-
-	@PostMapping("/getUserTransactions")
+	// Retrieves all sales that a user has sold
+	@GetMapping("/getUserTransactions")
 	public List<Sales> userTransactions(@RequestBody String username) {
 		return this.salesService.getUserSales(username);
 	}
-
+	// Adds a sale to the database
 	@PostMapping("/addSale")
 	public ResponseEntity<?> addSale(@RequestParam String buyer, String seller, float price) {
 		try {
@@ -164,12 +161,7 @@ public class HelloController {
 			return ResponseEntity.status(500).body("Internal server error: " + e.getMessage());
 		}
 	}
-
-	// getItem
-	// getUserItems
-	// getExistingItems
-	// getExistingTemplateItems
-
+	// Retrieves item that exists in circulation given the ID
 	@GetMapping("/getExistingItem")
 	public ExistingItem getExistingItem(@RequestParam String item_id) {
 		try {
@@ -178,7 +170,7 @@ public class HelloController {
 			return null;
 		}
 	}
-
+	// Retrieves all items that exists in circulation from a user
 	@GetMapping("/getExistingUserItems")
 	public List<Items> getExistingUserItems(@RequestParam String username) {
 		try {
@@ -188,6 +180,7 @@ public class HelloController {
 		}
 	}
 
+	// Retrieves all items that exists in circulation from a username and item template type
 	@GetMapping("/getExistingItems")
 	public List<ExistingItem> getExistingItems(@RequestParam String username, String template_id) {
 		try {
@@ -196,7 +189,7 @@ public class HelloController {
 			return null;
 		}
 	}
-
+	// Retrieves all items that exists in circulation from a template type
 	@GetMapping("/getExistingTemplateItems")
 	public List<ExistingItem> getExistingTemplateItem(@RequestParam String template_id) {
 		try {
@@ -205,7 +198,7 @@ public class HelloController {
 			return null;
 		}
 	}
-
+	// Retrieves all items that exists in circulation from a user that can be sold
 	@GetMapping("/getUserSellableItems")
 	public List<ExistingItem> getUserSellableItems(@RequestParam String username) {
 		try {
@@ -214,6 +207,7 @@ public class HelloController {
 			return null;
 		}
 	}
+	// Adds a new existing item into the database
 	@PostMapping("/addExistingItem")
 	public Boolean addExistingItem(@RequestParam String username, String template_id) {
 		try {
@@ -224,6 +218,7 @@ public class HelloController {
 
 	}
 
+	// Deletes an existing item from the database
 	@PostMapping("/deleteExistingItem")
 	public Boolean deleteExistingItem(@RequestParam String item_id) {
 		try {
@@ -233,7 +228,8 @@ public class HelloController {
 		}
 
 	}
-
+	
+	// Updates the owner of an item to another username
 	@PostMapping("/changeItemOwner")
 	public Boolean changeItemOwner(@RequestParam String item_id, String new_username) {
 		try {
@@ -244,13 +240,7 @@ public class HelloController {
 
 	}
 
-	// getExistingPokemon
-	// getExistingPokemons
-	// getUserPokemon
-	// getExistingTemplatePokemon
-	// deleteExistingPokemon
-	// changePokemonOwner
-
+	//Retrieves a pokemon that exists given their pokemon id
 	@GetMapping("/getExistingPokemon")
 	public ExistingPokemon getExistingPokemon(@RequestParam String poke_id) {
 		try {
@@ -260,7 +250,7 @@ public class HelloController {
 			return null;
 		}
 	}
-
+	//Retrieves all pokemon that exists from a user 
 	@GetMapping("/getExistingUserPokemon")
 	public List<Pokemon> getUserPokemon(@RequestParam String username) {
 		try {
@@ -270,6 +260,7 @@ public class HelloController {
 		}
 	}
 
+	//Retrieves all pokemon that exists that can be added to a sales post from a user 
 	@GetMapping("/getUserSellablePokemon")
 	public List<ExistingPokemon> getUserSellablePokemon(@RequestParam String username) {
 		try {
@@ -279,7 +270,7 @@ public class HelloController {
 		}
 	}
 
-
+	//Retrieves all pokemon that exists of a template type from a user 
 	@GetMapping("/getExistingPokemons")
 	public List<ExistingPokemon> getExistingPokemon(@RequestParam String username, String template_id) {
 		try {
@@ -288,7 +279,7 @@ public class HelloController {
 			return null;
 		}
 	}
-
+	//Retrieves all pokemon that exists of a template type
 	@GetMapping("/getExistingTemplatePokemon")
 	public List<ExistingPokemon> getExistingTemplatePokemon(@RequestParam String template_id) {
 		try {
@@ -297,7 +288,7 @@ public class HelloController {
 			return null;
 		}
 	}
-
+	//Adds a new existing pokemon  
 	@PostMapping("/addExistingPokemon")
 	public Boolean addExistingPokemon(@RequestParam String username, String template_id) {
 		try {
@@ -307,7 +298,8 @@ public class HelloController {
 		}
 
 	}
-
+	
+	//Deletes an existing pokemon  
 	@PostMapping("/deleteExistingPokemon")
 	public Boolean deleteExistingPokemon(@RequestParam String poke_id) {
 		try {
@@ -318,6 +310,7 @@ public class HelloController {
 
 	}
 
+	//Changes the owner of the existing pokemon to the new username provided   
 	@PostMapping("/changePokemonOwner")
 	public Boolean changePokemonOwner(@RequestParam String poke_id, String new_username) {
 		try {
@@ -328,6 +321,7 @@ public class HelloController {
 
 	}
 
+	//Adds a new frienship between two users  
 	@PostMapping("/addFriend")
 	public void addFriend(@RequestBody Map<String, Object> requestBody) {
 		String currentUser = (String) requestBody.get("username1");
@@ -335,23 +329,26 @@ public class HelloController {
 		this.friendService.addFriend(currentUser, friendUser);
 	}
 
-	@DeleteMapping("/removeFriend")
+	//Removes an existing friendship between two users  
+	@PostMapping("/removeFriend")
 	public void deleteFriendship(@RequestBody Map<String, Object> request) {
 		String username1 = (String) request.get("username1");
 		String username2 = (String) request.get("username2");
 		this.friendService.removeFriend(username1, username2);
 	}
 
+	//checks to see if the two users are friends 
 	@GetMapping("/checkFriendship")
 	public boolean checkFriendship(@RequestParam String username1, @RequestParam String username2) {
 		return this.friendService.checkFriendship(username1, username2);
 	}
 
+	//Retrieves all userposts that exist
 	@GetMapping("/allPosts")
 	public List<Posts> getAllPosts() {
 		return this.postService.getAllPokemonPosts();
 	}
-
+	//Creates a new userpost
 	@PostMapping("/createPost")
 	public ResponseEntity<String> createPost(@RequestBody Posts post) {
 		try {
@@ -362,7 +359,7 @@ public class HelloController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to create pokemon post.");
 		}
 	}
-
+	//Deletes an existing userpost given the postID and username
 	@DeleteMapping("/deletePost/{postId}/{authorUsername}")
 	public ResponseEntity<String> deletePost(@PathVariable int postId, @PathVariable String authorUsername) {
 		try {
@@ -373,7 +370,7 @@ public class HelloController {
 					.body("Failed to delete post: " + e.getMessage());
 		}
 	}
-
+	//Retrieves 6-team roster of a given user
 	@GetMapping("/getRoster")
 	public List<Integer> getRoster(@RequestParam String username) {
 		try {
@@ -382,7 +379,7 @@ public class HelloController {
 			return null;
 		}
 	}
-
+	// Adds a specific pokemon into the 6-team roster of the given user
 	@PostMapping("/addToRoster")
 	public boolean addToRoster(@RequestParam String username, @RequestParam Integer pokemonID) {
 		try {
@@ -391,7 +388,7 @@ public class HelloController {
 			return false;
 		}
 	}
-
+	// Removes a specific pokemon into the 6-team roster of the given user
 	@PostMapping("/deleteFromRoster")
 	public boolean deleteFromRoster(@RequestParam String username, @RequestParam Integer pokemonID) {
 		try {
@@ -402,7 +399,7 @@ public class HelloController {
 	}
 
 
-	// Create a sales post
+	// Create a sales post for pokemon
 	@PostMapping("/createPokemonSalesPost")
 	public Boolean createPokemonSalesPost(@RequestParam String username, String postDesc, String imageURL, Float price, Integer pokemon_id) {
 		try {
@@ -414,6 +411,8 @@ public class HelloController {
 			return false;
 		}
 	}
+	
+	// Create a sales post for pokemon
 	@PostMapping("/createItemSalesPost")
 	public Boolean createItemSalesPost(@RequestParam String username, String postDesc, String imageURL, Float price, Integer item_id) {
 		try {
@@ -425,24 +424,12 @@ public class HelloController {
 			return false;
 		}
 	}
-	// // Create a sales post
-	// @PostMapping("/salesposts")
-	// public ResponseEntity<String> createSalesPost(@RequestBody SalesPost salesPost) {
-	// 	try {
-	// 		salesPostService.createSalesPost(salesPost);
-	// 		return ResponseEntity.ok("Sales post created successfully!");
-	// 	} catch (Exception e) {
-	// 		e.printStackTrace();
-	// 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-	// 				.body("Failed to create sales post.");
-	// 	}
-	// }
 
 	// Delete a sales post
-	@DeleteMapping("/salesposts/{salesId}")
-	public ResponseEntity<String> deleteSalesPost(@RequestParam Integer salesId) {
+	@DeleteMapping("/deleteSalesPost")
+	public ResponseEntity<String> deleteSalesPost(@RequestParam Integer post_id, String username) {
 		try {
-			salesPostService.deleteSalesPost(salesId);
+			postService.deletePost(post_id, username);
 			return ResponseEntity.ok("Sales post deleted successfully!");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -495,18 +482,4 @@ public class HelloController {
 		}
 	}
 
-    // // Used to insert sale item and then return the sales post with the id
-    // @PostMapping("/insertSaleItem")
-    // public ResponseEntity<?> insertSaleItem(@RequestBody InsertSaleItem saleItem) {
-    //     try {
-    //         InsertSaleItem insertedItem = insertSaleItemService.insertSaleItem(saleItem);
-    //         return ResponseEntity.ok(insertedItem);
-    //     } catch (SQLException e) {
-    //         e.printStackTrace();
-    //         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to insert sale item.");
-    //     }
-// }
-
-} // (Integer sales_id, String seller, String purchaser, Float price)
-
-// itemSalesService.BuyStockItem(null, buyer_username)
+}

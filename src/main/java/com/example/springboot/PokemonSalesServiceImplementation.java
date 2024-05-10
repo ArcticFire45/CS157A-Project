@@ -107,22 +107,11 @@ public class PokemonSalesServiceImplementation {
         return false;
     }   
 
-
-
-    // if (sales.getPurchaser() == null) {
-    //     query = query + "INSERT INTO sales (Seller, Price) VALUES ('" + sales.getSeller() + "', " + sales.getPrice() + ");";
-    // } else if (sales.getSeller() == null) {
-    //     query = query + "INSERT INTO sales (Purchaser, Price) VALUES ('" + sales.getPurchaser() + "', " + sales.getPrice() + ");";
-    // } else {
-    //     query = query + "INSERT INTO sales (Seller, Purchaser, Price) VALUES ('" + sales.getSeller() + "', '" +  sales.getPurchaser()+ "', " + sales.getPrice() + ");";
-    // }
-
     public Boolean buyStockPokemon(Sales sales, Integer pokemon_template_id)
     {
         try {
             String str_pokemon_template_id = String.valueOf(pokemon_template_id);
             
-            // String query = "START TRANSACTION; ";
             String query = "";
             
             connection.setAutoCommit(false);
@@ -137,12 +126,6 @@ public class PokemonSalesServiceImplementation {
             connection.prepareStatement(query).executeUpdate();
 
             connection.commit();
-            // query = "START TRANSACTION; ";
-            // query = query + "UPDATE users SET money=money-10.10 WHERE username='User1';";
-            // query = query + "INSERT INTO Pokemons (Username, PokemonTemplateID) VALUES ('User1', 1); ";
-            // query = query + "INSERT INTO sales (Purchaser, Price) VALUES ('User1', 10.10); ";
-            // query = query + "INSERT INTO PokemonSales (salesID, PokemonID) SELECT MAX(s.salesID), MAX(i.PokemonID) FROM sales s, Pokemons i; ";
-            // query = query + "COMMIT;";
 
             return true;    
         } catch (SQLException e) 
@@ -173,14 +156,6 @@ public class PokemonSalesServiceImplementation {
 
             connection.commit();
 
-            
-            // query = "START TRANSACTION; ";
-            // query = query + "UPDATE users SET money=money-10.23 WHERE username='User1';";
-            // query = query + "UPDATE users SET money=money+10.23 WHERE username='User2';";
-            // query = query + "UPDATE Pokemons SET Username=User2 WHERE PokemonID=1); ";
-            // query = query + "INSERT INTO sales (Purchaser, Price) VALUES ('User1', 10.23); ";
-            // query = query + "INSERT INTO PokemonSales (salesID, PokemonID) SELECT MAX(s.salesID), 1 FROM sales s; ";
-            // query = query + "COMMIT;";
             return true;    
         } catch (SQLException e) 
         {

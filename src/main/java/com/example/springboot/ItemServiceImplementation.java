@@ -58,8 +58,6 @@ public class ItemServiceImplementation {
 
     public Items getItem(String item_id) {
         try {
-            // itemList = new ArrayList<Items>();
-            // ItemTemplateID INT PRIMARY KEY auto_increment,
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM ItemTemplate WHERE ItemTemplateID=" + item_id);
             ResultSet rs = stmt.executeQuery();
             rs.next();
