@@ -343,7 +343,7 @@ VALUES
 (8, 'Lucky Egg', 750.00, 'An item that increases the experience gained by a Pokémon when held.', 2.5, 'https://archives.bulbagarden.net/media/upload/thumb/0/0c/GO_Lucky_Egg.png/200px-GO_Lucky_Egg.png'),
 (9, 'Anti-Pikachu-Rubber-Balloon-Bazooka', 6900.00, 'Shoots a rubber balloon that chases Ash''s Pikachu.', 1.5, 'https://static.wikia.nocookie.net/pokemon/images/f/f2/Anti-PikachuRubber-balloonBazooka.jpg'),
 (10, 'Bombs', 120.00, 'Ordinary bombs. Used by Jessie and James from their balloon to attack Ash and Squirtle.', 1.1, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQH2FYHPZ53svydict-0qoJYu9YGOV1BandTMD53g0ZgA&s'),
-(11, 'Balloon Deluxe', 9999999.99, 'Combines all of the balloon attachments onto the Meowth balloon.', 33333, 'https://archives.bulbagarden.net/media/upload/b/ba/EP012_Bombs.png');
+(11, 'Balloon Deluxe', 9999999.99, 'Combines all of the balloon attachments onto the Meowth balloon.', 33333, 'https://www.nicepng.com/png/detail/222-2222293_view-fullsize-team-rocket-image-team-rocket-balloon.png');
 
 -- (1, "Bombs", '', ''),
 -- SELECT * FROM ItemTemplate;-- -- 
@@ -404,14 +404,14 @@ VALUES
     ('user4', 'user1');
 
 
-SELECT * 
-FROM pokemon p, pokemonsales ps 
-WHERE p.Username = "User1" & ps.PokemonID NOT IN (SELECT ps.pokemonID 
-													FROM pokemonsales ps, sales s 
-                                                    WHERE ps.SalesID = s.SalesID);
-START TRANSACTION;
+-- SELECT * 
+-- FROM pokemon p, pokemonsales ps 
+-- WHERE p.Username = "User1" & ps.PokemonID NOT IN (SELECT ps.pokemonID 
+-- 													FROM pokemonsales ps, sales s 
+--                                                     WHERE ps.SalesID = s.SalesID);
+-- START TRANSACTION;
 
-COMMIT;
+-- COMMIT;
 -- INSERT into sales (Seller, Purchaser, Price) 
 -- values 
 -- 	('user1','user2',10.92);
