@@ -3,49 +3,10 @@ import axios from "axios";
 import Post from "./Post";
 import UserFriendsBox from "./UserFriendsBox";
 
-const PostsPage = ({ user, money }) => {
+const PostsPage = ({ user }) => {
   const [newPostImage, setNewPostImage] = useState("");
   const [newPostDescription, setNewPostDescription] = useState("");
-  const [makeSale, setMakeSale] = useState(false);
-  const [saleType, setSaleType] = useState(""); // State to track sale type
-  const [price, setPrice] = useState("");
   const [posts, setPosts] = useState([]);
-  const [pokemonInventory, setPokemonInventory] = useState([]);
-  const [inventory, setInventory] = useState([]);
-  const [selectedPokemon, setSelectedPokemon] = useState();
-  const [selectedItem, setSelectedItem] = useState();
-  
-  console.log(selectedPokemon);
-
-  useEffect(() => {
-    const fetchUserInventory = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:8080/getExistingUserPokemon?username=${user.username}`
-        );
-        setPokemonInventory(response.data);
-      } catch (error) {
-        console.error("Error fetching user inventory:", error);
-      }
-    };
-
-    fetchUserInventory();
-  }, [user.username, money]);
-
-  useEffect(() => {
-    const fetchUserInventory = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:8080/getExistingUserItems?username=${user.username}`
-        );
-        setInventory(response.data);
-      } catch (error) {
-        console.error("Error fetching user inventory:", error);
-      }
-    };
-
-    fetchUserInventory();
-  }, [user.username, money]);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -69,45 +30,13 @@ const PostsPage = ({ user, money }) => {
     }
 
     try {
-      let createPostEndpoint;
-      let postIdParam;
-
-      const postData = {
-        username: user.username,
+      await axios.post("http://localhost:8080/createPost", {
         postDesc: newPostDescription,
+        author: user.username,
         imageURL: newPostImage,
-      };
-
-      if (makeSale) {
-        if (saleType === "pokemon") {
-          await axios.post(
-            `http://localhost:8080/createPokemonSalesPost?username=${
-              user.username
-            }&postDesc=${newPostDescription}&imageURL=${newPostImage}&price=${parseFloat(
-              price
-            )}&pokemon_id=${selectedPokemon}`
-          );
-        } else if (saleType === "item") {
-          await axios.post(
-            `http://localhost:8080/createItemSalesPost?username=${
-              user.username
-            }&postDesc=${newPostDescription}&imageURL=${newPostImage}&price=${parseFloat(
-              price
-            )}&item_id=${selectedItem}`
-          );
-        }
-      } else {
-        await axios.post(
-          `http://localhost:8080${createPostEndpoint}`,
-          postData
-        );
-      }
-
+      });
       setNewPostDescription("");
       setNewPostImage("");
-      setMakeSale(false);
-      setPrice("");
-      setSaleType(""); // Reset saleType
 
       const response = await axios.get("http://localhost:8080/allPosts");
       setPosts(response.data);
@@ -147,7 +76,7 @@ const PostsPage = ({ user, money }) => {
             padding: "20px",
             marginBottom: "10px",
             width: "50vw",
-            height: makeSale ? "300px" : "200px", // Adjusted height
+            height: "200px",
             marginLeft: "25vw",
             position: "relative",
             display: "flex",
@@ -167,83 +96,8 @@ const PostsPage = ({ user, money }) => {
             value={newPostDescription}
             onChange={(e) => setNewPostDescription(e.target.value)}
             style={{ marginBottom: "10px", width: "100%", padding: "8px" }}
-            rows={4}
+            rows={6}
           ></textarea>
-          <label style={{ marginBottom: "10px" }}>
-            <input
-              type="checkbox"
-              checked={makeSale}
-              onChange={(e) => setMakeSale(e.target.checked)}
-            />
-            Make Sale
-          </label>
-          {makeSale && (
-            <div>
-              <label style={{ marginBottom: "10px" }}>
-                <input
-                  type="radio"
-                  name="saleType"
-                  value="pokemon"
-                  checked={saleType === "pokemon"}
-                  onChange={() => setSaleType("pokemon")}
-                />
-                Pokemon Sale
-              </label>
-              <label style={{ marginBottom: "10px" }}>
-                <input
-                  type="radio"
-                  name="saleType"
-                  value="item"
-                  checked={saleType === "item"}
-                  onChange={() => setSaleType("item")}
-                />
-                Item Sale
-              </label>
-              <input
-                type="number"
-                placeholder="Price"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-                style={{ marginBottom: "10px", width: "100%", padding: "8px" }}
-              />
-              {saleType === "pokemon" && (
-                <select
-                  value={selectedPokemon}
-                  onChange={(e) => setSelectedPokemon(e.target.value)}
-                  style={{
-                    marginBottom: "10px",
-                    width: "100%",
-                    padding: "8px",
-                  }}
-                >
-                  <option value="">Select a Pokémon</option>
-                  {pokemonInventory.map((pokemon) => (
-                    <option key={pokemon.poke_id} value={pokemon.poke_id}>
-                      {pokemon.poke_name}
-                    </option>
-                  ))}
-                </select>
-              )}
-              {saleType === "item" && (
-                <select
-                  value={selectedItem}
-                  onChange={(e) => setSelectedItem(e.target.value)}
-                  style={{
-                    marginBottom: "10px",
-                    width: "100%",
-                    padding: "8px",
-                  }}
-                >
-                  <option value="">Select an Item</option>
-                  {inventory.map((item) => (
-                    <option key={item.item_id} value={item.item_id}>
-                      {item.item_name}
-                    </option>
-                  ))}
-                </select>
-              )}
-            </div>
-          )}
           <button
             onClick={handleAddPost}
             style={{
