@@ -157,12 +157,15 @@ public class ExistingPokemonServiceImplementation {
 public List<ExistingPokemon> getUserSellablePokemon(String username) {
     existingPokeList = new ArrayList<ExistingPokemon>();
     try {
-        String query = "SELECT * FROM pokemon p, pokemonTemplate pt WHERE p.username = '" + username + "' AND pt.PokeTemplateID = p.PokeTemplateID AND p.PokeID NOT IN (SELECT ps.pokemonID as PokeID FROM pokemonsales ps, sales s WHERE ps.SalesID = s.SalesID AND s.Purchaser = NULL);";
+        String query = "SELECT p.PokeID, p.Username, p.PokeTemplateID, pt.StockPrice, pt.PokeName, pt.Type1, pt.Type2, pt.GifURL, pt.ImageURL, pt.PokemonDescription FROM pokemon p, pokemonTemplate pt WHERE p.username = '" + username + "' AND pt.PokeTemplateID = p.PokeTemplateID AND p.PokeID NOT IN (SELECT ps.pokemonID as PokeID FROM pokemonsales ps, sales s WHERE ps.SalesID = s.SalesID AND s.Purchaser = NULL);";
         PreparedStatement stmt = connection
                 .prepareStatement(query);
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
             ExistingPokemon pokemon = new ExistingPokemon(rs.getInt(1), rs.getString(2), rs.getInt(3));
+
+            Pokemon template = new Pokemon(rs.getInt(3), rs.getInt(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10));
+            pokemon.setPokemon_template(template);
             existingPokeList.add(pokemon);
         }
         return existingPokeList;
