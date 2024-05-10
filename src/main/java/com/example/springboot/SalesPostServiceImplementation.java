@@ -54,6 +54,84 @@ public class SalesPostServiceImplementation {
         }
     }
 
+
+
+
+
+    // String query = "";
+            
+    // connection.setAutoCommit(false);
+
+    // query = "UPDATE users SET money=money-" + String.valueOf(sales.getPrice()) + " WHERE username='" + sales.getPurchaser() + "'; ";
+    // connection.prepareStatement(query).executeUpdate();
+    // query = "UPDATE users SET money=money+" + String.valueOf(sales.getPrice()) + " WHERE username='" + sales.getSeller() + "'; ";
+    // connection.prepareStatement(query).executeUpdate();
+    // query = "UPDATE items SET Username='" + sales.getPurchaser() + "' WHERE itemID=" + str_item_id + "; ";
+    // connection.prepareStatement(query).executeUpdate();
+    // query = "INSERT INTO sales (Seller, Purchaser, Price) VALUES ('" + sales.getSeller() + "', '" + sales.getPurchaser() + "', " + String.valueOf(sales.getPrice()) + "); "; 
+    // connection.prepareStatement(query).executeUpdate();
+    // query = "INSERT INTO itemSales (salesID, itemID) SELECT MAX(s.salesID)," + str_item_id + " FROM sales s; ";
+    // connection.prepareStatement(query).executeUpdate();
+    
+    // // connection.commit();
+    // private Integer postID;
+    // private String author;
+    // private String postDesc;
+    // private String imageURL;
+    public Boolean createSalesPostPokemon(Posts post, Sales sale, Integer poke_id) {
+        try {
+            connection.setAutoCommit(false);
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO UserPosts (Author, PostDescription, ImageURL) VALUES (?, ?, ?)");
+            stmt.setString(1, post.getAuthor());
+            stmt.setString(2, post.getPostDesc());
+            stmt.setString(3, post.getImageURL());
+            stmt.executeUpdate();
+            stmt = connection.prepareStatement("INSERT INTO sales (Seller, Price) VALUES (?, ?)");
+            stmt.setString(1, sale.getSeller());
+            stmt.setFloat(2, sale.getPrice());
+            stmt.executeUpdate();
+            stmt = connection.prepareStatement("INSERT INTO pokemonsales (SalesID, PokemonID) SELECT MAX(s.SalesID), ? FROM sales s");
+            stmt.setInt(1, poke_id);
+            stmt.executeUpdate();
+            stmt = connection.prepareStatement("INSERT INTO SalesPosts (PostID, SalesID) SELECT MAX(p.PostID), MAX(s.SalesID) FROM UserPosts p, sales s");
+            stmt.executeUpdate();
+            connection.commit();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public Boolean createSalesPostItem(Posts post, Sales sale, Integer item_id) {
+        try {
+            connection.setAutoCommit(false);
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO UserPosts (Author, PostDescription, ImageURL) VALUES (?, ?, ?)");
+            stmt.setString(1, post.getAuthor());
+            stmt.setString(2, post.getPostDesc());
+            stmt.setString(3, post.getImageURL());
+            stmt.executeUpdate();
+            stmt = connection.prepareStatement("INSERT INTO sales (Seller, Price) VALUES (?, ?)");
+            stmt.setString(1, sale.getSeller());
+            stmt.setFloat(2, sale.getPrice());
+            stmt.executeUpdate();
+            stmt = connection.prepareStatement("INSERT INTO itemsales (SalesID, ItemID) SELECT MAX(s.SalesID), ? FROM sales s");
+            stmt.setInt(1, item_id);
+            stmt.executeUpdate();
+            stmt = connection.prepareStatement("INSERT INTO SalesPosts (PostID, SalesID) SELECT MAX(p.PostID), MAX(s.SalesID) FROM UserPosts p, sales s");
+            stmt.executeUpdate();
+            connection.commit();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
+
+
+
     public void deleteSalesPost(Integer salesId) {
         try {
             PreparedStatement stmt = connection.prepareStatement("DELETE FROM SalesPosts WHERE SalesID = ?");

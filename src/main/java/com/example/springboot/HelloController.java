@@ -56,8 +56,8 @@ public class HelloController {
 	@Autowired
 	private PokemonSalesServiceImplementation pokemonSalesService;
 
-    @Autowired
-    private InsertSaleItemServiceImplementation insertSaleItemService;
+    // @Autowired
+    // private InsertSaleItemServiceImplementation insertSaleItemService;
 
 	@GetMapping("/")
 	public String index() {
@@ -401,18 +401,42 @@ public class HelloController {
 		}
 	}
 
+
 	// Create a sales post
-	@PostMapping("/salesposts")
-	public ResponseEntity<String> createSalesPost(@RequestBody SalesPost salesPost) {
+	@PostMapping("/createPokemonSalesPost")
+	public Boolean createPokemonSalesPost(@RequestParam String username, String postDesc, String imageURL, Float price, Integer pokemon_id) {
 		try {
-			salesPostService.createSalesPost(salesPost);
-			return ResponseEntity.ok("Sales post created successfully!");
+			return salesPostService.createSalesPostPokemon(new Posts(-1, username, postDesc, imageURL),
+													new Sales(-1, username, price),
+													pokemon_id);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body("Failed to create sales post.");
+			return false;
 		}
 	}
+	@PostMapping("/createItemSalesPost")
+	public Boolean createItemSalesPost(@RequestParam String username, String postDesc, String imageURL, Float price, Integer item_id) {
+		try {
+			return salesPostService.createSalesPostItem(new Posts(-1, username, postDesc, imageURL),
+													new Sales(-1, username, price),
+													item_id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	// // Create a sales post
+	// @PostMapping("/salesposts")
+	// public ResponseEntity<String> createSalesPost(@RequestBody SalesPost salesPost) {
+	// 	try {
+	// 		salesPostService.createSalesPost(salesPost);
+	// 		return ResponseEntity.ok("Sales post created successfully!");
+	// 	} catch (Exception e) {
+	// 		e.printStackTrace();
+	// 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	// 				.body("Failed to create sales post.");
+	// 	}
+	// }
 
 	// Delete a sales post
 	@DeleteMapping("/salesposts/{salesId}")
@@ -471,17 +495,17 @@ public class HelloController {
 		}
 	}
 
-    // Used to insert sale item and then return the sales post with the id
-    @PostMapping("/insertSaleItem")
-    public ResponseEntity<?> insertSaleItem(@RequestBody InsertSaleItem saleItem) {
-        try {
-            InsertSaleItem insertedItem = insertSaleItemService.insertSaleItem(saleItem);
-            return ResponseEntity.ok(insertedItem);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to insert sale item.");
-        }
-}
+    // // Used to insert sale item and then return the sales post with the id
+    // @PostMapping("/insertSaleItem")
+    // public ResponseEntity<?> insertSaleItem(@RequestBody InsertSaleItem saleItem) {
+    //     try {
+    //         InsertSaleItem insertedItem = insertSaleItemService.insertSaleItem(saleItem);
+    //         return ResponseEntity.ok(insertedItem);
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+    //         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to insert sale item.");
+    //     }
+// }
 
 } // (Integer sales_id, String seller, String purchaser, Float price)
 
