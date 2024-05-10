@@ -61,7 +61,11 @@ const App = () => {
           <Route
             path="/"
             element={
-              loggedIn ? <PostsPage user={user} /> : <Navigate to="/login" />
+              loggedIn ? (
+                <PostsPage user={user} money={money} />
+              ) : (
+                <Navigate to="/login" />
+              )
             }
           />
           <Route
@@ -90,7 +94,9 @@ const App = () => {
           />
           <Route
             path="/shop"
-            element={loggedIn ? <ShopPage /> : <Navigate to="/login" />}
+            element={
+              loggedIn ? <ShopPage user={user} /> : <Navigate to="/login" />
+            }
           />
           <Route
             path="/profile"

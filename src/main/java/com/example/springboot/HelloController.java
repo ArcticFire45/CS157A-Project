@@ -1,6 +1,5 @@
 package com.example.springboot;
 
-// import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -207,7 +206,7 @@ public class HelloController {
 			return null;
 		}
 	}
-	// Adds a new existing item into the database
+
 	@PostMapping("/addExistingItem")
 	public Boolean addExistingItem(@RequestParam String username, String template_id) {
 		try {
@@ -407,7 +406,7 @@ public class HelloController {
 
 	// Create a sales post for pokemon
 	@PostMapping("/createPokemonSalesPost")
-	public Boolean createPokemonSalesPost(@RequestParam String username, String postDesc, String imageURL, Float price, Integer pokemon_id) {
+	public Boolean createPokemonSalesPost(@RequestParam String username, @RequestParam String postDesc, @RequestParam String imageURL, @RequestParam Float price, @RequestParam Integer pokemon_id) {
 		try {
 			return salesPostService.createSalesPostPokemon(new Posts(-1, username, postDesc, imageURL),
 													new Sales(-1, username, price),
@@ -420,7 +419,7 @@ public class HelloController {
 	
 	// Create a sales post for pokemon
 	@PostMapping("/createItemSalesPost")
-	public Boolean createItemSalesPost(@RequestParam String username, String postDesc, String imageURL, Float price, Integer item_id) {
+	public Boolean createItemSalesPost(@RequestParam String username, @RequestParam String postDesc, @RequestParam String imageURL, @RequestParam Float price, @RequestParam Integer item_id) {
 		try {
 			return salesPostService.createSalesPostItem(new Posts(-1, username, postDesc, imageURL),
 													new Sales(-1, username, price),

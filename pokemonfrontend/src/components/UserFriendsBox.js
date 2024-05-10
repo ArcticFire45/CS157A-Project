@@ -20,25 +20,6 @@ const UserFriendsBox = ({ user }) => {
     fetchUsernames();
   }, [user.username]);
 
-  useEffect(() => {
-    const fetchFriendStatuses = async () => {
-      try {
-        const newFriendStatuses = {};
-        for (const username of usernames) {
-          const response = await axios.get(
-            `http://localhost:8080/checkFriendship?username1=${user.username}&username2=${username}`
-          );
-          newFriendStatuses[username] = response.data;
-        }
-        setFriendStatuses(newFriendStatuses);
-      } catch (error) {
-        console.error("Error checking friendships:", error);
-      }
-    };
-
-    fetchFriendStatuses();
-  }, [user.username, usernames, friendStatuses]);
-
   const handleAddFriend = async (friendUserName) => {
     try {
       await axios.post("http://localhost:8080/addFriend", {
@@ -64,6 +45,26 @@ const UserFriendsBox = ({ user }) => {
       console.error("Error adding/deleting friend:", error);
     }
   };
+
+  useEffect(() => {
+    const fetchFriendStatuses = async () => {
+      try {
+        const newFriendStatuses = {};
+        for (const username of usernames) {
+          const response = await axios.get(
+            `http://localhost:8080/checkFriendship?username1=${user.username}&username2=${username}`
+          );
+          newFriendStatuses[username] = response.data;
+        }
+        setFriendStatuses(newFriendStatuses);
+      } catch (error) {
+        console.error("Error checking friendships:", error);
+      }
+    };
+
+    fetchFriendStatuses();
+  }, [user.username, usernames, handleAddFriend, handleDeleteFriend]);
+  
   return (
     <div
       style={{
