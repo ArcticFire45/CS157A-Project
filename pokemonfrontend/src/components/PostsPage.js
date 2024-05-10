@@ -7,11 +7,15 @@ const PostsPage = ({ user, money }) => {
   const [newPostImage, setNewPostImage] = useState("");
   const [newPostDescription, setNewPostDescription] = useState("");
   const [makeSale, setMakeSale] = useState(false);
+  const [saleType, setSaleType] = useState(""); // State to track sale type
   const [price, setPrice] = useState("");
-  const [currency, setCurrency] = useState("USD"); // Default currency
   const [posts, setPosts] = useState([]);
   const [pokemonInventory, setPokemonInventory] = useState([]);
   const [inventory, setInventory] = useState([]);
+  const [selectedPokemon, setSelectedPokemon] = useState();
+  const [selectedItem, setSelectedItem] = useState();
+  
+  console.log(selectedPokemon);
 
   useEffect(() => {
     const fetchUserInventory = async () => {
@@ -65,21 +69,45 @@ const PostsPage = ({ user, money }) => {
     }
 
     try {
+      let createPostEndpoint;
+      let postIdParam;
+
       const postData = {
+        username: user.username,
         postDesc: newPostDescription,
-        author: user.username,
         imageURL: newPostImage,
-        makeSale: makeSale,
-        price: makeSale ? parseFloat(price) : null,
-        currency: makeSale ? currency : null,
       };
 
-      await axios.post("http://localhost:8080/createPost", postData);
+      if (makeSale) {
+        if (saleType === "pokemon") {
+          await axios.post(
+            `http://localhost:8080/createPokemonSalesPost?username=${
+              user.username
+            }&postDesc=${newPostDescription}&imageURL=${newPostImage}&price=${parseFloat(
+              price
+            )}&pokemon_id=${selectedPokemon}`
+          );
+        } else if (saleType === "item") {
+          await axios.post(
+            `http://localhost:8080/createItemSalesPost?username=${
+              user.username
+            }&postDesc=${newPostDescription}&imageURL=${newPostImage}&price=${parseFloat(
+              price
+            )}&item_id=${selectedItem}`
+          );
+        }
+      } else {
+        await axios.post(
+          `http://localhost:8080${createPostEndpoint}`,
+          postData
+        );
+      }
+
       setNewPostDescription("");
       setNewPostImage("");
       setMakeSale(false);
       setPrice("");
-      setCurrency("USD");
+      setSaleType(""); // Reset saleType
 
       const response = await axios.get("http://localhost:8080/allPosts");
       setPosts(response.data);
@@ -119,7 +147,7 @@ const PostsPage = ({ user, money }) => {
             padding: "20px",
             marginBottom: "10px",
             width: "50vw",
-            height: makeSale ? "280px" : "200px",
+            height: makeSale ? "300px" : "200px", // Adjusted height
             marginLeft: "25vw",
             position: "relative",
             display: "flex",
@@ -151,6 +179,26 @@ const PostsPage = ({ user, money }) => {
           </label>
           {makeSale && (
             <div>
+              <label style={{ marginBottom: "10px" }}>
+                <input
+                  type="radio"
+                  name="saleType"
+                  value="pokemon"
+                  checked={saleType === "pokemon"}
+                  onChange={() => setSaleType("pokemon")}
+                />
+                Pokemon Sale
+              </label>
+              <label style={{ marginBottom: "10px" }}>
+                <input
+                  type="radio"
+                  name="saleType"
+                  value="item"
+                  checked={saleType === "item"}
+                  onChange={() => setSaleType("item")}
+                />
+                Item Sale
+              </label>
               <input
                 type="number"
                 placeholder="Price"
@@ -158,22 +206,42 @@ const PostsPage = ({ user, money }) => {
                 onChange={(e) => setPrice(e.target.value)}
                 style={{ marginBottom: "10px", width: "100%", padding: "8px" }}
               />
-              <select
-                value={currency}
-                onChange={(e) => setCurrency(e.target.value)}
-                style={{ marginBottom: "10px", width: "100%", padding: "8px" }}
-              >
-                {pokemonInventory.map((pokemon) => (
-                  <option key={pokemon.poke_id} value={pokemon.poke_id}>
-                    {pokemon.poke_name}
-                  </option>
-                ))}
-                {inventory.map((item) => (
-                  <option key={item.item_id} value={item.item_id}>
-                    {item.item_name}
-                  </option>
-                ))}
-              </select>
+              {saleType === "pokemon" && (
+                <select
+                  value={selectedPokemon}
+                  onChange={(e) => setSelectedPokemon(e.target.value)}
+                  style={{
+                    marginBottom: "10px",
+                    width: "100%",
+                    padding: "8px",
+                  }}
+                >
+                  <option value="">Select a Pokémon</option>
+                  {pokemonInventory.map((pokemon) => (
+                    <option key={pokemon.poke_id} value={pokemon.poke_id}>
+                      {pokemon.poke_name}
+                    </option>
+                  ))}
+                </select>
+              )}
+              {saleType === "item" && (
+                <select
+                  value={selectedItem}
+                  onChange={(e) => setSelectedItem(e.target.value)}
+                  style={{
+                    marginBottom: "10px",
+                    width: "100%",
+                    padding: "8px",
+                  }}
+                >
+                  <option value="">Select an Item</option>
+                  {inventory.map((item) => (
+                    <option key={item.item_id} value={item.item_id}>
+                      {item.item_name}
+                    </option>
+                  ))}
+                </select>
+              )}
             </div>
           )}
           <button
