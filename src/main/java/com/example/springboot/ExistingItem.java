@@ -11,6 +11,7 @@ public class ExistingItem {
     private Integer item_id;
     private String username;
     private Integer item_template_id;
+    private Items item_template;
 
     public ExistingItem(Integer item_id, String username, Integer item_template_id) {
         this.item_id = item_id;
@@ -46,5 +47,13 @@ public class ExistingItem {
     public String toString() {
         return "ExistingItem [item_id=" + item_id + ", username=" + username + ", item_template_id=" + item_template_id
                 + "]";
+    }
+
+    public Items getItem_template() {
+        return item_template;
+    }
+
+    public void setItem_template(Items item_template) {
+        this.item_template = item_template;
     }
 }

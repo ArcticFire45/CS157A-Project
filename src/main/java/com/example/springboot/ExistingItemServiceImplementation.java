@@ -168,6 +168,10 @@ public List<ExistingItem> getUserSellableItems(String username) {
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
             ExistingItem item = new ExistingItem(rs.getInt(1), rs.getString(2), rs.getInt(3));
+            Items template = new Items(rs.getInt("ItemID"), rs.getString("ItemName"), rs.getFloat("StockPrice"),
+                        rs.getString("ItemDescription"), rs.getFloat("MoneyClickerMultiplier"),
+                        rs.getString("ImageURL"));
+            item.setItem_template(template);
             existingItemsList.add(item);
         }
         return existingItemsList;
