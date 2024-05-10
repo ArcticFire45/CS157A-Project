@@ -7,7 +7,7 @@ const PurchasesPage = ({ user }) => {
   useEffect(() => {
     const fetchUserPurchases = async () => {
       try {
-        const response = await axios.post(
+        const response = await axios.get(
           `http://localhost:8080/getUserPurchases?username=${user.username}`);
         setPurchases(response.data);
       } catch (error) {
