@@ -7,12 +7,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.antlr.v4.runtime.atn.SemanticContext.AND;
-// import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-// import com.example.springboot.ItemServiceImplementation;
+
+// import org.antlr.v4.runtime.atn.SemanticContext.AND;
+// import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
 
 @Service
 public class ExistingItemServiceImplementation {
@@ -29,14 +29,6 @@ public class ExistingItemServiceImplementation {
         connection = DBUtil.getConnection();
     }
 
-    // private Integer item_id;
-    // private String username;
-    // private Integer item_template_id;
-
-    // getItem
-    // getUserItems
-    // getExistingItems
-    // getExistingTemplateItems
 
     public ExistingItem getItem(String item_id) {
         try {

@@ -1,22 +1,5 @@
 package com.example.springboot;
 
-
-
-// CREATE TABLE IF NOT EXISTS PokemonSales (
-//     SalesID INT PRIMARY KEY auto_increment,
-//     PokemonID INT NOT NULL,
-//     FOREIGN KEY (SalesID) REFERENCES Sales(SalesID),
-//     FOREIGN KEY (PokemonID) REFERENCES Pokemon(PokeID)
-// );
-
-// CREATE TABLE IF NOT EXISTS ItemSales (
-//     SalesID INT PRIMARY KEY auto_increment,
-//     ItemID INT NOT NULL,
-//     FOREIGN KEY (SalesID) REFERENCES Sales(SalesID),
-//     FOREIGN KEY (ItemID) REFERENCES Items(ItemID)
-// );
-
-
 public class ItemSales {
 
 

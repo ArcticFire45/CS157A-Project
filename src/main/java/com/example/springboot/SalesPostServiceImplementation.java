@@ -55,29 +55,6 @@ public class SalesPostServiceImplementation {
     }
 
 
-
-
-
-    // String query = "";
-            
-    // connection.setAutoCommit(false);
-
-    // query = "UPDATE users SET money=money-" + String.valueOf(sales.getPrice()) + " WHERE username='" + sales.getPurchaser() + "'; ";
-    // connection.prepareStatement(query).executeUpdate();
-    // query = "UPDATE users SET money=money+" + String.valueOf(sales.getPrice()) + " WHERE username='" + sales.getSeller() + "'; ";
-    // connection.prepareStatement(query).executeUpdate();
-    // query = "UPDATE items SET Username='" + sales.getPurchaser() + "' WHERE itemID=" + str_item_id + "; ";
-    // connection.prepareStatement(query).executeUpdate();
-    // query = "INSERT INTO sales (Seller, Purchaser, Price) VALUES ('" + sales.getSeller() + "', '" + sales.getPurchaser() + "', " + String.valueOf(sales.getPrice()) + "); "; 
-    // connection.prepareStatement(query).executeUpdate();
-    // query = "INSERT INTO itemSales (salesID, itemID) SELECT MAX(s.salesID)," + str_item_id + " FROM sales s; ";
-    // connection.prepareStatement(query).executeUpdate();
-    
-    // // connection.commit();
-    // private Integer postID;
-    // private String author;
-    // private String postDesc;
-    // private String imageURL;
     public Boolean createSalesPostPokemon(Posts post, Sales sale, Integer poke_id) {
         try {
             connection.setAutoCommit(false);

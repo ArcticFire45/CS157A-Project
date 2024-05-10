@@ -10,16 +10,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-// CREATE TABLE IF NOT EXISTS Sales (
-//     SalesID INT PRIMARY KEY,
-//     Seller varchar(30) NOT NULL,
-//     Purchaser varchar(30),
-//     Price DECIMAL(10, 2) NOT NULL,
-//     FOREIGN KEY (Seller) REFERENCES Users(Username),
-//     FOREIGN KEY (Purchaser) REFERENCES Users(Username),
-//     CHECK (Price >= 0) 
-// );
-
 @Service
 public class SalesServiceImplementation {
 
@@ -82,7 +72,6 @@ public class SalesServiceImplementation {
                         + "', " + price;
             }
             PreparedStatement stmt = connection.prepareStatement(query);
-            // ResultSet rs = stmt.executeQuery();
             stmt.executeQuery();
             return true;
         } catch (SQLException e) {
@@ -90,8 +79,6 @@ public class SalesServiceImplementation {
         }
         return false;
     }
-
-    // Did we want to add dates to when they were purchased, when they were posted?
     public List<Sales> getUserTransactionHistory(String username) {
         ArrayList<Sales> transactionList = new ArrayList<Sales>();
         transactionList.addAll(getUserPurchases(username));

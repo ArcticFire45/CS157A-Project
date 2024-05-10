@@ -1,6 +1,5 @@
 package com.example.springboot;
 
-//SalesPosts(SalesID, PostID)
 public class SalesPost {
     private Integer SalesID;
     private Integer PostID;

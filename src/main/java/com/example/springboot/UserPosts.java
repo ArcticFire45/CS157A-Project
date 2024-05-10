@@ -1,10 +1,5 @@
 package com.example.springboot;
 
-//required:
-//UserPosts(PostID, description, image_url)
-//SalesPosts(SalesID, PostID)
-
-// User posts pokemon 
 public class UserPosts {
     private Integer PostID;
     private String description;

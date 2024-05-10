@@ -1,6 +1,6 @@
 package com.example.springboot;
 
-import java.sql.SQLException;
+// import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -55,9 +55,6 @@ public class HelloController {
 
 	@Autowired
 	private PokemonSalesServiceImplementation pokemonSalesService;
-
-    // @Autowired
-    // private InsertSaleItemServiceImplementation insertSaleItemService;
 
 	@GetMapping("/")
 	public String index() {
@@ -133,9 +130,6 @@ public class HelloController {
 		this.userservice.updateUserMoney(username, moneyToAdd);
 	}
 
-	// public ResponseEntity<?> postMethodName(@RequestBody String user,
-	// @RequestParam String pass) {
-
 	@PostMapping("/getUserSales")
 	public List<Sales> userSales(@RequestParam String username) {
 		return this.salesService.getUserPurchases(username);
@@ -164,11 +158,6 @@ public class HelloController {
 			return ResponseEntity.status(500).body("Internal server error: " + e.getMessage());
 		}
 	}
-
-	// getItem
-	// getUserItems
-	// getExistingItems
-	// getExistingTemplateItems
 
 	@GetMapping("/getExistingItem")
 	public ExistingItem getExistingItem(@RequestParam String item_id) {

@@ -45,8 +45,6 @@ public class PokemonServiceImplementation {
                         rs.getString(5),
                         rs.getString(6), rs.getString(7), rs.getString(8));
                 pokemonList.add(poke);
-                // Pokemon poke_test = new Pokemon(1, "test");
-                // pokemonList.add(poke_test);
             }
         } catch (SQLException e) {
             e.printStackTrace();
