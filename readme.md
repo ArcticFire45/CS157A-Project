@@ -2,6 +2,7 @@
 ### Spring Boot
 #### *Pre Reqs*
 - Java 17 or higher
+- We used Visual Studio Code
 - Spring Boot is compatible with Apache Maven 3.0 or above. If you don’t already have Maven installed, run
 > brew install maven
 
@@ -12,7 +13,8 @@
 
 #### *Pre Reqs*
 - Make sure to have Node.js downloaded (at least version 16)
-- Run all of the SQL scripts in our **sql_scripts** folder beforehand
+- Have a SpringBoot Local Instance connection set up where the username is "springuser" and password is "password" connected on localhost:3306
+- Run the SQL scripts: pokemon_create_all_tables.sql and populate_db.sql in our **sql_scripts** folder beforehand
 
 #### *Running the Application*
 - Start the Spring Boot application 
@@ -31,6 +33,7 @@ This should open on localhost:3000
 - SQL Scripts
 - Existing Items/Pokemon
 - Pokemon/ Item Templates
+- Sales
 
 **Chelsea Chu**
 - Pokemon Roster Implementation
@@ -40,8 +43,10 @@ This should open on localhost:3000
 **Kevin Rai**
 - Front End pages
 - Connecting with back end routes
+- Friends
+- Login/Signup
 
 **Lawton Fong**
-- Sales
+- SalesPosts
 - Posts
 
