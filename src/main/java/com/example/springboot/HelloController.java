@@ -348,6 +348,13 @@ public class HelloController {
 	public List<Posts> getAllPosts() {
 		return this.postService.getAllPokemonPosts();
 	}
+
+	//Retrieves all userposts that exist
+	@GetMapping("/allSalesPosts")
+	public List<SalesPost> getAllSalesPosts() {
+		return this.salesPostService.getAllSalesPosts();
+	}
+
 	//Creates a new userpost
 	@PostMapping("/createPost")
 	public ResponseEntity<String> createPost(@RequestBody Posts post) {
@@ -397,7 +404,6 @@ public class HelloController {
 			return false;
 		}
 	}
-
 
 	// Create a sales post for pokemon
 	@PostMapping("/createPokemonSalesPost")
