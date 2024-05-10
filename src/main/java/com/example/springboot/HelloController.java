@@ -20,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 @CrossOrigin(origins = "http://localhost:3000")
 public class HelloController {
 
+    //routes to each feature in application
 	@Autowired
 	private PokemonServiceImplementation pokeService;
 
@@ -60,51 +61,62 @@ public class HelloController {
     // private InsertSaleItemServiceImplementation insertSaleItemService;
 
 	@GetMapping("/")
+
+    //testing spring boot application
 	public String index() {
 
 		return "Testing from Spring Boot!";
 	}
 
+    //retrieve information about pokemon
 	@GetMapping("/pokepoke")
 	public List<Pokemon> pokemon_information() {
 		return this.pokeService.getPokemonData();
 	}
 
+    //retrieve information about items
 	@GetMapping("/allitems")
 	public List<Items> item_information() {
 		return this.itemService.getItemData();
 	}
 
+    //retrieve information about a specific item based on template ID
 	@GetMapping("/getItem")
 	public Items getItem(@RequestParam String item_template_id) {
 		return this.itemService.getItem(item_template_id);
 	}
 
+    //retrieve name of first pokemon
 	@GetMapping("/first_pokemon")
 	public String first_pokemon() {
 		return this.pokeService.getPokemonName("1");
 	}
 
+    //retrieve pokemon about specific pokemon based on template ID
 	@GetMapping("/getPokemon")
 	public Pokemon getPokemon(@RequestParam String pokemon_template_id) {
 		return this.pokeService.getPokemon(pokemon_template_id);
 	}
 
+    //search pokemon by name
 	@GetMapping("/search")
 	public List<Pokemon> searchPokemon(@RequestParam String name) {
 		return this.pokeService.searchPokemonByName(name);
 	}
 
+    //search item by name
 	@GetMapping("/itemsearch")
 	public List<Items> searchItem(@RequestParam String name) {
 		return this.itemService.searchItemByName(name);
 	}
 
+    //add new users to the application
 	@PostMapping(value = "/signup")
 	public int signUp(@RequestBody User user) {
 		return this.userservice.addUser(user);
 	}
 
+    //logs in a user and check if user data is successful
 	@GetMapping("/login/{username}/{password}")
 	public ResponseEntity<?> login(@PathVariable("username") String user, @PathVariable("password") String pass) {
 		boolean loggedIn = this.userservice.loginUser(user, pass);
@@ -116,16 +128,19 @@ public class HelloController {
 		}
 	}
 
+    //retrieve information about a specific user
 	@GetMapping("/user")
 	public User getUser(@RequestParam String username) {
 		return this.userservice.getUserFrom(username);
 	}
 
+    //retrieves usernames of all users except for specified one
 	@GetMapping("/alluser/{excludedUsername}")
 	public List<String> getAllUserExcept(@PathVariable String excludedUsername) {
 		return this.userservice.getAllUsernamesExcept(excludedUsername);
 	}
 
+    //updates user balance
 	@PostMapping("/updateMoney")
 	public void updateMoney(@RequestBody Map<String, Object> requestBody) {
 		String username = (String) requestBody.get("username");
@@ -136,21 +151,25 @@ public class HelloController {
 	// public ResponseEntity<?> postMethodName(@RequestBody String user,
 	// @RequestParam String pass) {
 
+    //retrieves sales made by specific user
 	@PostMapping("/getUserSales")
 	public List<Sales> userSales(@RequestParam String username) {
 		return this.salesService.getUserPurchases(username);
 	}
 
+    //retrieves purchases made by the user
 	@PostMapping("/getUserPurchases")
 	public List<Sales> userPurchases(@RequestParam String username) {
 		return this.salesService.getUserPurchases(username);
 	}
 
+    //retrieves transactions involving a specific user
 	@PostMapping("/getUserTransactions")
 	public List<Sales> userTransactions(@RequestBody String username) {
 		return this.salesService.getUserSales(username);
 	}
 
+    //adds sale transaction
 	@PostMapping("/addSale")
 	public ResponseEntity<?> addSale(@RequestParam String buyer, String seller, float price) {
 		try {
@@ -170,6 +189,7 @@ public class HelloController {
 	// getExistingItems
 	// getExistingTemplateItems
 
+    //feature to retrieve details of an existing item based on its item ID.
 	@GetMapping("/getExistingItem")
 	public ExistingItem getExistingItem(@RequestParam String item_id) {
 		try {
@@ -179,6 +199,7 @@ public class HelloController {
 		}
 	}
 
+    //feature to retrieve a list of existing items owned by a specific user.
 	@GetMapping("/getExistingUserItems")
 	public List<Items> getExistingUserItems(@RequestParam String username) {
 		try {
@@ -188,6 +209,7 @@ public class HelloController {
 		}
 	}
 
+    //feature to retrieve a list of existing items owned by a specific user and matching a particular template ID.
 	@GetMapping("/getExistingItems")
 	public List<ExistingItem> getExistingItems(@RequestParam String username, String template_id) {
 		try {
@@ -197,6 +219,7 @@ public class HelloController {
 		}
 	}
 
+    //feature to retrieve a list of existing items matching a particular template ID.
 	@GetMapping("/getExistingTemplateItems")
 	public List<ExistingItem> getExistingTemplateItem(@RequestParam String template_id) {
 		try {
@@ -206,6 +229,7 @@ public class HelloController {
 		}
 	}
 
+    //feature to retrieves a list of existing items owned by a specific user that are marked as sellable.
 	@GetMapping("/getUserSellableItems")
 	public List<ExistingItem> getUserSellableItems(@RequestParam String username) {
 		try {
@@ -214,6 +238,8 @@ public class HelloController {
 			return null;
 		}
 	}
+    
+    //feature to add existing item to user's inventory
 	@PostMapping("/addExistingItem")
 	public Boolean addExistingItem(@RequestParam String username, String template_id) {
 		try {
@@ -224,6 +250,7 @@ public class HelloController {
 
 	}
 
+    //feature to delete existing item 
 	@PostMapping("/deleteExistingItem")
 	public Boolean deleteExistingItem(@RequestParam String item_id) {
 		try {
@@ -234,6 +261,7 @@ public class HelloController {
 
 	}
 
+    //feature to transfer ownership of item to another owner
 	@PostMapping("/changeItemOwner")
 	public Boolean changeItemOwner(@RequestParam String item_id, String new_username) {
 		try {
@@ -251,6 +279,7 @@ public class HelloController {
 	// deleteExistingPokemon
 	// changePokemonOwner
 
+    //obtain existing pokemon based on pokemon_id
 	@GetMapping("/getExistingPokemon")
 	public ExistingPokemon getExistingPokemon(@RequestParam String poke_id) {
 		try {
@@ -261,6 +290,7 @@ public class HelloController {
 		}
 	}
 
+    //feature to obtain user's pokemon by name
 	@GetMapping("/getExistingUserPokemon")
 	public List<Pokemon> getUserPokemon(@RequestParam String username) {
 		try {
@@ -270,6 +300,7 @@ public class HelloController {
 		}
 	}
 
+    //feature to allow users to sell pokemon
 	@GetMapping("/getUserSellablePokemon")
 	public List<ExistingPokemon> getUserSellablePokemon(@RequestParam String username) {
 		try {
@@ -279,7 +310,7 @@ public class HelloController {
 		}
 	}
 
-
+    //feature to retrieve existing pokemon by specific template ID and given username
 	@GetMapping("/getExistingPokemons")
 	public List<ExistingPokemon> getExistingPokemon(@RequestParam String username, String template_id) {
 		try {
@@ -289,6 +320,7 @@ public class HelloController {
 		}
 	}
 
+    //feature to retrieve existing Pokemon based on a specific template ID
 	@GetMapping("/getExistingTemplatePokemon")
 	public List<ExistingPokemon> getExistingTemplatePokemon(@RequestParam String template_id) {
 		try {
@@ -298,6 +330,7 @@ public class HelloController {
 		}
 	}
 
+    //feature to add existing pokemon by id
 	@PostMapping("/addExistingPokemon")
 	public Boolean addExistingPokemon(@RequestParam String username, String template_id) {
 		try {
@@ -308,6 +341,7 @@ public class HelloController {
 
 	}
 
+    //feature to delete existing pokemon by id
 	@PostMapping("/deleteExistingPokemon")
 	public Boolean deleteExistingPokemon(@RequestParam String poke_id) {
 		try {
@@ -318,6 +352,7 @@ public class HelloController {
 
 	}
 
+    //feature to change owner of pokemon(by id) to a new user specified by username 
 	@PostMapping("/changePokemonOwner")
 	public Boolean changePokemonOwner(@RequestParam String poke_id, String new_username) {
 		try {
@@ -328,6 +363,7 @@ public class HelloController {
 
 	}
 
+    //feature to add friends
 	@PostMapping("/addFriend")
 	public void addFriend(@RequestBody Map<String, Object> requestBody) {
 		String currentUser = (String) requestBody.get("username1");
@@ -335,6 +371,7 @@ public class HelloController {
 		this.friendService.addFriend(currentUser, friendUser);
 	}
 
+    //feature to remove friends
 	@DeleteMapping("/removeFriend")
 	public void deleteFriendship(@RequestBody Map<String, Object> request) {
 		String username1 = (String) request.get("username1");
@@ -425,18 +462,6 @@ public class HelloController {
 			return false;
 		}
 	}
-	// // Create a sales post
-	// @PostMapping("/salesposts")
-	// public ResponseEntity<String> createSalesPost(@RequestBody SalesPost salesPost) {
-	// 	try {
-	// 		salesPostService.createSalesPost(salesPost);
-	// 		return ResponseEntity.ok("Sales post created successfully!");
-	// 	} catch (Exception e) {
-	// 		e.printStackTrace();
-	// 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-	// 				.body("Failed to create sales post.");
-	// 	}
-	// }
 
 	// Delete a sales post
 	@DeleteMapping("/salesposts/{salesId}")
@@ -451,7 +476,7 @@ public class HelloController {
 		}
 	}
 
-	// Used to buy items from the shop
+	//Feature to buy items from the shop
 	@PostMapping("/buyShopItem")
 	public boolean buyShopItem(@RequestParam String buyer_username, float price, Integer item_template_id) {
 		try {
@@ -461,7 +486,7 @@ public class HelloController {
 		}
 	}
 
-	// Used to buy items from other people. will do a transfer
+	//Feature to buy items from other people. will do a transfer
 	@PostMapping("/buySellerItem")
 	public boolean buySellerItem(@RequestParam String seller_username, String buyer_username, float price,
 			Integer existing_item_id) {
@@ -473,7 +498,7 @@ public class HelloController {
 		}
 	}
 
-	// Used to buy items from the shop
+	//Feature to buy items from the shop
 	@PostMapping("/buyShopPokemon")
 	public boolean buyShopPokemon(@RequestParam String buyer_username, float price, Integer pokemon_template_id) {
 		try {
@@ -483,7 +508,7 @@ public class HelloController {
 		}
 	}
 
-	// Used to buy items from other people. will do a transfer
+	//Feature to buy pokemon from other people. will do a transfer
 	@PostMapping("/buySellerPokemon")
 	public boolean buySellerPokemon(@RequestParam String seller_username, String buyer_username, float price,
 			Integer existing_pokemon_id) {
@@ -495,18 +520,6 @@ public class HelloController {
 		}
 	}
 
-    // // Used to insert sale item and then return the sales post with the id
-    // @PostMapping("/insertSaleItem")
-    // public ResponseEntity<?> insertSaleItem(@RequestBody InsertSaleItem saleItem) {
-    //     try {
-    //         InsertSaleItem insertedItem = insertSaleItemService.insertSaleItem(saleItem);
-    //         return ResponseEntity.ok(insertedItem);
-    //     } catch (SQLException e) {
-    //         e.printStackTrace();
-    //         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to insert sale item.");
-    //     }
-// }
 
-} // (Integer sales_id, String seller, String purchaser, Float price)
+} 
 
-// itemSalesService.BuyStockItem(null, buyer_username)

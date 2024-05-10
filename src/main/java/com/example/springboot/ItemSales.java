@@ -16,7 +16,7 @@ package com.example.springboot;
 //     FOREIGN KEY (ItemID) REFERENCES Items(ItemID)
 // );
 
-
+//function
 public class ItemSales {
 
 

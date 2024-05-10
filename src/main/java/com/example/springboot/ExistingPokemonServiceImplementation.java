@@ -12,15 +12,8 @@ import org.antlr.v4.runtime.atn.SemanticContext.AND;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-// import com.example.springboot.ItemServiceImplementation;
 
-// CREATE TABLE IF NOT EXISTS Pokemon (
-//     PokeID INT PRIMARY KEY auto_increment, -- The pokemon identity
-//     Username varchar(30), -- Pokemon owner
-//     PokeTemplateID INT NOT NULL, -- Pokemon type
-//     FOREIGN KEY (Username) REFERENCES Users(Username),
-//     FOREIGN KEY (PokeTemplateID) REFERENCES PokemonTemplate(PokeTemplateID)
-// );
+//creating implementation for existing pokemon service
 @Service
 public class ExistingPokemonServiceImplementation {
 
@@ -32,18 +25,15 @@ public class ExistingPokemonServiceImplementation {
 
     Connection connection;
 
+    //constructor method
     public ExistingPokemonServiceImplementation() throws SQLException {
         connection = DBUtil.getConnection();
     }
 
-    // CREATE TABLE IF NOT EXISTS Pokemon (
-    // PokeID INT PRIMARY KEY auto_increment, -- The pokemon identity
-    // Username varchar(30), -- Pokemon owner
-    // PokeTemplateID INT NOT NULL, -- Pokemon type
-    // FOREIGN KEY (Username) REFERENCES Users(Username),
-    // FOREIGN KEY (PokeTemplateID) REFERENCES PokemonTemplate(PokeTemplateID)
-    // );
 
+
+    //retrieves an existing pokemon from the database based on its unique poke_id and constructs an existing pokemon object 
+    //representing the retrieved Pokémon and returns it
     public ExistingPokemon getPokemon(String poke_id) {
         try {
             PreparedStatement stmt = connection
@@ -58,6 +48,8 @@ public class ExistingPokemonServiceImplementation {
         return null;
     }
 
+    //retrieves all pokemon belonging to a specific user from the database. 
+    //constructs Pokemon objects for each retrieved Pokemon and adds them to a list, which is then returned.
     public List<Pokemon> getUserPokemon(String username) {
         pokemonList = new ArrayList<Pokemon>();
         try {
@@ -90,6 +82,8 @@ public class ExistingPokemonServiceImplementation {
         return null;
     }
 
+    //retrieves all existing Pokemon of a specific template owned by a particular user. 
+    //constructs ExistingPokemon objects for each retrieved Pokemon and adds them to a list, which is then returned.
     public List<ExistingPokemon> getExistingPokemons(String username, String item_template_id) {
         existingPokeList = new ArrayList<ExistingPokemon>();
         try {
@@ -109,6 +103,8 @@ public class ExistingPokemonServiceImplementation {
         return null;
     }
 
+    // This method retrieves all existing Pokémon of a specific template from the database. 
+    // It constructs ExistingPokemon objects for each retrieved Pokémon and adds them to a list, which is then returned.
     public List<ExistingPokemon> getExistingTemplatePokemon(String item_template_id) {
         existingPokeList = new ArrayList<ExistingPokemon>();
         try {
@@ -126,6 +122,8 @@ public class ExistingPokemonServiceImplementation {
         return null;
     }
 
+    //Adds a new existing Pokemon to the database for a specific user and template.
+    //executes an SQL INSERT statement and returns true if the insertion is successful, otherwise false.
     public Boolean addExistingPokemon(String username, String item_template_id) {
         try {
             PreparedStatement stmt = connection
@@ -139,6 +137,8 @@ public class ExistingPokemonServiceImplementation {
         return false;
     }
 
+    //Deletes an existing Pokemon from the database based on its item_id. 
+    //executes an SQL DELETE statement and returns true if the deletion is successful, otherwise false.
     public Boolean deleteExistingPokemon(String item_id) {
         try {
             PreparedStatement stmt = connection
@@ -151,6 +151,8 @@ public class ExistingPokemonServiceImplementation {
         return false;
     }
 
+    //Changes the owner of a Pokemon specified by poke_id to a new username. 
+    //Executes an SQL UPDATE statement and returns true if the update is successful, otherwise false.
     public Boolean changeOwnerUsername(String poke_id, String new_username) {
         try {
             // UPDATE Customers
@@ -169,11 +171,10 @@ public class ExistingPokemonServiceImplementation {
         return false;
     }
 
-// SELECT * 
-// FROM pokemon p, pokemonTemplate pt 
-// WHERE p.username = "user1" AND pt.PokeTemplateID = p.PokeTemplateID AND p.PokeID NOT IN (SELECT ps.pokemonID as PokeID
-// 												FROM pokemonsales ps, sales s 
-// 												WHERE ps.SalesID = s.SalesID AND s.Purchaser = NULL);
+
+
+// Retrieves all Pokemon belonging to a specific user (username) from the database that are available for sale (not already sold). 
+// Constructs ExistingPokemon objects for each retrieved Pokemon and adds them to a list, which is then returned.
 public List<ExistingPokemon> getUserSellablePokemon(String username) {
     existingPokeList = new ArrayList<ExistingPokemon>();
     try {
@@ -194,57 +195,4 @@ public List<ExistingPokemon> getUserSellablePokemon(String username) {
 
     
 
-
-
-    // @PostMapping("/changeItemOwner")
-    // public Boolean getExistingTemplateItems(@RequestBody String item_id, String
-    // new_username) {
-    // try {
-    // return this.existingItemsService.changeOwnerUsername(item_id, new_username);
-    // } catch (Exception e) {
-    // return false;
-    // }
-
-    // public List<Pokemon> getPokemonData() {
-    // try {
-    // existingItemsList = new ArrayList<Pokemon>();
-    // PreparedStatement stmt = connection.prepareStatement("SELECT * FROM
-    // pokemontemplate");
-    // ResultSet rs = stmt.executeQuery();
-    // while (rs.next()) {
-    // Pokemon poke = new Pokemon(rs.getInt(1), rs.getInt(2), rs.getString(3),
-    // rs.getString(4),
-    // rs.getString(5),
-    // rs.getString(6), rs.getString(7), rs.getString(8));
-    // existingItemsList.add(poke);
-    // // Pokemon poke_test = new Pokemon(1, "test");
-    // // pokemonList.add(poke_test);
-    // }
-    // } catch (SQLException e) {
-    // e.printStackTrace();
-    // }
-
-    // return existingItemsList;
-    // }
-
-    // public List<Pokemon> searchPokemonByName(String name) {
-    // try {
-    // existingItemsList = new ArrayList<ExistingItem>();
-    // PreparedStatement stmt = connection.prepareStatement("SELECT * FROM
-    // pokemontemplate WHERE PokeName LIKE ?");
-    // stmt.setString(1, "%" + name + "%");
-    // ResultSet rs = stmt.executeQuery();
-    // while (rs.next()) {
-    // Pokemon poke = new Pokemon(rs.getInt(1), rs.getInt(2), rs.getString(3),
-    // rs.getString(4),
-    // rs.getString(5),
-    // rs.getString(6), rs.getString(7), rs.getString(8));
-    // existingItemsList.add(poke);
-    // }
-    // } catch (SQLException e) {
-    // e.printStackTrace();
-    // }
-
-    // return existingItemsList;
-    // }
 }

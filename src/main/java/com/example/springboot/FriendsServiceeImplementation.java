@@ -11,16 +11,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+//creating implementation for Friends
 public class FriendsServiceeImplementation {
     @Autowired
     static List<Friends> friendList = new ArrayList<Friends>();
 
     Connection connection;
 
+    //constructor method for initializing a connection to the database
     public FriendsServiceeImplementation() throws SQLException {
         connection = DBUtil.getConnection();
     }
 
+    //adds a friendship relation between two users to the database. 
+    //inserts a new record into the Friends table with the provided usernames and returns the number of rows affected by the SQL INSERT statement.
     public int addFriend(String username1, String username2) {
         try {
             PreparedStatement stmt = connection
@@ -34,6 +38,8 @@ public class FriendsServiceeImplementation {
         }
     }
 
+    //This method removes a friendship relation between two users from the database. 
+    //Deletes records from the Friends table where either (Username1 = username1 AND Username2 = username2) or (Username1 = username2 AND Username2 = username1). 
     public void removeFriend(String username1, String username2) {
         try {
             PreparedStatement stmt = connection
@@ -49,6 +55,9 @@ public class FriendsServiceeImplementation {
         }
     }
 
+    //This method checks if there exists a friendship relation between two users in the database. 
+    //executes a SQL SELECT statement to check if there is at least one record in the Friends table matching either (Username1 = username1 AND Username2 = username2) or (Username1 = username2 AND Username2 = username1). 
+    //returns true if such a friendship relation exists, otherwise false.
     public boolean checkFriendship(String username1, String username2) {
         try {
             PreparedStatement stmt = connection.prepareStatement(

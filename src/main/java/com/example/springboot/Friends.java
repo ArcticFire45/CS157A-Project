@@ -1,5 +1,7 @@
 package com.example.springboot;
 
+//storing information about two friends. 
+// provides methods to set and get the usernames of these friends.
 public class Friends {
     private String Username1;
     private String Username2;

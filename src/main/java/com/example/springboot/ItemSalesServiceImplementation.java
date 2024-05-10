@@ -25,7 +25,7 @@ import org.springframework.stereotype.Service;
 // );
 
 
-
+//create functionality for item sales
 @Service
 public class ItemSalesServiceImplementation {
 
@@ -39,7 +39,7 @@ public class ItemSalesServiceImplementation {
 
 
 
-    
+    // obtains itemsale of pokemon
     public ItemSales getItemSale(String sale_id)
     {
         try {
@@ -56,6 +56,7 @@ public class ItemSalesServiceImplementation {
         return null;
     }   
 
+    // functionality for obtaining useritemsales
     public List<ItemSales> getUserItemSales(String item_id)
     {
         itemSalesList = new ArrayList<ItemSales>();  
@@ -77,7 +78,7 @@ public class ItemSalesServiceImplementation {
     }   
 
 
-    
+    // functionality for add sale items
     public Boolean addItemSale(String sales_id, String item_id)
     {
         try {
@@ -92,7 +93,7 @@ public class ItemSalesServiceImplementation {
         return false;
     } 
     
-    
+    // functionality deleting sale items
     public Boolean deleteItemSales(String sales_id)
     {
         try {
@@ -117,6 +118,7 @@ public class ItemSalesServiceImplementation {
     //     query = query + "INSERT INTO sales (Seller, Purchaser, Price) VALUES ('" + sales.getSeller() + "', '" +  sales.getPurchaser()+ "', " + sales.getPrice() + ");";
     // }
 
+    // functionality for buying available items from store
     public Boolean buyStockItem(Sales sales, Integer item_template_id)
     {
         try {
@@ -158,6 +160,7 @@ public class ItemSalesServiceImplementation {
         return false;
     }   
     
+    // functionality for allowing users to buy items from a seller
     public Boolean buySellerItem(Sales sales, Integer item_id)
     {
         try {

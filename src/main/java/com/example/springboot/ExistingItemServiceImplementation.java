@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 // import com.example.springboot.ItemServiceImplementation;
 
+//implementing feature for items on application
 @Service
 public class ExistingItemServiceImplementation {
 
@@ -38,6 +39,8 @@ public class ExistingItemServiceImplementation {
     // getExistingItems
     // getExistingTemplateItems
 
+
+    // feature for obtaining the item 
     public ExistingItem getItem(String item_id) {
         try {
             PreparedStatement stmt = connection
@@ -52,6 +55,7 @@ public class ExistingItemServiceImplementation {
         return null;
     }
 
+    //obtain user items
     public List<Items> getUserItems(String username) {
         itemsList = new ArrayList<Items>();
         try {
@@ -78,6 +82,7 @@ public class ExistingItemServiceImplementation {
         return null;
     }
 
+    //functionality for obtaining existing items 
     public List<ExistingItem> getExistingItems(String username, String item_template_id) {
         existingItemsList = new ArrayList<ExistingItem>();
         try {
@@ -167,6 +172,8 @@ public class ExistingItemServiceImplementation {
 // WHERE i.username = "user1" AND it.ItemTemplateID = i.ItemTemplateID AND i.ItemID NOT IN (SELECT its.ItemID
 // 												FROM itemsales its, sales s 
 // 												WHERE its.SalesID = s.SalesID AND s.Purchaser = NULL);
+
+// 
 public List<ExistingItem> getUserSellableItems(String username) {
     existingItemsList = new ArrayList<ExistingItem>();
     try {

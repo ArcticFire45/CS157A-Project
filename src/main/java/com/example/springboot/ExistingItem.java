@@ -7,6 +7,8 @@ package com.example.springboot;
 //     FOREIGN KEY (Username) REFERENCES Users(Username),
 //     FOREIGN KEY (ItemTemplateID) REFERENCES ItemTemplate(ItemTemplateID)
 // );
+
+// creating parameters for items with each item containing an id, name, and templateid
 public class ExistingItem {
     private Integer item_id;
     private String username;

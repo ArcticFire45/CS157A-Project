@@ -1,5 +1,7 @@
 package com.example.springboot;
 
+
+//model for inserting items into application. each item has a saleID, postID, itemType, itemID
 public class InsertSaleItem {
 
     private int saleID;
@@ -7,7 +9,7 @@ public class InsertSaleItem {
     private String itemType; 
     private int itemId; 
 
-
+    
     public InsertSaleItem(int saleID, int postID, String itemType, int itemId) {
         this.saleID = saleID;
         this.postID = postID;
